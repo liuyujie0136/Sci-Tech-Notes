@@ -1,4 +1,4 @@
-# Linux使用技巧与注意事项_Part1
+# Linux使用技巧与注意事项-Part1
 > Collected by liuyujie0136
 >
 > First published on [my Github Pages](https://liuyujie0136.github.io/bioinfo/linux_tips)
