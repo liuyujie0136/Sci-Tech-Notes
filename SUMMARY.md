@@ -6,4 +6,4 @@
 * [R](r/r.md)
   * [test](r/test.md)
 * [Python](python/python.md)
-  * [test](python/test.md)
+  * [Python语言程序设计课程案例 @ 北理工MOOC](python/python-mooc-BIT.md)
