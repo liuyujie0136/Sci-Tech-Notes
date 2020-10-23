@@ -1,6 +1,5 @@
-# WEHI RNA-seq Workshop - Code with Comments
-> School of Life Sciences, Nanjing University
->
+# RNA-seq Code with Comments
+> School of Life Sciences, Nanjing University  
 > 2019.11.30
 
 ```r
