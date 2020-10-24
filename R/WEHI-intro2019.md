@@ -22,15 +22,15 @@ In this workshop, you will be learning how to analyse single-cell RNA-sequencing
 ### For RNA-seq Workshop
 
 1. Download R and RStudio
-2. Open RStudio, Select tools-global options-packages-CRAN mirror-change-China (Beijing) [https] - TUNA Team, Tsinghua University
-3. Create and set working directory: Select tools-global options-general-default working directory (**Note: chinese characters is not allowed**)
-4. Copy the following commands into R console (**Note: update all the packages when installing**)
+2. Open RStudio, Select `tools-global options-packages-CRAN mirror-change-China (Beijing) [https] - TUNA Team, Tsinghua University`
+3. Create and set working directory: Select `tools-global options-general-default working directory` (**Note: chinese characters is not allowed**)
+4. Install R packages (**Note: update all the packages when installing**)
 ```r
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install("RNAseq123")
 ```
-5. Download data from GEO with the following commands
+5. Download data from GEO
 ```r
 install.packages("R.utils")
 url <- "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE63310&format=file"
