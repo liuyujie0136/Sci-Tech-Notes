@@ -104,7 +104,7 @@ cumprod(A,dim)	#A为矩阵, dim=1(默认, 同上); dim=2: 按行累积求积
 
 ## Python中`if __name__ == '__main__':`的作用和原理
 
-### `if __name__ == '__main__':` 的作用
+### 作用
 
 一个python文件通常有两种使用方法，第一是作为脚本直接执行，第二是 `import` 到其他的 python 脚本中被调用（模块重用）执行。因此 `if __name__ == 'main':` 的作用就是控制这两种情况执行代码的过程，在 `if __name__ == 'main':` 下的代码只有在第一种情况下（即文件作为脚本直接执行）才会被执行，而 import 到其他脚本中是不会被执行的。举例说明：新建 `test.py` ，内容如下：
 
@@ -122,16 +122,16 @@ this is one
 this is two
 ```
 
-下面尝试 `import` 执行。在同一文件夹新建名称为 `import_test.py` 的脚本，内容如下。执行之，结果仅为`this is one`。
+下面尝试 `import` 执行。在同一文件夹新建名称为 `import-test.py` 的脚本，内容如下。执行之，结果仅为`this is one`。
 
 ```python
-# import_test.py
+# import-test.py
 import test
 ```
 
-### `if __name__ == '__main__':` 的运行原理
+### 原理
 
-每个python模块（python文件，也就是此处的 test.py 和 import_test.py）都包含内置的变量 `__name__`，当该模块被直接执行的时候，`__name__` 等于文件名（包含后缀`.py` ）；如果该模块 `import` 到其他模块中，则该模块的 `__name__` 等于模块名称（不包含后缀`.py`）。
+每个python模块（python文件，也就是此处的 test.py 和 import-test.py）都包含内置的变量 `__name__`，当该模块被直接执行的时候，`__name__` 等于文件名（包含后缀`.py` ）；如果该模块 `import` 到其他模块中，则该模块的 `__name__` 等于模块名称（不包含后缀`.py`）。
 而 `__main__` 始终指当前执行模块的名称（包含后缀`.py`）。进而当模块被直接执行时，`__name__ == '__main__'` 结果为真。
 
 为了进一步说明，我们在 `test.py` 脚本的 `if __name__=="__main__":` 之前加入 `print(__name__)`，即将 `__name__` 打印出来。结果如下：直接执行时输出为`__main__`，`import` 执行时输出为`test`。
