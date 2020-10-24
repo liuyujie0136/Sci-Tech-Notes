@@ -1,4 +1,4 @@
-# WEHI RNA-seq Workshop 2019
+# WEHI RNA-seq Workshop 2019 - Introduction
 > School of Life Sciences, Nanjing University
 
 ## Introduction
@@ -92,17 +92,17 @@ library(DropletUtils)
 sce.416b <- LunSpikeInData(which="416b")
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 
-# Grun 
-sce.grun <- GrunPancreasData() 
-untar(bfcrpath(BiocFileCache("raw_data", ask = FALSE), file.path("http://cf.10xgenomics.com/samples", "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz")), exdir=file.path(tempdir(), "pbmc4k")) 
- 
-# PBMC 
-sce.pbmc <- read10xCounts(file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38"), col.names=TRUE) 
- 
-# Zeisel 
-sce.zeisel <- ZeiselBrainData(ensembl = FALSE) 
- 
-# Richard 
-sce.richard <- RichardTCellData() 
+# Grun
+sce.grun <- GrunPancreasData()
+untar(bfcrpath(BiocFileCache("raw_data", ask = FALSE), file.path("http://cf.10xgenomics.com/samples", "cell-exp/2.1.0/pbmc4k/pbmc4k_raw_gene_bc_matrices.tar.gz")), exdir=file.path(tempdir(), "pbmc4k"))
+
+# PBMC
+sce.pbmc <- read10xCounts(file.path(tempdir(), "pbmc4k/raw_gene_bc_matrices/GRCh38"), col.names=TRUE)
+
+# Zeisel
+sce.zeisel <- ZeiselBrainData(ensembl = FALSE)
+
+# Richard
+sce.richard <- RichardTCellData()
 ```
 
