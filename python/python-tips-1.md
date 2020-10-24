@@ -1,9 +1,11 @@
 # Python使用技巧与注意事项-Part1
 > Collected by liuyujie0136
 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
 ## Python计算排列数与组合数
 
-### 编写函数计算组合数 $ C^{i}_{n} $
+### 编写函数计算组合数$C^{i}_{n}$
 ```python
 def Combinatorial(n,i):
     '''设计组合数'''
