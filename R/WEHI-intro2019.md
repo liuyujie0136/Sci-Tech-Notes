@@ -4,7 +4,7 @@
 
 ## Introduction
 
-From the 30th November - 2 December, five bioinformaticians from the Walter and Eliza Hall Institute for Medical Research will be visiting Nanjing University to provide a series of training workshops on bioinformatics methods to analyse different kinds of data. This is an exciting opportunity for staff and students of the university to learn about bioinformatics analysis methods from experienced researchers with many years of experience in the analysis of data and the development of analysis methods. 
+From the 30th November - 2nd December, five bioinformaticians from the Walter and Eliza Hall Institute for Medical Research will be visiting Nanjing University to provide a series of training workshops on bioinformatics methods to analyse different kinds of data. This is an exciting opportunity for staff and students of the university to learn about bioinformatics analysis methods from experienced researchers with many years of experience in the analysis of data and the development of analysis methods. 
 
 ## RNA-Sequencing Analysis Workshop
 
@@ -54,44 +54,70 @@ read.delim(files[1], nrow=5)
 ### For scRNA-seq Workshop
 
 1. **Assumption:** You have run the code above, because RNA-seq is the basis of scRNA-seq.
+
 2. Install R packages
+
 ```r
 install.packages("BiocManager")
+BiocManager::install(version = "3.10")
+
 install.packages("igraph")
+install.packages("Matrix")
+
+BiocManager::install("msigdbr")
+BiocManager::install(c("scran", "scater", "edgeR", "pheatmap", "TENxPBMCData", "iSEE", "SingleCellExperiment", "scRNAseq", "AnnotationHub", "ensembldb", "robustbase", "DropletUtils", "BiocFileCache"), version = "3.10")
+BiocManager::install("PCAtools")
+
 install.packages("ggplot2")
-BiocManager::install(c("scran", "scater", "edgeR", "pheatmap","TENxPBMCData","iSEE"), version = "3.10")
+install.packages("tidyverse")
+install.packages("GGally")
+install.packages("gridExtra")
 ```
+
 3. Check your packages
+
 ```r
-library(edgeR)
-library(scater)
+# Load libraries
 library(scran)
 library(TENxPBMCData)
-library(iSEE)
-library(pheatmap)
-```
-4. Install additional R packages and check (used for downloading data sets)
-```r
-install.packages("Matrix")
-BiocManager::install(c("SingleCellExperiment", "scRNAseq", "AnnotationHub", "ensembldb", "robustbase", "DropletUtils", "BiocFileCache"), version = "3.10")
 library(SingleCellExperiment)
 library(AnnotationHub)
 library(scRNAseq)
+library(scater)
 library(robustbase)
 library(BiocFileCache)
 library(DropletUtils)
 library(Matrix)
+
+# Data sets
+library(scRNAseq)
+library(AnnotationHub)
+library(DropletUtils)
+library(PCAtools)
+
+# Plotting
+library(tidyverse)
+library(GGally)
+
+# data base
+library(msigdbr)
 ```
-5. Download data sets
+
+4. Download data sets
 
 ```r
 # Data sets
 library(scRNAseq)
 library(AnnotationHub)
 library(DropletUtils)
+library(PCAtools)
 
 # 416b
 sce.416b <- LunSpikeInData(which="416b")
+sce.416b$phenotype <- ifelse(grepl("induced", sce.416b$phenotype), "induced", "wild type")
+sce.416b$block <- factor(sce.416b$block)
+
+# mmv97
 ens.mm.v97 <- AnnotationHub()[["AH73905"]]
 
 # Grun
@@ -106,5 +132,44 @@ sce.zeisel <- ZeiselBrainData(ensembl = FALSE)
 
 # Richard
 sce.richard <- RichardTCellData()
+sce.richard <- sce.richard[,sce.richard$`single cell quality`=="OK"]
+
+# 8qc
+library(BiocFileCache)
+bfc <- BiocFileCache(ask=FALSE)
+qcdata <- bfcrpath(bfc, "https://github.com/LuyiTian/CellBench_data/blob/master/data/mRNAmix_qc.RData?raw=true")
+
+env <- new.env()
+load(qcdata, envir=env)
+sce.8qc <- env$sce8_qc
+
+# Function
+build_plot_for_UNI_counts = function(bcrank){
+	uniq <- !duplicated(bcrank$rank) # Only showing unique points for plotting speed.
+	
+	plot(
+		bcrank$rank[uniq],
+		bcrank$total[uniq],
+		log = "xy",
+		xlab = "Rank",
+		ylab = "Total UMI count",
+		cex.lab = 1.2
+	)
+	
+	abline(h = metadata(bcrank)$inflection,
+				 col = "darkgreen",
+				 lty = 2)
+	abline(h = metadata(bcrank)$knee,
+				 col = "dodgerblue",
+				 lty = 2)
+	
+	legend(
+		"bottomleft",
+		legend = c("Inflection", "Knee"),
+		col = c("darkgreen", "dodgerblue"),
+		lty = 2,
+		cex = 1.2
+	)
+}
 ```
 
