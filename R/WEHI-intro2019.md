@@ -1,4 +1,5 @@
-# WEHI RNA-seq Workshop 2019 - Introduction
+# WEHI RNA-seq Workshop 2019
+
 > School of Life Sciences, Nanjing University
 
 ## Introduction
@@ -82,6 +83,7 @@ library(DropletUtils)
 library(Matrix)
 ```
 5. Download data sets
+
 ```r
 # Data sets
 library(scRNAseq)
