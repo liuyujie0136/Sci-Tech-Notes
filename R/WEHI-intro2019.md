@@ -55,7 +55,6 @@ read.delim(files[1], nrow=5)
 
 1. **Assumption:** You have run the code above, because RNA-seq is the basis of scRNA-seq.
 2. Install R packages
-
 ```r
 install.packages("BiocManager")
 BiocManager::install(version = "3.10")
@@ -73,7 +72,6 @@ install.packages("GGally")
 install.packages("gridExtra")
 ```
 3. Check your packages
-
 ```r
 # Load libraries
 library(scran)
@@ -101,7 +99,6 @@ library(GGally)
 library(msigdbr)
 ```
 4. Download data sets
-
 ```r
 # Data sets
 library(scRNAseq)
