@@ -10,7 +10,7 @@
   * [WEHI RNA-seq Workshop 2019](R/WEHI-intro2019.md)
     * [RNA-seq Code with Comments](R/WEHI-RNAseq.md)
     * [Single Cell RNA-seq Code with Comments](R/WEHI-scRNAseq.md)
-  * [Use R package `export` to export Rplots to PPT](R/graph2ppt.md)
+  * [Use R package export to export Rplots to PPT](R/graph2ppt.md)
   * [Volcano Plot 火山图简介](R/volcano-plot.md)
 * Python
   * [Python使用技巧与注意事项-Part1](python/python-tips-1.md)

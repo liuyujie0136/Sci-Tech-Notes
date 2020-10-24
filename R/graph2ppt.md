@@ -1,4 +1,4 @@
-# Use R package `export` to export Rplots to PPT
+# Use R package export to export Rplots to PPT
 > export is an R package to easily export active R graphs and statistical output in publication quality to Microsoft Office, HTML, and Latex. More information on [GitHub](https://github.com/tomwenseleers/export).
 
 ## Get the latest development version from GitHub

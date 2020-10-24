@@ -70,16 +70,19 @@ print(list(combinations([1,2,3],2)))
 ### 附：MATLAB计算排列组合数
 
 1. 求n的阶乘
+
 * factorial(n)
 * gamma(n+1)
 * v='n!'; vpa(v)
 
 2. 求组合数
+
 * combntns(x,m)	#列举出从n个元素中取出m个元素的组合，其中x是含有n个元素的向量
 * nchoosek(n,k)	#从n个元素中取k个元素的所有组合数
 * nchoosek(x,m)	#从向量x中取m个元素的组合
 
 3. 求排列数
+
 * perms(x)	#给出向量x的所有排列 
 * prod(n:m)	#求排列数：m*(m-1)*(m-2)*…*(n+1)*n (m>n)
 * prod(1:2:2n-1)	#求(2n-1)!! 
@@ -88,6 +91,7 @@ print(list(combinations([1,2,3],2)))
 * prod(A,dim)	#dim=1(默认); dim=2: 对矩阵A的各行求积（等价于(prod(A'))'） 
 
 4. 累积求积函数cumprod()
+
 * cumprod(n:m)	#输出一个向量[n n*(n+1) n(n+1)(n+2) … n(n+1)(n+2)…(m-1)m]
 * cumprod(A)	#A为矩阵, 输出同维数的矩阵，按列累积求积
 * cumprod(A,dim)	#A为矩阵, dim=1(默认, 同上); dim=2: 按行累积求积
