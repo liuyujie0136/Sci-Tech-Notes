@@ -3,7 +3,7 @@
 
 ## Python计算排列数与组合数
 
-### 编写函数计算组合数$C^{i}_{n}$
+### 编写函数计算组合数 $C^{i}_{n}$
 ```python
 def Combinatorial(n,i):
     '''设计组合数'''
@@ -70,31 +70,35 @@ print(list(combinations([1,2,3],2)))
 ### 附：MATLAB计算排列组合数
 
 1. 求n的阶乘
-
-* factorial(n)
-* gamma(n+1)
-* v='n!'; vpa(v)
+```matlab
+factorial(n)
+gamma(n+1)
+v='n!'; vpa(v)
+```
 
 2. 求组合数
-
-* combntns(x,m)	#列举出从n个元素中取出m个元素的组合，其中x是含有n个元素的向量
-* nchoosek(n,k)	#从n个元素中取k个元素的所有组合数
-* nchoosek(x,m)	#从向量x中取m个元素的组合
+```matlab
+combntns(x,m)	#列举出从n个元素中取出m个元素的组合，其中x是含有n个元素的向量
+nchoosek(n,k)	#从n个元素中取k个元素的所有组合数
+nchoosek(x,m)	#从向量x中取m个元素的组合
+```
 
 3. 求排列数
-
-* perms(x)	#给出向量x的所有排列 
-* prod(n:m)	#求排列数：m*(m-1)*(m-2)*…*(n+1)*n (m>n)
-* prod(1:2:2n-1)	#求(2n-1)!! 
-* prod(2:2:2n)	#求(2n)!! 
-* prod(A)		#对矩阵A的各列求积 
-* prod(A,dim)	#dim=1(默认); dim=2: 对矩阵A的各行求积（等价于(prod(A'))'） 
+```matlab
+perms(x)	#给出向量x的所有排列 
+prod(n:m)	#求排列数：m*(m-1)*(m-2)*…*(n+1)*n (m>n)
+prod(1:2:2n-1)	#求(2n-1)!! 
+prod(2:2:2n)	#求(2n)!! 
+prod(A)		#对矩阵A的各列求积 
+prod(A,dim)	#dim=1(默认); dim=2: 对矩阵A的各行求积（等价于(prod(A'))'） 
+```
 
 4. 累积求积函数cumprod()
-
-* cumprod(n:m)	#输出一个向量[n n*(n+1) n(n+1)(n+2) … n(n+1)(n+2)…(m-1)m]
-* cumprod(A)	#A为矩阵, 输出同维数的矩阵，按列累积求积
-* cumprod(A,dim)	#A为矩阵, dim=1(默认, 同上); dim=2: 按行累积求积
+```matlab
+cumprod(n:m)	#输出一个向量[n n*(n+1) n(n+1)(n+2) … n(n+1)(n+2)…(m-1)m]
+cumprod(A)	#A为矩阵, 输出同维数的矩阵，按列累积求积
+cumprod(A,dim)	#A为矩阵, dim=1(默认, 同上); dim=2: 按行累积求积
+```
 
 5. 使用 `format rat` 命令即可使输出结果转化为分数形式
 
@@ -128,9 +132,9 @@ import test
 ### `if __name__ == '__main__':` 的运行原理
 
 每个python模块（python文件，也就是此处的 test.py 和 import_test.py）都包含内置的变量 `__name__`，当该模块被直接执行的时候，`__name__` 等于文件名（包含后缀`.py` ）；如果该模块 `import` 到其他模块中，则该模块的 `__name__` 等于模块名称（不包含后缀`.py`）。
-而 `__main__` 始终指当前执行模块的名称（包含后缀`.py`）。进而当模块被直接执行时，`__name__` == '__main__' 结果为真。
+而 `__main__` 始终指当前执行模块的名称（包含后缀`.py`）。进而当模块被直接执行时，`__name__ == '__main__'` 结果为真。
 
-为了进一步说明，我们在 `test.py` 脚本的 `if __name__=="__main__":` 之前加入 `print(__name__)，即将 `__name__` 打印出来。结果如下：直接执行时输出为`__main__`，`import` 执行时输出为`test`。
+为了进一步说明，我们在 `test.py` 脚本的 `if __name__=="__main__":` 之前加入 `print(__name__)`，即将 `__name__` 打印出来。结果如下：直接执行时输出为`__main__`，`import` 执行时输出为`test`。
 
 ## 修改Python IDLE初始默认文件打开/保存路径的方法
 
