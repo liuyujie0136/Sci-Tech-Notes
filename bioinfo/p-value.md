@@ -56,21 +56,20 @@ BH法有时也称FDR法，是我们最常用的多重假设检验校正方法，
 
 ## q-value是什么？
 
-q-value是Storey和Tibshirani提出的基于p-value分布的FDR计量方法.
+q-value是Storey和Tibshirani提出的基于p-value分布的FDR计量方法，详见[此推文](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247488229&idx=1&sn=2c4f1fbba7f4af9797ffd6ff06a200c5&scene=21#wechat_redirect)。
 
 ## 如何尽量减少统计检验次数
 
 我们看到上面的校正方法多于统计检测次数有关，统计检测次数越多，校正也会越强烈。有没有合适的办法来规避一些无意义的统计检验呢？
 
-* WGCNA方法通过把基因聚类为模块再进行统计分析，大大降低了统计检验次数，具体见WGCNA分析，简单全面的最新教程
-* GSEA、GO等富集分析时合并相似的GO/KEGG通路再进行富集分析，如一文掌握GSEA，超详细教程中提到的合并共有基因数目超过70%的通路。
-* 差异基因分析时过滤掉极低表达的基因 (低表达基因通常生物意义小或检测噪声大，即便有差异也难分清是生物差异还是技术差异)，如高通量数据中批次效应的鉴定和处理 - 系列总结和更新提到的方法。
-DESeq2中还额外进行了independent filtering进行进一步过滤提高统计检出率。
-没有通过过滤标准的基因校正后的padj赋值为NA (这也是之前总被问起的DESeq2结果中NA的来源)。
+* WGCNA方法通过把基因聚类为模块再进行统计分析，大大降低了统计检验次数
+* GSEA、GO等富集分析时合并相似的GO/KEGG通路再进行富集分析
+* 差异基因分析时过滤掉极低表达的基因 (低表达基因通常生物意义小或检测噪声大，即便有差异也难分清是生物差异还是技术差异)
 
 ## 如何获得更小更稳定的检测P-value
-增加生物重复使得统计结果检验更稳定，见如果不是没有钱谁想只测3个重复。
-选择合适的统计方法屏蔽个体差异，见上面提到的批次校正和limma配对检验。
+
+* 增加生物重复使得统计结果检验更稳定
+* 选择合适的统计方法屏蔽个体差异，详见公众号**生信宝典**推文[批次校正](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247495952&idx=1&sn=fd7f0472fb97a7da9199ffde0e17c07d&chksm=ec0e349adb79bd8c9961fe445b0f3cd6ef3a583f98a510a02aea18ff3be9710395961a92168f&token=342863021&lang=zh_CN&scene=21#wechat_redirect)和[limma配对检验](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247488116&idx=1&sn=62c480f623f37f2fc16d78a0be62685b&scene=21#wechat_redirect)。
 
 
 
