@@ -10,13 +10,13 @@ From the 30th November - 2nd December, five bioinformaticians from the Walter an
 
 In this workshop, you will be learning how to analyse RNA-seq count data using R. This will include reading the data into R, pre-processing data and performing differential expression analysis, with a focus on the limma-voom analysis workflow. You will learn how to generate common plots for analysis and visualisation of gene expression data, such as boxplots and heatmaps. 
  
-This workshop is aimed at biologists interested in learning how to perform differential expression analysis of RNA-seq data when reference genomes are available. The material we will be covering on RNA-seq is available at https://f1000research.com/articles/5-1408/v3 .
+This workshop is aimed at biologists interested in learning how to perform differential expression analysis of RNA-seq data when reference genomes are available. The material we will be covering on RNA-seq is available at https://f1000research.com/articles/5-1408/v3.
 
 The course is aimed at PhD students, Master's students, and third & fourth year undergraduate students.  Some basic R knowledge is assumed - this is not an introduction to R course. If you are not familiar with the R statistical programming language it is compulsory that you work through an introductory R course before you attend this workshop - the Software Carpentry [R for Reproducible Scientific Analysis](http://swcarpentry.github.io/r-novice-gapminder/) lessons up to and including vectorisation (topic 9) is recommended. 
 
 ## Single-Cell RNA-Sequencing Analysis Workshop
 
-In this workshop, you will be learning how to analyse single-cell RNA-sequencing count data produced by the Chromium 10x platform using R. This will include reading the data into R, pre-processing data, normalization, feature selection, dimensional reduction and downstream analysis such as clustering and cell type annotation. You will learn how to generate common plots for analysis and visualisation of single cell gene expression data, such as diagnostic plots to assess the data quality as well as dimensionality reduction techniques such as principal components analysis and t-distributed stochastic neighbourhood embedding (t-SNE). The material we will be covering on RNA-seq is available at https://osca.bioconductor.org ​.
+In this workshop, you will be learning how to analyse single-cell RNA-sequencing count data produced by the Chromium 10x platform using R. This will include reading the data into R, pre-processing data, normalization, feature selection, dimensional reduction and downstream analysis such as clustering and cell type annotation. You will learn how to generate common plots for analysis and visualisation of single cell gene expression data, such as diagnostic plots to assess the data quality as well as dimensionality reduction techniques such as principal components analysis and t-distributed stochastic neighbourhood embedding (t-SNE). The material we will be covering on RNA-seq is available at https://osca.bioconductor.org.
 
 ## Preparations
 
