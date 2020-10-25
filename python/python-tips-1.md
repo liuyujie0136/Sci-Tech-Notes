@@ -1,6 +1,22 @@
 # Python使用技巧与注意事项-Part1
 > Collected by liuyujie0136
 
+## Python更换pip源(pypi镜像) - [清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)
+
+1. 临时使用（注意，simple 不能少, 是 https 而不是 http）
+```
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+```
+2. 设为默认（升级 pip 到最新版本后进行配置）
+```
+pip install pip -U
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+```
+3. 如果您到 pip 默认源的网络连接较差，可临时使用本镜像站来升级 pip
+```
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
+```
+
 ## Python计算排列数与组合数
 
 ### 编写函数计算组合数<img src="http://chart.googleapis.com/chart?cht=tx&chl=C^{i}_{n}" style="border:none;">
