@@ -1,1 +1,6 @@
 theme: jekyll-theme-minimal
+encoding: UTF-8
+title: Website by liuyujie0136
+description: A website for self learning, collecting and sharing.
+logo: https://github.com/liuyujie0136/liuyujie0136.github.io/raw/master/logo.jpg
+show_downloads: ["true"]

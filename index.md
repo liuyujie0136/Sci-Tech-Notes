@@ -1,6 +1,7 @@
 # Science and Technology Notes
 
-## [Introduction](README.md)
+## Introduction
+> under revision
 
 ## [Contents](SUMMARY.md)
 
