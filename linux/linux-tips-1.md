@@ -1,7 +1,5 @@
 # Linux使用技巧与注意事项-Part1
 > Collected by liuyujie0136
->
-> First published on [my Github Pages](https://liuyujie0136.github.io/bioinfo/linux_tips)
 
 ## Docker
 > Docker is a tool to run Linux containers based on selected images.
