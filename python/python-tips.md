@@ -1,4 +1,4 @@
-# Python使用技巧与注意事项-Part1
+# Python使用技巧与注意事项
 > Collected by liuyujie0136
 
 ## Python更换pip源(pypi镜像) - [清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)

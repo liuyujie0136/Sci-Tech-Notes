@@ -1,4 +1,4 @@
-# Linux使用技巧与注意事项-Part1
+# Linux使用技巧与注意事项
 > Collected by liuyujie0136
 
 ## Docker
@@ -703,6 +703,25 @@ passwd
 * 使用`visudo`命令编辑`sudo`权限文件。注意，该命令为一个单词
 * 出现vim编辑窗口，在文件合适位置加入`<user_name>	ALL=(ALL) ALL`语句
 * 保存退出后，便把自己加入了`sudo`组，可以使用`sudo`命令了
+
+## Linux下安装Miniconda
+
+1. 进入[清华大学开源软件镜像站 - Anaconda镜像使用帮助](https://mirror.tuna.tsinghua.edu.cn/help/anaconda/)，下翻找到Miniconda镜像使用帮助
+2. 进入[Miniconda安装包下载地址](https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/)
+3. 直接下载对应版本的`sh`文件，或将光标定位在所需文件，复制链接地址，再使用`wget -c <url>`下载
+4. 运行该文件，即执行命令`bash Miniconda***.sh`，根据提示按Enter键或者输入yes即可
+5. 安装完成后，会在家目录`~`下生成一个`Minconda3`文件夹
+6. 运行`source .bashrc`，激活`conda`，这时会发现终端前出现了`(base)`，表示已进入`conda`环境
+7. `conda`安装成功之后，逐行运行下面的命令，添加国内镜像，方便以后下载软件。
+  ```
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/bioconda
+  conda config --set show_channel_urls yes
+  ```
+8. 注：若不希望终端前一直显示`base`，仅在需用`conda`时才调用，可在`.bashrc`最后加上一句`conda deactivate`使其默认不运行。需使用时输入`conda activate`激活之。
+
+
 
 ---
 

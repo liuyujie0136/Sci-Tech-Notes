@@ -1,7 +1,5 @@
 # Python语言程序设计课程案例 @ 北理工MOOC
 > Selected by liuyujie0136
->
-> First published on [my Github Pages](https://liuyujie0136.github.io/python/python_mooc_BIT)
 
 ## （一）Python基本语法元素
 ```python

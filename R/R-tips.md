@@ -1,4 +1,4 @@
-# R使用技巧与注意事项-Part1
+# R使用技巧与注意事项
 > Collected by liuyujie0136
 
 ## [Statistics for Biologists - Nature Collection](https://www.nature.com/collections/qghhqm/)
