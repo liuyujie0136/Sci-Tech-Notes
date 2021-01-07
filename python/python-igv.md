@@ -8,6 +8,7 @@
 
 代码如下：<sup>（[下载地址](https://github.com/xuzhougeng/myscripts/blob/master/igv_web.py)）</sup>
 
+
 ```python
 #!/usr/bin/env python3
 
@@ -183,7 +184,9 @@ if __name__ == "__main__":
      gtfs = opts.gtf
      bws = opts.bigwig
      igv_web(fasta, bams, bws,  bed, gtfs)
+
 ```
+
 
 运行：
 ```
