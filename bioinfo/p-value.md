@@ -8,7 +8,7 @@
 
 假设检验的基本方法是提出一个空假设（null hypothesis），也叫做原假设或无效假设，符号是`H0`。一次检验有四种可能的结果，用下面的表格表示：
 
-![I类和II类错误](https://github.com/liuyujie0136/Sci-Tech-Notes/raw/main/bioinfo/p-value-1.png)
+![I类和II类错误](https://liuyujie0136.github.io/Sci-Tech-Notes/bioinfo/p-value-1.png)
 
 * Type I error，I类错误，也叫做α错误，假阳性。
 * Type II error，II类错误，也叫做β错误，假阴性。
@@ -24,7 +24,7 @@
 > P(在m次检验全部决策正确)=(1-α)^m  
 > P(在m次检验中至少一次决策错误) = 1-(1-α)^m
 
-![至少1个假阳性的概率](https://github.com/liuyujie0136/Sci-Tech-Notes/raw/main/bioinfo/p-value-2.png)
+![至少1个假阳性的概率](https://liuyujie0136.github.io/Sci-Tech-Notes/bioinfo/p-value-2.png)
 
 随着检验次数的增多，出现至少一次决策错误的概率快速提高。当说起“根据假设检验的次数校正p值”时，意思是控制整体的I型错误率。
 

@@ -721,6 +721,14 @@ passwd
   ```
 8. 注：若不希望终端前一直显示`base`，仅在需用`conda`时才调用，可在`.bashrc`最后加上一句`conda deactivate`使其默认不运行。需使用时输入`conda activate`激活之。
 
+## WSL(Windows Subsystem for Linux)更改登录用户
+
+* 对于Ubuntu系统，在`Windows PowerShell`中运行`ubuntu config --default-user <username>`即可
+
+## WSL中Vim字体改变的解决方案
+
+* 问题：安装好WSL版本的Ubuntu1804之后，由于默认字体不适合长时间阅读且不美观，便从属性窗口设置了新字体，但是发现在启动Vim的时候会出现字体变回原来的字体的情况。
+* 解决方法：运行`regedit`修改注册表，定位至`HKEY_CURRENT_USER\Console\C:_Program Files_WindowsApps_CanonicalGroupLimited.Ubuntu18.04onWindows_1804<...>ubuntu1804.exe`，方括号中内容根据实际情况修改，在其中添加：`CodePage`（`DWORD`类型、值`0x01b5`）
 
 
 ---

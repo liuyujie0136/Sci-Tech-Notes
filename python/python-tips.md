@@ -156,7 +156,7 @@ import test
 
 找到桌面或者开始菜单里的Python IDLE快捷方式，或者直接打开安装目录下的pythonw.exe。右击之，选择“属性”，在属性窗口中可对“起始位置”进行修改，即可更改默认文件打开/保存路径。
 
-![python-IDLE-settings](https://github.com/liuyujie0136/Sci-Tech-Notes/raw/main/python/python-IDLE.png)
+![python-IDLE-settings](https://liuyujie0136.github.io/Sci-Tech-Notes/python/python-IDLE.png)
 
 ## [Biopython教程与手册](https://biopython-cn.readthedocs.io/zh_CN/latest/)
 

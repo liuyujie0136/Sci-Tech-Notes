@@ -33,7 +33,7 @@
 
 body, td {
    font-family: 'Source Sans Pro', 'Lucida Grande', Verdana, Arial, sans-serif !important;
-   font-size: 16pt;
+   font-size: 15px !important;
 }
 
 body.macintosh, body.macintosh td {
@@ -161,13 +161,16 @@ code {
 }
 ```
 
+## R参数控制: `options()` - 示例
 
+```r
+options(stringsAsFactors = FALSE)
+getOption("stringsAsFactors")
+```
 
-
-
-
-
-
-
+```r
+options(scipen = 6, digits = 10)
+getOption("scipen")
+```
 
 
