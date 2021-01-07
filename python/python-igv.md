@@ -9,7 +9,7 @@
 代码如下：<sup>（[下载地址](https://github.com/xuzhougeng/myscripts/blob/master/igv_web.py)）</sup>
 
 
-```python
+```
 #!/usr/bin/env python3
 
 """
