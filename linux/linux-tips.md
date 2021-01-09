@@ -730,9 +730,49 @@ passwd
 * 问题：安装好WSL版本的Ubuntu1804之后，由于默认字体不适合长时间阅读且不美观，便从属性窗口设置了新字体，但是发现在启动Vim的时候会出现字体变回原来的字体的情况。
 * 解决方法：运行`regedit`修改注册表，定位至`HKEY_CURRENT_USER\Console\C:_Program Files_WindowsApps_CanonicalGroupLimited.Ubuntu18.04onWindows_1804<...>ubuntu1804.exe`，方括号中内容根据实际情况修改，在其中添加：`CodePage`（`DWORD`类型、值`0x01b5`）
 
+## Linux下的变量操作
 
----
+### 变量替换
 
-**声明：上述内容根据多种参考资料整理，在此不一一列举，仅供个人学习，版权归原作者所有。**
+* 巧记方法：`#`和`%`是删除符号。在键盘上，`#`在`$`的左边，所以是从左边开始删除，`%`在`$`的右边，所以是从右边开始删除。`/`是替换符。
+```bash
+${var#pattern}  从变量头部开始匹配模式，将符合的最短数据删除
+${var##pattern} 从变量头部开始匹配模式，将符合的最长数据删除
+${var%pattern}  从变量尾部开始匹配模式，将符合的最短数据删除
+${var%%pattern} 从变量尾部开始匹配模式，将符合的最长数据删除
+${var/oldPattern/newPattern}  将第一个符合旧模式的数据替换为新模式
+${var//oldPattern/newPattern} 将全部符合旧模式的数据替换为新模式
+```
+* 示例
+1. 输出文件的后缀
+```bash
+# 用#会匹配上第一个点和之前的内容，删除之后就获得了后缀名txt
+var1=me.txt
+echo ${var1#*.} 
+# 假如文件名中本身含有点(.)就会让上一种写法失效，此时应该用##来匹配最长数据，同样获得txt
+var2=me.pdf.txt
+echo ${var2##*.} 
+```
+2. 输出文件名
+```bash
+# %删除了从右边起第一个点及其右边的字符，仅剩文件名
+echo ${var1%%.}
+me
+# 假如文件名中本身含有点也是会让上一种写法失效，此时需用%来做最短匹配
+echo ${var2%.}
+me.pdf
+```
+3. 替换部分字符
+```bash
+var=hello123hello123
+# 替换第一个
+echo ${var/123/456}
+hello456hello123
+# 全部替换
+echo ${var//123/456}
+hello456hello456
+```
 
+### 变量声明操作
+![变量声明操作](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/linux-var.png)
 

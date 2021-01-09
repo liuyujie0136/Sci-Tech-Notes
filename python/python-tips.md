@@ -160,6 +160,6 @@ import test
 
 ## [Biopython教程与手册](https://biopython-cn.readthedocs.io/zh_CN/latest/)
 
-
+## [Python教程系列-王的机器](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzIzMjY0MjE1MA==&scene=1&album_id=1352817590674194433&count=3&uin=NTM4NTg2OTA5&key=aa37eea3a2616ab374acae3a140a6236676d3bd8daacbafb519fe3e44010e8becd1c8204d6577ef30fa031062646595b3c09548f08216a5aa1fb2adc07e68fc5e5f42a004a77efa52721a9cf7bce99e1d392ef5cc5fad0c7d7df72b25453ca10c28b3ebeb4e4eb204a3e644db23bbf307fb4cc4f4f0840a0eaa7e63280e09289&devicetype=Windows+10+x64&version=6300002f&lang=zh_CN&ascene=1&pass_ticket=zHXxNRWO9vaAdMHWYrW7Si%2FjFsybBIzRU11g9UIV9Ps42Y4mLOvCrvw4DPWir0Pr)
 
 
