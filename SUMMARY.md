@@ -7,6 +7,7 @@
   * [生物信息学常见文件格式](bioinfo/file-format.md)
 * Linux
   * [Linux使用技巧与注意事项](linux/linux-tips.md)
+  * [生物信息学常用Linux平台软件简介](linux/bioinfo-soft.md)
 * R
   * [R使用技巧与注意事项](R/R-tips.md)
   * [WEHI RNA-seq Workshop 2019](R/WEHI-intro2019.md)
