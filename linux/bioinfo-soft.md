@@ -72,6 +72,10 @@ cat filereport_read_run_PRJNA171289_tsv.txt | cut -f 2 | \
     sed 's/fasp.sra.ebi.ac.uk://g' | \
     sed 's/;/\n/' | \
     sed '/fastq_aspera/d' > ENA-Aspera-FASTQ.txt
+# 或：
+cat filereport_read_run_PRJNA171289_tsv.txt | cut -f 2 | \
+    sed 's/fasp.sra.ebi.ac.uk://g; s/;/\n/; /fastq_aspera/d' \
+    > ENA-Aspera-FASTQ.txt
 ```
 * 运行如下代码，进行下载：
 ```bash

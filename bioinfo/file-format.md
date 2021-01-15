@@ -77,3 +77,39 @@ else if(max>73 && min>=64) print "Phred64"; \
 else if(min>=59 && min<64 && max>73) print "Solexa64"; \
 else print "Unknown score encoding"; \
 ```
+
+
+## VCF文件
+
+VCF是用于描述SNP，INDEL和SV结果的文本文件。VCF文件分为两部分内容：以"#"开头的注释部分；没有"#"开头的主体部分。注释部分有很多对VCF的介绍信息，仔细查看注释部分就可以完全明白VCF各行各列的意义。主体部分中每一行代表一个Variant的信息。
+
+* **CHROM 和 POS**：代表参考序列名和variant的位置；如果是INDEL的话，位置是INDEL的第一个碱基位置。
+* **ID**：variant的ID。比如在dbSNP中有该SNP的id，则会在此行给出；若没有，则用"."表示其为一个novel variant。
+* **REF 和 ALT**：参考序列的碱基 和 Variant的碱基。
+* **QUAL**：Phred格式(Phred_scaled)的质量值，表示在该位点存在variant的可能性；该值越高，则variant的可能性越大；计算方法：`Phred = -10 * log (1-p)` ，p为variant存在的概率; 通过计算公式可以看出值为10的表示错误概率为0.1，该位点为variant的概率为90%。
+* **FILTER**：使用上一个QUAL值来进行过滤的话，是不够的。GATK能使用其它的方法来进行过滤，过滤结果中通过则该值为"PASS"或"."。
+* **INFO**：这一行是variant的详细信息，以"TAG=Value"，并使用";"分隔的形式。其中很多的注释信息在VCF文件的头部注释中给出：
+  * **AC，AF 和 AN**：AC(Allele Count) 表示该Allele的数目；AF(Allele Frequency) 表示Allele的频率； AN(Allele Number) 表示Allele的总数目。对于1个diploid sample而言：则基因型 0/1 表示sample为杂合子，Allele数为1(双倍体的sample在该位点只有1个等位基因发生了突变)，Allele的频率为0.5(双倍体的sample在该位点只有50%的等位基因发生了突变)，总的Allele为1； 基因型 1/1 则表示sample为纯合的，Allele数为2，Allele的频率为1，总的Allele为2。
+  * **DP**：reads覆盖度。是一些reads被过滤掉后的覆盖度。
+  * **Dels**：Fraction of Reads Containing Spanning Deletions。进行SNP和INDEL calling的结果中，有该TAG并且值为0表示该位点为SNP，没有则为INDEL。
+  * **FS**：使用Fisher's精确检验来检测strand bias而得到的Fhred格式的p值。该值越小越好。一般进行filter的时候，可以设置 FS < 10～20。
+  * **HaplotypeScore**：Consistency of the site with at most two segregating haplotypes
+  * **InbreedingCoeff**：Inbreeding coefficient as estimated from the genotype likelihoods per-sample when compared against the Hard-Weinberg expectation
+  * **MLEAC**：Maximum likelihood expectation (MLE) for the allele counts (not necessarily the same as the AC), for each ALT allele, in the same order as listed
+  * **MLEAF**：Maximum likelihood expectation (MLE) for the allele frequency (not necessarily the same as the AF), for each ALT alle in the same order as listed
+  * **MQ**：RMS Mapping Quality
+  * **MQ0**：Total Mapping Quality Zero Reads
+  * **MQRankSum**：Z-score From Wilcoxon rank sum test of Alt vs. Ref read mapping qualities
+  * **QD**：Variant Confidence/Quality by Depth
+  * **RPA**：Number of times tandem repeat unit is repeated, for each allele (including reference)
+  * **RU**：Tandem repeat unit (bases)
+  * **ReadPosRankSum**：Z-score from Wilcoxon rank sum test of Alt vs. Ref read position bias
+  * **STR**：Variant is a short tandem repeat
+* **FORMAT 和 B001**：这两行合起来提供了"B001"这个sample的基因型的信息。"B001"代表这该名称的样品，是由BAM文件中的@RG下的SM标签决定的。
+  * **GT**：样品的基因型（genotype）。两个数字中间用’/'分开，这两个数字表示双倍体的sample的基因型。0 表示样品中有ref的allele； 1 表示样品中variant的allele； 2表示有第二个variant的allele。因此： 0/0 表示sample中该位点为纯合的，和ref一致； 0/1 表示sample中该位点为杂合的，有ref和variant两个基因型； 1/1 表示sample中该位点为纯合的，和variant一致。
+  * **AD 和 DP**：AD(Allele Depth)为sample中每一种allele的reads覆盖度,在diploid（二倍体）中则是用逗号分割的两个值，前者对应ref基因型，后者对应variant基因型； DP（Depth）为sample中该位点的覆盖度。
+  * **GQ**：基因型的质量值(Genotype Quality)。Phred格式(Phred_scaled)的质量值，表示在该位点该基因型存在的可能性；该值越高，则Genotype的可能性越大；计算方法：`Phred = -10 * log (1-p)`，p为基因型存在的概率。
+  * **PL**：指定的三种基因型的质量值(provieds the likelihoods of the given genotypes)。这三种指定的基因型为(0/0,0/1,1/1)，这三种基因型的概率总和为1。和之前不一致，该值越大，表明为该种基因型的可能性越小。 `Phred = -10 * log (p)`，p为基因型存在的概率。
+
+
+

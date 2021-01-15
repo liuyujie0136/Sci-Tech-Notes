@@ -776,3 +776,73 @@ hello456hello456
 ### 变量声明操作
 ![变量声明操作](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/linux-var.png)
 
+## Linux下nohup命令
+
+`nohup`英文全称no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。在默认情况下（非重定向时），程序会输出一个名叫 nohup.out 的文件到当前目录下，如果当前目录的 nohup.out 文件不可写，则输出重定向到 $HOME/nohup.out 文件中。
+
+**语法格式：**
+```bash
+nohup Command [ Args ] [ & ]
+```
+
+**参数说明：**
+```bash
+Command  要执行的命令。
+Args     一些参数，可以指定输出文件。
+&        让命令在后台执行，终端退出后命令仍旧执行。
+```
+
+**示例：**
+
+以下命令在后台执行1.sh脚本，并重定向输入到1.log文件：
+
+```bash
+nohup 1.sh > 1.log 2>&1 &
+
+# 2>&1: 将标准错误2重定向到标准输出&1，标准输出&1再被重定向输入到1.log文件中
+# 0 – stdin (standard input，标准输入)
+# 1 – stdout (standard output，标准输出)
+# 2 – stderr (standard error，标准错误输出)
+```
+
+如果要停止运行，你需要使用以下命令查找到`nohup`运行脚本到PID，然后使用`kill`命令来删除：
+```bash
+ps -aux | grep "1.sh" 
+kill -9 <PID>
+
+# 参数说明：
+a   显示所有程序
+u   以用户为主的格式来显示
+x   显示所有程序，不区分终端机
+```
+
+# awk同时处理多个文件
+
+`awk`的数据输入有两个来源，标准输入和文件，后一种方式支持多个文件。
+
+1. `shell`的`Pathname Expansion`方式
+```bash
+awk '{...}' *.txt
+
+# *.txt先被shell解释，替换成当前目录下的所有*.txt，如当前目录有1.txt和2.txt，则命令最终为awk '{...}' 1.txt 2.txt
+```
+
+2. 直接指定多个文件
+```bash
+awk '{...}' a.txt b.txt c.txt ...
+# awk对多文件的处理流程是，依次读取各个文件内容，先读a.txt，再读b.txt....
+```
+
+那么，在多文件处理的时候，如何判断`awk`目前读的是哪个文件，而依次做对应的操作呢？
+
+1. 当`awk`读取的文件只有两个的时候，比较常用的方法有：
+   1. `awk 'NR==FNR{...}NR>FNR{...}' file1 file2`
+   2. `awk 'NR==FNR{...}NR!=FNR{...}' file1 file2`
+   3. `awk 'NR==FNR{...;next}{...}' file1 file2`
+2. 了解`FNR`(已读入当前文件的记录数)和`NR`(已读入的总记录数)这两个`awk`内置变量的意义就很容易知道这些方法是如何运作的：
+   1. 对于`awk 'NR==FNR{...}NR>FNR{...}' file1 file2`，读入file1的时候，已读入file1的记录数FNR一定等于awk已读入的总记录数NR，因为file1是awk读入的首个文件，故读入file1时执行前一个命令块{...}。读入file2的时候，已读入的总记录数NR一定大于读入file2的记录数FNR，故读入file2时执行后一个命令块{...}。
+   2. 对于`awk 'NR==FNR{...;next}{...}' file1 file2`，读入file1时，满足NR==FNR，先执行前一个命令块，但因为其中有next命令，故后一个命令块{...}是不会执行的。读入file2时，不满足NR==FNR，前一个命令块{..}不会执行，只执行后一个命令块{...}。
+3. 当`awk`处理的文件超过两个时，显然上面那种方法就不适用了。因为读第3个文件或以上时，也满足`NR>FNR (NR!=FNR)`，显然无法区分开来。所以就要用到更通用的方法了：
+   1. 利用当前被处理参数标志: `awk 'ARGIND==1{...}ARGIND==2{...}ARGIND==3{...}...' file1 file2 file3 ...`
+   2. 利用命令行参数数组: `awk 'FILENAME==ARGV[1]{...}FILENAME==ARGV[2]{...}FILENAME==ARGV[3]{...}...' file1 file2 file3 ...`
+   3. 把文件名直接加入判断，但不通用: `awk 'FILENAME=="file1"{...}FILENAME=="file2"{...}FILENAME=="file3"{...}...' file1 file2 file3 ...`
