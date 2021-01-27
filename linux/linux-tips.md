@@ -116,18 +116,18 @@ cat /etc/sysconfig/network-scripts/ifcfg-l0
 ```
 * 查看磁盘信息
 ```bash
-lsblk		查看磁盘信息 - 列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出RAM盘的信息
-fdisk -l	观察硬盘实体使用情况，也可对硬盘分区
+lsblk       查看磁盘信息 - 列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出RAM盘的信息
+fdisk -l    观察硬盘实体使用情况，也可对硬盘分区
 df -h       查看磁盘总体情况
 du -sh      查看当前文件夹磁盘占用
 ```
 * 查看进程与用户信息
 ```bash
-ps -ef		查看所有进程
+ps -ef      查看所有进程
 ps -aux     按用户查看进程
-top		    实时显示进程状态
-w		    查看活动用户
-id <usr>	查看指定用户信息
+top         实时显示进程状态
+w           查看活动用户
+id <usr>    查看指定用户信息
 ```
 * [更多内容](https://blog.csdn.net/qq_31278903/article/details/83146031)
 
@@ -256,12 +256,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
@@ -364,14 +364,14 @@ endif
 "
 " The following are commented out as they cause vim to behave a lot
 " differently from regular Vi. They are highly recommended though.
-"set showcmd		" Show (partial) command in status line.
-"set showmatch		" Show matching brackets.
-"set ignorecase		" Do case insensitive matching
-"set smartcase		" Do smart case matching
-"set incsearch		" Incremental search
-"set autowrite		" Automatically save before commands like :next and :make
+"set showcmd        " Show (partial) command in status line.
+"set showmatch      " Show matching brackets.
+"set ignorecase     " Do case insensitive matching
+"set smartcase      " Do smart case matching
+"set incsearch      " Incremental search
+"set autowrite      " Automatically save before commands like :next and :make
 "set hidden         " Hide buffers when they are abandoned
-"set mouse=a		" Enable mouse usage (all modes)
+"set mouse=a        " Enable mouse usage (all modes)
 "
 " Source a global configuration file if available
 if filereadable("/etc/vim/vimrc.local")
@@ -446,7 +446,7 @@ exit 0
   ```
   * open crontab and edit it by the following command: 
   ```bash
-  crontab -e	# or crontab ~/cronjob
+  crontab -e    # or crontab ~/cronjob
   ```
   * type in the following lines or write the following in a file (i.e. `~/crontab`):
   ```bash
@@ -463,17 +463,17 @@ exit 0
 # 1
 for ((i=1;i<=10;i++))
 do
-	echo $(expr $i \* 3 + 1);
+    echo $(expr $i \* 3 + 1);
 done
 # 2
 for i in $(seq 1 10)
 do
-	echo $(expr $i \* 3 + 1);
+    echo $(expr $i \* 3 + 1);
 done
 # 3
 for i in {1..10}
 do
-	echo $(expr $i \* 3 + 1);
+    echo $(expr $i \* 3 + 1);
 done
 # 4
 awk 'BEGIN{for(i=1; i<=10; i++) print i}'
@@ -485,23 +485,23 @@ exit 0
 # 1
 for i in `ls`;
 do 
-	echo $i is file name\! ;
+    echo $i is file name\! ;
 done
 # 2
 for i in $* ;
 do
-	echo $i is input chart\! ;
+    echo $i is input chart\! ;
 done
 # 3
 for i in f1 f2 f3 ;
 do
-	echo $i is appoint ;
+    echo $i is appoint ;
 done
 # 4
 list="rootfs usr data data2"
 for i in $list;
 do
-	echo $i is appoint ;
+    echo $i is appoint ;
 done
 exit 0
 ```
@@ -511,12 +511,12 @@ exit 0
 # 1
 for file in /proc/*;
 do
-	echo $file is file path \! ;
+    echo $file is file path \! ;
 done
 # 2
 for file in $(ls *.sh)
 do
-	echo $file is file path \! ;
+    echo $file is file path \! ;
 done
 exit 0
 ```
@@ -524,15 +524,15 @@ exit 0
 ## Linux下将文件夹命名为今天的日期的方法
 
 ```bash
-alias today="date +F%"	# +F% format is like 2020-01-01
+alias today="date +F%"  # +F% format is like 2020-01-01
 mkdir results-$(today)
 ```
 
 ## Linux下使ls命令只显示目录的方法
 
 ```bash
-ls -F | grep '/$'	#最易用，若将其结果保存在变量里，可用循环遍历并用cd访问
-ls -l | grep '^d'	#显示信息最完整
+ls -F | grep '/$'   #最易用，若将其结果保存在变量里，可用循环遍历并用cd访问
+ls -l | grep '^d'   #显示信息最完整
 ```
 附：ls与cd连用示例
 ```bash
@@ -540,13 +540,13 @@ ls -l | grep '^d'	#显示信息最完整
 dir=`ls -F | grep "/$"`
 for i in $dir
 do
-	cd $i
-	files=`ls`	# or files=$(ls)
-	for j in $files
-	do
-		cat $j >> /home/test/share/all.out
-	done
-	cd ..
+    cd $i
+    files=`ls`  # or files=$(ls)
+    for j in $files
+    do
+        cat $j >> /home/test/share/all.out
+    done
+    cd ..
 done
 exit 0
 ```
@@ -573,14 +573,14 @@ dos2unix text.txt
 ```
 * 使用vi的替换功能，在vi的命令模式下输入:
 ```
-:%s/^M$//g			#去掉行尾的^M
-:%s/^M//g			#去掉所有的^M
-:%s/^M/[ctrl-v]+[enter]/g	#将^M替换成回车
-:%s/^M/\r/g			#将^M替换成回车
+:%s/^M$//g          #去掉行尾的^M
+:%s/^M//g           #去掉所有的^M
+:%s/^M/[ctrl-v]+[enter]/g   #将^M替换成回车
+:%s/^M/\r/g         #将^M替换成回车
 ```
 * 使用`sed`命令
 ```bash
-sed -e 's/^M/\n/g' text.txt	#注意：^M需使用[ctrl-v] [ctrl-m]生成，并非直接输入
+sed -e 's/^M/\n/g' text.txt #注意：^M需使用[ctrl-v] [ctrl-m]生成，并非直接输入
 ```
 * 注：在vim的.vimrc文件中把fileformat=unix去掉便不会显示（默认不显示^M）
 
@@ -608,17 +608,17 @@ cat text.txt | xargs
 dir=`ls -F | grep "/$"`
 for i in $dir
 do
-	echo $i >> all.out
-	cd $i
-	files=`ls`
-	for j in $files
-	do
-		dos2unix $j
-		echo $j >> ../all.out
-		awk 'BEGIN{ORS=" "}; /^[^0-9]/{print}' $j >> ../all.out
-		echo -e "\n" >> ../all.out
-	done
-	cd ..
+    echo $i >> all.out
+    cd $i
+    files=`ls`
+    for j in $files
+    do
+        dos2unix $j
+        echo $j >> ../all.out
+        awk 'BEGIN{ORS=" "}; /^[^0-9]/{print}' $j >> ../all.out
+        echo -e "\n" >> ../all.out
+    done
+    cd ..
 done
 exit 0
 ```
@@ -644,16 +644,16 @@ cut <option> <file>
 ```
 * 使用示例
 ```bash
-cut -c 3 text.txt		#输出第三位上的字符
-cut -c 3-5 text.txt		#输出第三至五位（均含）上的字符
-cut -c 3-4,6 text.txt		#输出第三至五位、第六位上的字符
-cut -c 3- text.txt		#输出第三个字符到最后一个字符
-cut -c -2,5- text.txt		#输出开始至第二个字符、第五个字符至最后一个字符
-cut -b 3-5 text.txt		#使用字节为单位来进行，若文件以单字节编码字符，则与c结果一致
-cut -f 2 text.txt		#输出第二列，默认列分隔符为Tab
-cut -f 2,3,5 text.txt		#输出第二、三、五列，默认列分隔符为Tab
-cut -d ' ' -f 2-5 text.txt	#输出第二至五列，列分隔符改为空格
-cut -d ',' -f 2- text.txt	#输出第二至最后，列分隔符改为逗号（常见于csv文件）
+cut -c 3 text.txt       #输出第三位上的字符
+cut -c 3-5 text.txt     #输出第三至五位（均含）上的字符
+cut -c 3-4,6 text.txt   #输出第三至五位、第六位上的字符
+cut -c 3- text.txt      #输出第三个字符到最后一个字符
+cut -c -2,5- text.txt   #输出开始至第二个字符、第五个字符至最后一个字符
+cut -b 3-5 text.txt     #使用字节为单位来进行，若文件以单字节编码字符，则与c结果一致
+cut -f 2 text.txt       #输出第二列，默认列分隔符为Tab
+cut -f 2,3,5 text.txt   #输出第二、三、五列，默认列分隔符为Tab
+cut -d ' ' -f 2-5 text.txt  #输出第二至五列，列分隔符改为空格
+cut -d ',' -f 2- text.txt   #输出第二至最后，列分隔符改为逗号（常见于csv文件）
 ```
 
 ## Ubuntu镜像使用帮助
@@ -703,7 +703,7 @@ passwd
 
 * 使用`su -`命令切换到root身份。注意该命令有`-`，与`su`不同，在用命令`su`的时候只是切换到root，但没有把root的环境变量传过去，还是当前用户的环境变量，用`su -`命令将环境变量也一起带过去，就像和root登录一样
 * 使用`visudo`命令编辑`sudo`权限文件。注意，该命令为一个单词
-* 出现vim编辑窗口，在文件合适位置加入`<user_name>	ALL=(ALL) ALL`语句
+* 出现vim编辑窗口，在文件合适位置加入`<user_name>   ALL=(ALL) ALL`语句
 * 保存退出后，便把自己加入了`sudo`组，可以使用`sudo`命令了
 
 ## Linux下安装Miniconda
@@ -723,7 +723,7 @@ passwd
   ```
 8. 注：若不希望终端前一直显示`base`，仅在需用`conda`时才调用，可在`.bashrc`最后加上一句`conda deactivate`使其默认不运行。需使用时输入`conda activate`激活之。
 
-## WSL(Windows Subsystem for Linux)更改登录用户
+## WSL更改登录用户
 
 * 对于Ubuntu系统，在`Windows PowerShell`中运行`ubuntu config --default-user <username>`即可
 
@@ -742,7 +742,7 @@ ${var:pos}      从位置pos至结尾提取子串（位置从0开始）
 ${var:pos:len}  从位置pos开始提取长度为len的子串
 ```
 
-* 示例
+* **示例**
 1. 取得字符串长度
 ```bash
 string=abc12342341          #等号两边不要有空格
@@ -801,7 +801,7 @@ echo ${string%%3*1}    #abc12       从string右边开始，去掉最长匹配�
 ```bash
 s1="hello"  
 s2="world"  
-echo ${s1}${s2}123   #等同于echo $s1$s2
+echo ${s1}${s2}123   #等同于echo $s1$s2123
 ```
 
 ### 删除与替换
@@ -817,7 +817,7 @@ ${var//pattern/replacement} 将全部符合旧模式的数据替换为新模式
 ${var/#pattern/replacement} 从开头完整匹配并替换
 ${var/%pattern/replacement} 从末尾完整匹配并替换
 ```
-* 示例
+* **示例**
 1. 输出文件的后缀
 ```bash
 # 用#会匹配上第一个点和之前的内容，删除之后就获得了后缀名txt
@@ -895,18 +895,18 @@ x   显示所有程序，不区分终端机
 * 按`Ctrl+z`把程序挂起，操作后屏幕会出现如下提示([1]中的1表示命令的作业号)：
 ```bash
 ^Z
-[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+[1]+  Stopped   rsync -av * test@192.168.0.1:/tmp
 ```
 * 用`jobs`命令查看下任务状态，跟刚才的屏幕提示一致，程序被暂时终止，作业号还是1：
 ```bash
-[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+[1]+  Stopped   rsync -av * test@192.168.0.1:/tmp
 ```
 * 使用`bg %1`命令把作业号为1的任务放入后台，并从停止状态变为运行状态，相当于加了`&`后接着运行。再用`jobs`查看，任务状态变成了运行中。
 ```bash
 bg %1
 [1]+ rsync -av * test@192.168.0.1:/tmp &
 jobs
-[1]+  运行中               rsync -av * test@192.168.0.1:/tmp &
+[1]+  Running   rsync -av * test@192.168.0.1:/tmp &
 ```
 * 运行`disown -h %1`，表示在终端关闭时不对作业号为1的程序发送终止信号，外部因素将不影响程序的运行。可通过ps命令查看任务进程。
 ```bash
@@ -1117,7 +1117,7 @@ done
 ### 大括号`{}`
 * 大括号拓展：通配(globbing)将对大括号中的文件名做扩展。在大括号中，不允许有空白，除非这个空白被引用或转义。
   * 对大括号中的以逗号分割的文件列表进行拓展。如`touch {a,b}.txt`结果为`a.txt b.txt`
-  * 对大括号中以点点{..}分割的顺序文件列表起拓展作用，如`touch {a..d}.txt`结果为`a.txt b.txt c.txt d.txt`
+  * 对大括号中以点点(..)分割的顺序文件列表起拓展作用，如`touch {a..d}.txt`结果为`a.txt b.txt c.txt d.txt`
 * 代码块：又称内部组，这个结构事实上创建了一个匿名函数。与小括号中的命令不同，大括号内的命令不会新开一个子shell运行，即脚本余下部分仍可使用括号内变量。括号内的命令间用分号隔开，最后一个也必须有分号。`{}`的第一个命令和左括号之间必须要有一个空格。
 * 获取变量：`${x}`或`$x`
 * [特殊用法](http://m.blog.chinaunix.net/uid-22606185-id-4023973.html)
@@ -1129,10 +1129,10 @@ if [ $i -lt 5 ]
 if [ $a -ne 1 -a $a != 2 ]
 if [ $a -ne 1] && [ $a != 2 ]
 if [[ $a != 1 && $a != 2 ]]
-for i in $(seq 0 4);do echo $i;done
-for i in `seq 0 4`;do echo $i;done
-for ((i=0;i<5;i++));do echo $i;done
-for i in {0..4};do echo $i;done
+for i in $(seq 0 4); do echo $i; done
+for i in `seq 0 4`; do echo $i; done
+for ((i=0;i<5;i++)); do echo $i; done
+for i in {0..4}; do echo $i; done
 ```
 
 ### expr用法
@@ -1177,3 +1177,11 @@ expr index "abc" "b"        #result: 2      第一个子串出现的位置
 expr length "abcde"         #result: 5      计算字符串长度
 expr $a : ".*"              #result: 5      同上
 ```
+
+## Linux下按Tab补全命令时忽略大小写
+
+执行`vim ~/.inputrc`，添加如下内容，保存重启终端后即可。
+```vim
+set completion-ignore-case on
+```
+
