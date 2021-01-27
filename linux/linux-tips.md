@@ -116,16 +116,18 @@ cat /etc/sysconfig/network-scripts/ifcfg-l0
 ```
 * 查看磁盘信息
 ```bash
-lsblk		#查看磁盘信息 - 列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出RAM盘的信息
-fdisk -l	#观察硬盘实体使用情况，也可对硬盘分区
-df -k		#用于显示磁盘分区上的可使用的磁盘空间
+lsblk		查看磁盘信息 - 列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出RAM盘的信息
+fdisk -l	观察硬盘实体使用情况，也可对硬盘分区
+df -h       查看磁盘总体情况
+du -sh      查看当前文件夹磁盘占用
 ```
 * 查看进程与用户信息
 ```bash
-ps -ef		#查看所有进程
-top		#实时显示进程状态
-w		#查看活动用户
-id <username>	#查看指定用户信息
+ps -ef		查看所有进程
+ps -aux     按用户查看进程
+top		    实时显示进程状态
+w		    查看活动用户
+id <usr>	查看指定用户信息
 ```
 * [更多内容](https://blog.csdn.net/qq_31278903/article/details/83146031)
 
@@ -368,7 +370,7 @@ endif
 "set smartcase		" Do smart case matching
 "set incsearch		" Incremental search
 "set autowrite		" Automatically save before commands like :next and :make
-"set hidden		" Hide buffers when they are abandoned
+"set hidden         " Hide buffers when they are abandoned
 "set mouse=a		" Enable mouse usage (all modes)
 "
 " Source a global configuration file if available
@@ -378,26 +380,26 @@ endif
 "
 "" 实用设置
 "
-set nocompatible	"去掉有关vi一致性模式，避免以前版本的bug和局限
-set nu!			"显示行号
-set guifont=Luxi/ Mono/ 9	"设置字体，字体名称和字号
-filetype on		"检测文件的类型
-set history=1000	"记录历史的行数
-set background=dark	"背景使用黑色
-syntax on		"语法高亮度显示
-set autoindent		"vim使用自动对齐，也就是把当前行的对齐格式应用到下一行(自动缩进）
-set cindent		"cindent是特别针对C语言语法自动缩进
-set smartindent		"依据上面的对齐格式，智能的选择对齐方式，对于类似C语言编写上有用
-set tabstop=4		"设置tab键为4个空格
-set shiftwidth=4	"设置当行之间交错时使用4个空格
-set ai!			"设置自动缩进
-set showmatch		"设置匹配模式，类似当输入一个左括号时会匹配相应的右括号
-set guioptions-=T	"去除vim的GUI版本中的toolbar
-set vb t_vb=		"当vim进行编辑时，如果命令错误，会发出警报，该设置去掉警报
-set ruler		"在编辑过程中，在右下角显示光标位置的状态行
-set nohls		"默认情况下，寻找匹配是高亮度显示，该设置关闭高亮显示
-set incsearch		"在程序中查询一单词，自动匹配单词的位置；如查询desk单词，当输到/d时，会自动找到第一个d开头的单词，当输入到/de时，会自动找到第一个以ds开头的单词，以此类推，进行查找；当找到要匹配的单词时，别忘记回车
-set backspace=2		"设置退格键可用
+set nocompatible    "去掉有关vi一致性模式，避免以前版本的bug和局限
+set nu!             "显示行号
+set guifont=Luxi/ Mono/ 9   "设置字体，字体名称和字号
+filetype on         "检测文件的类型
+set history=1000    "记录历史的行数
+set background=dark "背景使用黑色
+syntax on           "语法高亮度显示
+set autoindent      "vim使用自动对齐，也就是把当前行的对齐格式应用到下一行(自动缩进）
+set cindent         "cindent是特别针对C语言语法自动缩进
+set smartindent     "依据上面的对齐格式，智能的选择对齐方式，对于类似C语言编写上有用
+set tabstop=4       "设置tab键为4个空格
+set shiftwidth=4    "设置当行之间交错时使用4个空格
+set ai!             "设置自动缩进
+set showmatch       "设置匹配模式，类似当输入一个左括号时会匹配相应的右括号
+set guioptions-=T   "去除vim的GUI版本中的toolbar
+set vb t_vb=        "当vim进行编辑时，如果命令错误，会发出警报，该设置去掉警报
+set ruler           "在编辑过程中，在右下角显示光标位置的状态行
+set nohls           "默认情况下，寻找匹配是高亮度显示，该设置关闭高亮显示
+set incsearch       "在程序中查询一单词，自动匹配单词的位置；如查询desk单词，当输到/d时，会自动找到第一个d开头的单词，当输入到/de时，会自动找到第一个以ds开头的单词，以此类推，进行查找；当找到要匹配的单词时，别忘记回车
+set backspace=2     "设置退格键可用
 ```
 * 保存退出
 * [更多内容](https://blog.csdn.net/amoscykl/article/details/80616688)
@@ -459,7 +461,7 @@ crontab -e	# or crontab ~/cronjob
 ```bash
 #!/bin/bash
 # 1
-for((i=1;i<=10;i++));
+for ((i=1;i<=10;i++))
 do
 	echo $(expr $i \* 3 + 1);
 done
@@ -730,9 +732,79 @@ passwd
 * 问题：安装好WSL版本的Ubuntu1804之后，由于默认字体不适合长时间阅读且不美观，便从属性窗口设置了新字体，但是发现在启动Vim的时候会出现字体变回原来的字体的情况。
 * 解决方法：运行`regedit`修改注册表，定位至`HKEY_CURRENT_USER\Console\C:_Program Files_WindowsApps_CanonicalGroupLimited.Ubuntu18.04onWindows_1804<...>ubuntu1804.exe`，方括号中内容根据实际情况修改，在其中添加：`CodePage`（`DWORD`类型、值`0x01b5`）
 
-## Linux下的变量操作
+## Linux字符串变量操作
 
-### 变量替换
+### 截取
+
+```bash
+${#var}         变量长度
+${var:pos}      从位置pos至结尾提取子串（位置从0开始）
+${var:pos:len}  从位置pos开始提取长度为len的子串
+```
+
+* 示例
+1. 取得字符串长度
+```bash
+string=abc12342341          #等号两边不要有空格
+echo ${#string}             #结果11
+expr length $string         #结果11
+expr "$string" : ".*"       #结果11  分号两边要有空格，这里的:和match的用法差不多
+```
+2. 字符串所在位置
+```bash
+str="abcdef"            #等同于str=abcdef
+expr index $str "bc"    #2  此处字符串对应的下标从1开始
+expr index $str "c"     #3
+expr index $str "x"     #0
+expr index $str ""      #0
+```
+3. 从字符串开头到子串的最大长度
+```bash
+string=abc12342341
+expr match $string 'abc.*3' #结果9（按最长匹配，*为通配符）
+```
+4. 字符串截取
+```bash
+string=abc12342341
+echo ${string:4}        #2342341  从第4位开始截取后面所有字符串（下标从0开始！）
+echo ${string:3:6}      #123423   从第3位开始截取后面6位
+echo ${string: -4}      #2341     截取后4位（注意：冒号右边有空格）
+echo ${string:(-4)}     #2341     截取后4位
+echo ${string:(-6):5}   #34234    截取后6位再截取5前五位，即从倒数第二个位置向左提取6个字符
+expr substr $string 3 3 #123      从第3位开始截取后面3位（下标从1开始！）
+```
+5. 匹配内容
+```bash
+string=abc12342341
+expr match $string '\([a-c]*[0-9]*\)'  #abc12342341
+expr $string : '\([a-c]*[0-9]\)'       #abc1
+expr $string : '.*\([0-9][0-9][0-9]\)' #341  显示括号中匹配的内容
+```
+6. 截取不匹配内容
+```bash
+string=abc12342341
+echo ${string#a*3}     #42341       从string左边开始，去掉最短匹配子串
+echo ${string#c*3}     #abc12342341 从string左边开始，什么也没有匹配到
+echo ${string#*c1*3}   #42341       从string左边开始，去掉最短匹配子串
+echo ${string##a*3}    #41          从string左边开始，去掉最长匹配子串
+echo ${string%3*1}     #abc12342    从string右边开始，去掉最短匹配子串
+echo ${string%%3*1}    #abc12       从string右边开始，去掉最长匹配子串
+```
+7. 比较
+```bash
+[[ "a.txt" == a* ]]        #逻辑真 (pattern matching)
+[[ "a.txt" =~ .*\.txt ]]   #逻辑真 (regex matching)
+[[ "abc" == "abc" ]]       #逻辑真 (string comparision)
+[[ "11" < "2" ]]           #逻辑真 (string comparision), 按ascii值比较
+```
+8. 连接
+```bash
+s1="hello"  
+s2="world"  
+echo ${s1}${s2}123   #等同于echo $s1$s2
+```
+
+### 删除与替换
 
 * 巧记方法：`#`和`%`是删除符号。在键盘上，`#`在`$`的左边，所以是从左边开始删除，`%`在`$`的右边，所以是从右边开始删除。`/`是替换符。
 ```bash
@@ -740,8 +812,10 @@ ${var#pattern}  从变量头部开始匹配模式，将符合的最短数据删�
 ${var##pattern} 从变量头部开始匹配模式，将符合的最长数据删除
 ${var%pattern}  从变量尾部开始匹配模式，将符合的最短数据删除
 ${var%%pattern} 从变量尾部开始匹配模式，将符合的最长数据删除
-${var/oldPattern/newPattern}  将第一个符合旧模式的数据替换为新模式
-${var//oldPattern/newPattern} 将全部符合旧模式的数据替换为新模式
+${var/pattern/replacement}  将第一个符合旧模式的数据替换为新模式
+${var//pattern/replacement} 将全部符合旧模式的数据替换为新模式
+${var/#pattern/replacement} 从开头完整匹配并替换
+${var/%pattern/replacement} 从末尾完整匹配并替换
 ```
 * 示例
 1. 输出文件的后缀
@@ -773,7 +847,7 @@ echo ${var//123/456}
 hello456hello456
 ```
 
-### 变量声明操作
+### 变量声明
 ![变量声明操作](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/linux-var.png)
 
 ## Linux下nohup命令
@@ -816,6 +890,76 @@ u   以用户为主的格式来显示
 x   显示所有程序，不区分终端机
 ```
 
+## awk基本操作符、内置函数与变量
+
+### awk操作符的优先级
+![awk操作符](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/awk-operators.png)
+
+### awk内置函数
+
+* 算术
+```bash
+atan2(y,x)  返回 y/x 的反正切
+cos(x)      返回 x 的余弦，x 是弧度
+sin(x)      返回 x 的正弦，x 是弧度
+exp(x)      返回 x 幂函数
+log(x)      返回 x 的自然对数
+sqrt(x)     返回 x 平方根
+int(x)      返回 x 的截断至整数的值
+rand()      返回任意数字 n，其中 0 <= n < 1
+srand(sed)  将 rand 函数的种子值设置为 sed
+```
+* 字符串
+```bash
+gsub(reg,str1,str2)     使用str1替换所有str2中符合正则表达式reg的子串
+sub(reg,str1,str2)      含义与gsub相同，只不过gsub是替换所有匹配，sub只替换第一个匹配
+index(str,sub)          返回sub在str中第一次出现的索引，注意索引从1开始计算，如果没有则返回0
+length(str)             返回str字符串的长度，length函数还可以返回数组元素的个数
+blength(str)            返回字符串的字节数
+match(str,reg)          与index函数一样，只不过reg使用正则表达式，例如match("hello",/lo/)
+split(str,array,reg)    将str分隔成数组保存到array中，分隔使用正则reg，或者字符串都可以，返回数组长度
+tolower(str)            转换为小写
+toupper(str)            转换为大写
+substr(str,start,len)   截取字符串，从start索引开始的len个字符，如不指定len则截取到末尾，索引从1开始
+```
+* 其他
+```bash
+system(cmd)                         执行系统命令，返回退出码
+mktime( YYYY MM dd HH MM ss [DST])  生成时间格式
+strftime(format,timestamp)          格式化时间输出，将时间戳转换为时间字符串
+systime()                           得到时间戳,返回从1970年1月1日开始到当前时间(不计闰年)的整秒数
+```
+* 完整函数列表请查阅[手册](https://www.gnu.org/software/gawk/manual/gawk.html)
+
+### awk内置变量
+
+awk中同样定义了很多内置变量，我们可以直接像使用普通变量一样使用他们，由于awk的版本众多，有些内置变量并不是得到所有awk版本的支持。**[A][N][P][G]表示支持该变量的工具，[A]=awk、[N]=nawk、[P]=POSIXawk、[G]=gawk**
+
+```bash
+[A] $k          当前记录的第k个字段（列）
+[A] $0          当前行文本内容
+[N] ARGC        命令行参数的数目
+[G] ARGIND      命令行中当前文件的位置（从0开始）
+[N] ARGV        包含命令行参数的数组
+[G] CONVFMT     数字转换格式（默认值为%.6g）
+[P] ENVIRON     环境变量关联数组
+[N] ERRNO       最后一个系统错误的描述
+[G] FIELDWIDTHS 字段宽度列表（用空格键分隔）
+[A] FILENAME    当前输入文件的名
+[P] FNR         同NR，但相对于当前文件
+[A] FS          字段分隔符（默认是任何空格）
+[G] IGNORECASE  如果为真，则进行忽略大小写的匹配
+[A] NF          表示字段数，在执行过程中对应于当前的字段数
+[A] NR          表示记录数，在执行过程中对应于当前的行号
+[A] OFMT        数字的输出格式（默认值是%.6g）
+[A] OFS         输出字段分隔符（默认值是一个空格）
+[A] ORS         输出记录分隔符（默认值是一个换行符）
+[A] RS          记录分隔符（默认是一个换行符）
+[N] RSTART      由match函数所匹配的字符串的第一个位置
+[N] RLENGTH     由match函数所匹配的字符串的长度
+[N] SUBSEP      数组下标分隔符（默认值是34）
+```
+
 ## awk同时处理多个文件
 
 `awk`的数据输入有两个来源，标准输入和文件，后一种方式支持多个文件。
@@ -845,3 +989,191 @@ awk '{...}' a.txt b.txt c.txt ...
    1. 利用当前被处理参数标志: `awk 'ARGIND==1{...}ARGIND==2{...}ARGIND==3{...}...' file1 file2 file3 ...`
    2. 利用命令行参数数组: `awk 'FILENAME==ARGV[1]{...}FILENAME==ARGV[2]{...}FILENAME==ARGV[3]{...}...' file1 file2 file3 ...`
    3. 把文件名直接加入判断，但不通用: `awk 'FILENAME=="file1"{...}FILENAME=="file2"{...}FILENAME=="file3"{...}...' file1 file2 file3 ...`
+
+## Linux下文件批量重命名
+
+### `mv`命令
+```bash
+for i in `ls *.gz`
+do
+    mv $i ${i:0:5}  #Example：仅截取从首位开始的五位作为文件名
+done
+```
+
+### `rename`命令
+* GNU版本：`rename old new file_list`
+  * Example：`rename "chr" "" *.gz*`
+* perl版本：`rename 's/old/new/[g]' file_list`
+  * Example：`rename 's/chr/chrom/g' *.gz*`
+
+## 耗时很长的程序忘加nohup就运行了怎么办
+
+* 按`Ctrl+z`把程序挂起，操作后屏幕会出现如下提示([1]中的1表示命令的作业号)：
+```bash
+^Z
+[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+```
+* 用`jobs`命令查看下任务状态，跟刚才的屏幕提示一致，程序被暂时终止，作业号还是1：
+```bash
+[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+```
+* 使用`bg %1`命令把作业号为1的任务放入后台，并从停止状态变为运行状态，相当于加了`&`后接着运行。再用`jobs`查看，任务状态变成了运行中。
+```bash
+bg %1
+[1]+ rsync -av * test@192.168.0.1:/tmp &
+jobs
+[1]+  运行中               rsync -av * test@192.168.0.1:/tmp &
+```
+* 运行`disown -h %1`，表示在终端关闭时不对作业号为1的程序发送终止信号，外部因素将不影响程序的运行。可通过ps命令查看任务进程。
+```bash
+disown -h %1
+ps -auwx | grep rsync
+```
+* 提示：
+  * 例子中使用的是`rsync`同步，从节省时间来看，不是一个很好的例子。因为把命令停掉再运行一次时，已经同步完整的数据不会再同步，时间损失不会太大。这也是使用同步命令`rsync`相比于`scp`的一个好处。
+  * 例子中的`rsync`或其它涉及两个服务器交互的命令，都需要我们人为输入登录密码，因此直接加`nohup &`运行是行不通的，无法接受密码的输入。因此通过上面这个操作先在前台启动运行、输入密码，再放入后台不挂断运行。当然也可以使用ssh免密码登录远程服务器。
+  * 如果程序运行时，已加了`&`放入后台了，则只需运行`jobs`获得作业号，再运行`disown`不挂断即可。
+  * 程序作业号不一定都是1，如果之前就有程序在后台运行，作业号相应的会自加。
+  * `nohup`和`disown`都可以使程序不挂断，可以获得一样的效果，但原理不太一致。`nohup`可以使程序忽略挂断信号(SIGHUP)或者使程序脱离终端的控制，从而终端不能再对其发送挂断信号(SIGHUP)；`disown`则是内生于shell，告诉shell在终止时不对程序发送挂断信号(SIGHUP)。
+
+## Bash中括号及expr的用法
+
+### 小括号`()`
+* 单小括号`(...)`
+  * 命令组：括号中的命令将会新开一个子shell顺序执行，所以括号中的变量不能够被脚本余下的部分使用。括号中多个命令之间用分号隔开，最后一个命令可以没有分号，各命令和括号之间不必有空格。
+  * 命令替换：等同于cmd，shell扫描一遍命令行，发现了`(cmd)`结构，便将其中的cmd执行一次，得到其标准输出，再将此输出放到原来命令。如`a=$(ls)` 等同于 a=\`ls\`
+  * 用于初始化数组：如`array=(a b c d)`
+* 双小括号`((...))`
+  * 整数扩展：这种扩展计算是整数型的计算，不支持浮点型。`((exp))`结构扩展并计算一个算术表达式的值，如果表达式的结果为0，那么返回的退出状态码为0，或者是"False"，而一个非零值的表达式所返回的退出状态码将为1，或者是"True"。若表达式是逻辑判断，为真则退出码为1，假则为0。
+  ```bash
+  echo $((1+2)) #result: 3
+  echo $((1<2)) #result: 1
+  echo $((1>2)) #result: 0
+  ```
+  * 只要括号中的运算符、表达式符合C语言运算规则，都可用在`$((exp))`中，甚至是三目运算符。作不同进制运算时，输出结果全都自动转化成了十进制，如`echo $((16#5f))`的结果为95
+  * 单纯用`((x))`也可重定义变量值，如`a=5; ((a++))`可将`$a`重定义为6
+  * 双括号中的变量可以不使用`$`符号前缀。双括号内支持多个表达式用逗号分开。
+  ```bash
+  a=1; b=2
+  ((a++,b++))
+  echo $a, $b   #result: 2, 3
+  ```
+
+### 中括号`[]`
+* 单中括号`[...]`
+  * bash的内部命令：`[`和`test`是等同的。如果我们不用绝对路径指明，通常我们用的都是bash自带的命令。`if/test`结构中的左中括号是调用`test`的命令标识，右中括号是关闭条件判断的，括号两边有空格。这个命令把它的参数作为比较表达式或者作为文件测试，并且根据比较的结果来返回一个退出状态码。
+  * `test`和`[]`中可用的比较运算符只有`==`和`!=`，两者都是用于字符串比较的，不可用于整数比较，整数比较只能使用`-eq`、`-gt`这种形式。无论是字符串比较还是整数比较都不支持大于号小于号。如果实在想用，对于字符串比较可以使用转义形式，如果比较"ab"和"bc"：`[ ab \< bc ]`，结果为真，也就是返回状态为0。`[]`中的逻辑与和逻辑或使用`-a`和`-o`表示。
+  ```bash
+  if [ 'a' == 'b' ]; then
+      echo "a=b"
+  else
+      echo "a!=b"
+  fi
+  #result: a!=b
+  if [ 1 -lt 2 ]; then
+      echo '1<2'
+  else
+      echo '1>2'
+  fi
+  #result: 1<2
+  if [ 1 \< 2 ]; then
+      echo '1<2'
+  else
+      echo '1>2'
+  fi
+  #result: 1<2
+  ```
+  * 字符范围：用作正则表达式的一部分，描述一个匹配的字符范围。作为test用途的中括号内不能使用正则。
+  * 在一个array结构的上下文中，中括号用来引用数组中每个元素的编号。
+  * 表达式计算：`count=1; echo $[${count} + 1]  #result: 2`
+* 双中括号`[[...]]`
+  * `[[`是bash程序语言的关键字，并不是一个命令。`[[]]`结构比`[]`结构更加通用。在`[[`和`]]`之间所有的字符都不会发生文件名扩展或者单词分割，但是会发生参数扩展和命令替换。
+  * 支持字符串的模式匹配，使用`=~`操作符时甚至支持shell的正则表达式。字符串比较时可以把右边的作为一个模式，而不仅仅是一个字符串，比如`[[ hello == hell? ]]`，结果为真。`[[]]`中匹配字符串或通配符不需要引号。
+  ```bash
+  if [[ abcdefg =~ ^[a-z0-9]+$ ]]; then
+      echo "match"
+  else
+      echo "no match"
+  fi
+  #result: match
+  if [[ "012345abc" =~ ^[0-9]+$ ]]; then
+      echo "match"
+  else
+      echo "no match"
+  fi
+  #result: no match
+  ```
+  * 使用`[[ ... ]]`条件判断结构，而不是`[ ... ]`，能够防止脚本中的许多逻辑错误。如`&&`、`||`、`<`和`>`能够正常存在于`[[]]`条件判断结构中，但在`[]`结构中会报错。
+  ```bash
+  if [[ 1 < 2 ]]; then
+  　　echo '1<2'
+  else
+  　　echo '1>2'
+  fi
+  #result: 1<2
+  ```
+  * bash把双中括号中的表达式看作一个单独的元素，并返回一个退出状态码。
+
+### 大括号`{}`
+* 大括号拓展：通配(globbing)将对大括号中的文件名做扩展。在大括号中，不允许有空白，除非这个空白被引用或转义。
+  * 对大括号中的以逗号分割的文件列表进行拓展。如`touch {a,b}.txt`结果为`a.txt b.txt`
+  * 对大括号中以点点{..}分割的顺序文件列表起拓展作用，如`touch {a..d}.txt`结果为`a.txt b.txt c.txt d.txt`
+* 代码块：又称内部组，这个结构事实上创建了一个匿名函数。与小括号中的命令不同，大括号内的命令不会新开一个子shell运行，即脚本余下部分仍可使用括号内变量。括号内的命令间用分号隔开，最后一个也必须有分号。`{}`的第一个命令和左括号之间必须要有一个空格。
+* 获取变量：`${x}`或`$x`
+* [特殊用法](http://m.blog.chinaunix.net/uid-22606185-id-4023973.html)
+
+### 示例
+```bash
+if ($i<5)
+if [ $i -lt 5 ]
+if [ $a -ne 1 -a $a != 2 ]
+if [ $a -ne 1] && [ $a != 2 ]
+if [[ $a != 1 && $a != 2 ]]
+for i in $(seq 0 4);do echo $i;done
+for i in `seq 0 4`;do echo $i;done
+for ((i=0;i<5;i++));do echo $i;done
+for i in {0..4};do echo $i;done
+```
+
+### expr用法
+* `expr`命令是一个手工命令行计数器，用于求表达式变量的值，一般用于整数值，也可用于字符串。
+* 运算表达式用法
+```bash
+count=1; num=2
+echo `expr $count + $num`
+echo $[${count} + ${num} + 1]
+echo $((${count} + ${num}))
+echo $((count + num))
+```
+* 运算
+```bash
+expr 2 + 2
+echo $(( 2 + 2))
+expr 3 - 2
+expr 1 \* 2 #进行乘法运算时需要转义
+expr 3 / 2
+expr 3 % 2
+```
+* 正则匹配，返回分组结果，每次只能设定一个分组
+```bash
+expr "a/b/c/1.log" : '.*/\(.*\)/[0-9]\+.log$'   #result: c
+expr "a/b/c/1.log" : '.*/\([0-9]\+\).log$'      #result: 1
+```
+* match用法：从开头匹配，返回字符所在下标（下标从1开始），未匹配返回0，使用通配符时返回最后一个匹配字符所在下标
+```bash
+expr match "abcde" "a"      #result: 1
+expr match "abcde" "b"      #result: 0
+expr match "abcde" ".*b"    #result: 2
+expr match "abcde" ".*c"    #result: 3
+expr match "abcde" ".*cd"   #result: 4
+expr match "abcde" ".*ed"   #result: 0
+expr match "abcde" ".*cde"  #result: 5
+```
+* 字符串操作
+```bash
+a='12345'; echo ${a:1:2}    #result: 23     切片（下标从0开始）
+expr substr "abcdefg" 1 3   #result: abc    子串（下标从1开始）
+expr index "abc" "b"        #result: 2      第一个子串出现的位置
+expr length "abcde"         #result: 5      计算字符串长度
+expr $a : ".*"              #result: 5      同上
+```

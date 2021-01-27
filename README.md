@@ -1,5 +1,6 @@
 # Science and Technology Notes
-> under revision
+
+本书主要收录个人整理的一些笔记，以生物信息学相关内容为主。
 
 ## Contact Me
 
