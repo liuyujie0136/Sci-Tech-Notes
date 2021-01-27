@@ -144,17 +144,17 @@ id <usr>	查看指定用户信息
 * 如何找到`/bin/sh`在我们系统上的指向
   * `/bin/sh`的复杂之处是：它可以是符号链接也可以是硬链接。
   * 如果是符号链接，可以尝试：
-```bash
-test@bioinfo_docker:~$ file -h /bin/sh
-/bin/sh: symbolic link to dash
-```
+  ```bash
+  file -h /bin/sh
+  /bin/sh: symbolic link to dash
+  ```
   * 如果是硬链接，可以尝试：
-```bash
-test@bioinfo_docker:~$ find -L /bin -samefile /bin/sh
-/bin/sh.distrib
-/bin/dash
-/bin/sh
-```
+  ```bash
+  find -L /bin -samefile /bin/sh
+  /bin/sh.distrib
+  /bin/dash
+  /bin/sh
+  ```
   * 注：实际上`-L`标志同时包括符号链接和硬链接，但是这种方法的缺点是它不是可移植的，POSIX不需要`find`来支持`-samefile`选项，尽管GNU `find`和FreeBSD `find`都支持它。
 * Shebang：在计算领域中，Shebang（也称为Hashbang）是一个由井号和叹号构成的字符序列#!，其出现在文本文件的第一行的前两个字符。最终，通过在脚本的第一行编写Shebang来决定使用sh还是bash。
 ```bash
@@ -441,18 +441,18 @@ exit 0
 ```
 * Using `crontab` command to execute the backup script routinely, and record in a log file, for example, execute the command `~/backup.sh > ~/backup.log` in 5:10am everyday:
   * add executable permission
-```bash
-chmod +x ~/backup.sh
-```
+  ```bash
+  chmod +x ~/backup.sh
+  ```
   * open crontab and edit it by the following command: 
-```bash
-crontab -e	# or crontab ~/cronjob
-```
+  ```bash
+  crontab -e	# or crontab ~/cronjob
+  ```
   * type in the following lines or write the following in a file (i.e. `~/crontab`):
-```bash
-# minute hour day_in_month month day_in_week command
-     10   5  * * *   ~/backup.sh > ~/backup.log
-```
+  ```bash
+  # minute hour day_in_month month day_in_week command
+      10   5  * * *   ~/backup.sh > ~/backup.log
+  ```
   * exit and save
 
 ## Linux中for循环的几个常用写法
@@ -555,7 +555,7 @@ exit 0
 
 在Linux下使用`vi`或`cat -A`查看一些在Windows下创建的文本文件，有时会发现在行尾有一些`^M`，既影响文件的查看，也影响利用`awk`等命令对文件进行操作，见下：
 ```bash
-test@bioinfo_docker:~/share$ cat -A text.txt
+cat -A text.txt
 1^M$
 2^M$
 3^M$
@@ -890,6 +890,36 @@ u   以用户为主的格式来显示
 x   显示所有程序，不区分终端机
 ```
 
+### 耗时很长的程序忘加nohup就运行了怎么办
+
+* 按`Ctrl+z`把程序挂起，操作后屏幕会出现如下提示([1]中的1表示命令的作业号)：
+```bash
+^Z
+[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+```
+* 用`jobs`命令查看下任务状态，跟刚才的屏幕提示一致，程序被暂时终止，作业号还是1：
+```bash
+[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
+```
+* 使用`bg %1`命令把作业号为1的任务放入后台，并从停止状态变为运行状态，相当于加了`&`后接着运行。再用`jobs`查看，任务状态变成了运行中。
+```bash
+bg %1
+[1]+ rsync -av * test@192.168.0.1:/tmp &
+jobs
+[1]+  运行中               rsync -av * test@192.168.0.1:/tmp &
+```
+* 运行`disown -h %1`，表示在终端关闭时不对作业号为1的程序发送终止信号，外部因素将不影响程序的运行。可通过ps命令查看任务进程。
+```bash
+disown -h %1
+ps -auwx | grep rsync
+```
+* 提示：
+  * 例子中使用的是`rsync`同步，从节省时间来看，不是一个很好的例子。因为把命令停掉再运行一次时，已经同步完整的数据不会再同步，时间损失不会太大。这也是使用同步命令`rsync`相比于`scp`的一个好处。
+  * 例子中的`rsync`或其它涉及两个服务器交互的命令，都需要我们人为输入登录密码，因此直接加`nohup &`运行是行不通的，无法接受密码的输入。因此通过上面这个操作先在前台启动运行、输入密码，再放入后台不挂断运行。当然也可以使用ssh免密码登录远程服务器。
+  * 如果程序运行时，已加了`&`放入后台了，则只需运行`jobs`获得作业号，再运行`disown`不挂断即可。
+  * 程序作业号不一定都是1，如果之前就有程序在后台运行，作业号相应的会自加。
+  * `nohup`和`disown`都可以使程序不挂断，可以获得一样的效果，但原理不太一致。`nohup`可以使程序忽略挂断信号(SIGHUP)或者使程序脱离终端的控制，从而终端不能再对其发送挂断信号(SIGHUP)；`disown`则是内生于shell，告诉shell在终止时不对程序发送挂断信号(SIGHUP)。
+
 ## awk基本操作符、内置函数与变量
 
 ### awk操作符的优先级
@@ -1005,36 +1035,6 @@ done
   * Example：`rename "chr" "" *.gz*`
 * perl版本：`rename 's/old/new/[g]' file_list`
   * Example：`rename 's/chr/chrom/g' *.gz*`
-
-## 耗时很长的程序忘加nohup就运行了怎么办
-
-* 按`Ctrl+z`把程序挂起，操作后屏幕会出现如下提示([1]中的1表示命令的作业号)：
-```bash
-^Z
-[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
-```
-* 用`jobs`命令查看下任务状态，跟刚才的屏幕提示一致，程序被暂时终止，作业号还是1：
-```bash
-[1]+  已停止               rsync -av * test@192.168.0.1:/tmp
-```
-* 使用`bg %1`命令把作业号为1的任务放入后台，并从停止状态变为运行状态，相当于加了`&`后接着运行。再用`jobs`查看，任务状态变成了运行中。
-```bash
-bg %1
-[1]+ rsync -av * test@192.168.0.1:/tmp &
-jobs
-[1]+  运行中               rsync -av * test@192.168.0.1:/tmp &
-```
-* 运行`disown -h %1`，表示在终端关闭时不对作业号为1的程序发送终止信号，外部因素将不影响程序的运行。可通过ps命令查看任务进程。
-```bash
-disown -h %1
-ps -auwx | grep rsync
-```
-* 提示：
-  * 例子中使用的是`rsync`同步，从节省时间来看，不是一个很好的例子。因为把命令停掉再运行一次时，已经同步完整的数据不会再同步，时间损失不会太大。这也是使用同步命令`rsync`相比于`scp`的一个好处。
-  * 例子中的`rsync`或其它涉及两个服务器交互的命令，都需要我们人为输入登录密码，因此直接加`nohup &`运行是行不通的，无法接受密码的输入。因此通过上面这个操作先在前台启动运行、输入密码，再放入后台不挂断运行。当然也可以使用ssh免密码登录远程服务器。
-  * 如果程序运行时，已加了`&`放入后台了，则只需运行`jobs`获得作业号，再运行`disown`不挂断即可。
-  * 程序作业号不一定都是1，如果之前就有程序在后台运行，作业号相应的会自加。
-  * `nohup`和`disown`都可以使程序不挂断，可以获得一样的效果，但原理不太一致。`nohup`可以使程序忽略挂断信号(SIGHUP)或者使程序脱离终端的控制，从而终端不能再对其发送挂断信号(SIGHUP)；`disown`则是内生于shell，告诉shell在终止时不对程序发送挂断信号(SIGHUP)。
 
 ## Bash中括号及expr的用法
 
