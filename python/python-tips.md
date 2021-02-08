@@ -1,6 +1,16 @@
 # Python使用技巧与注意事项
 > Collected by liuyujie0136
 
+## VS Code 相关技巧
+
+### 缩进快捷键
+1. 向左缩进: `Ctrl + [`
+2. 向右缩进: `Ctrl + ]`
+
+### 同时编辑多行
+1. `Alt + Shift`: 竖列选择这种模式下只可以选择竖列，不可以随意插入光标。所以只限制于同一列且不间隔的情况下。
+2. `Shift + Ctrl`: 竖列选择 `Ctrl+Click`，选择多个编辑位点。这种模式下不仅可以选择竖列，同时还可以在多个地方插入光标。
+
 ## Python更换pip源(pypi镜像) - [清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)
 
 1. 临时使用（注意，simple 不能少, 是 https 而不是 http）
@@ -162,4 +172,110 @@ import test
 
 ## [Python教程系列-王的机器](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzIzMjY0MjE1MA==&scene=1&album_id=1352817590674194433&count=3&uin=NTM4NTg2OTA5&key=aa37eea3a2616ab374acae3a140a6236676d3bd8daacbafb519fe3e44010e8becd1c8204d6577ef30fa031062646595b3c09548f08216a5aa1fb2adc07e68fc5e5f42a004a77efa52721a9cf7bce99e1d392ef5cc5fad0c7d7df72b25453ca10c28b3ebeb4e4eb204a3e644db23bbf307fb4cc4f4f0840a0eaa7e63280e09289&devicetype=Windows+10+x64&version=6300002f&lang=zh_CN&ascene=1&pass_ticket=zHXxNRWO9vaAdMHWYrW7Si%2FjFsybBIzRU11g9UIV9Ps42Y4mLOvCrvw4DPWir0Pr)
 
+## [Python基础教程-C语言中文网](http://c.biancheng.net/python/)
+
+`print()`函数详细语法: `print(value, ..., sep='', end='\n', file=sys.stdout, flush=False)`
+
+## Python中统计列表元素的出现次数并降序排序
+
+```python
+from collections import Counter
+
+ls = ['a', 'b', 'c', 'c', 'd', 'b', 'a', 'a', 'c', 'c']
+
+counted_ls = Counter(ls)
+sorted_ls_with_count = sorted(counted_ls.items(), key=lambda x: x[1], reverse=True)
+```
+
+## Python有序字典(OrderedDict)与普通字典(dict)
+
+### 无序字典（普通字典）
+
+```python
+my_dict = dict()
+my_dict["name"] = "lowman"
+my_dict["age"] = 26
+my_dict["girl"] = "Tailand"
+my_dict["money"] = 80
+my_dict["hourse"] = None
+for key, value in my_dict.items():
+　　print(key, value)
+```
+
+输出：
+```
+money 80
+girl Tailand
+age 26
+hourse None
+name lowman
+```
+
+可以看见，遍历一个普通字典，返回的数据和定义字典时的字段顺序是不一致的。**注意**: Python3.6改写了dict的内部算法，Python3.6版本以后的dict是有序的，所以也就无须再关注dict顺序性的问题
+ 
+### 有序字典
+
+```python
+import collections
+
+my_order_dict = collections.OrderedDict()
+my_order_dict["name"] = "lowman"
+my_order_dict["age"] = 45
+my_order_dict["money"] = 998
+my_order_dict["hourse"] = None
+
+for key, value in my_order_dict.items():
+    print(key, value)
+```
+
+输出：
+```
+name lowman
+age 45
+money 998
+hourse None
+```
+
+有序字典可以按字典中元素的插入顺序来输出。**注意**: 有序字典的作用只是记住元素插入顺序并按顺序输出。如果有序字典中的元素一开始就定义好了，后面没有插入元素这一动作，那么遍历有序字典，其输出结果仍然是无序的，因为缺少了有序插入这一条件，所以此时有序字典就失去了作用，所以有序字典一般用于动态添加并需要按添加顺序输出的时候。
+
+## Python `gzip`模块
+
+> Python gzip module provides a very simple way to compress and decompress files and work in a similar manner to GNU programs gzip and gunzip.
+
+### 编写压缩文件
+
+```python
+import gzip
+import io
+import os
+
+output_file_name = 'jd_example.txt.gz'
+file_mode = 'wb'
+
+with gzip.open(output_file_name, file_mode) as output:
+    with io.TextIOWrapper(output, encoding='utf-8') as encode:
+        encode.write('We can write anything in the file here.\n')
+
+print(output_file_name, 
+        'contains', os.stat(output_file_name).st_size, 'bytes')
+os.system('file -b --mime {}'.format(output_file_name))
+```
+
+### 读取压缩文件
+
+```python
+import gzip
+import io
+
+read_file_name = 'jd_example.txt.gz'
+file_mode = 'rb'
+
+with gzip.open(read_file_name, file_mode) as input_file:
+    with io.TextIOWrapper(input_file, encoding='utf-8') as dec:
+        print(dec.read())
+
+# i = io.TextIOWrapper(gzip.open(input_gz, "rb"), encoding='utf-8')
+# use this code will return an object "i" just like commom "open" does,
+# so you can use "i.readline()" or "for line in i" and so on
+```
 
