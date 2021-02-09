@@ -199,7 +199,7 @@ my_dict["girl"] = "Tailand"
 my_dict["money"] = 80
 my_dict["hourse"] = None
 for key, value in my_dict.items():
-　　print(key, value)
+    print(key, value)
 ```
 
 输出：
