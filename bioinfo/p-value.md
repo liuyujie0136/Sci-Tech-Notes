@@ -21,8 +21,8 @@
 
 > 错误拒绝原假设的概率 P(Reject H0|H0=True) = α  
 > 决策正确的概率 P(No Reject H0|H0=True) = 1-α  
-> P(在m次检验全部决策正确)=(1-α)^m  
-> P(在m次检验中至少一次决策错误) = 1-(1-α)^m
+> P(在m次检验全部决策正确)=$(1-α)^m$  
+> P(在m次检验中至少一次决策错误) = $1-(1-α)^m$
 
 ![至少1个假阳性的概率](https://liuyujie0136.github.io/Sci-Tech-Notes/bioinfo/p-value-2.png)
 
@@ -54,6 +54,11 @@ Benjamini and Hochberg FDR (BH)是我们最常用的校正P-value控制假阳性
 
 BH法有时也称FDR法，是我们最常用的多重假设检验校正方法，可以很好的控制假阳性率和维持统计检出力。R函数p.adjust可用来计算一组p-value校正后的FDR值。(DESeq2中返回的padj也是用BH方法控制的FDR)
 
+## 是否需要p值校正？
+
+* 如果多次假设检验的结果之间有影响，或需要将多次假设检验的结果合并分析，则需要校正。例：寻找两种条件下具有差异表达的基因，我们会对每个基因在两组样本里的表达量分别进行检验（多重假设检验），但最后获得所有差异表达基因时需要将上述各结果合并，若不进行校正，则差异表达基因中假阳性结果就较多，故需要校正。
+* 反之，如果多次假设检验的结果仅用来单独分析，不会将结果合并，则无需校正。例：将基因分成几个基因集，比较这几个基因集之间某特征是否有显著差异，因两两之间的比较与其他基因集并无关联，故不需要校正。
+
 ## q-value是什么？
 
 q-value是Storey和Tibshirani提出的基于p-value分布的FDR计量方法，详见[此推文](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247488229&idx=1&sn=2c4f1fbba7f4af9797ffd6ff06a200c5&scene=21#wechat_redirect)。
@@ -70,6 +75,4 @@ q-value是Storey和Tibshirani提出的基于p-value分布的FDR计量方法，�
 
 * 增加生物重复使得统计结果检验更稳定
 * 选择合适的统计方法屏蔽个体差异，详见公众号**生信宝典**推文[批次校正](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247495952&idx=1&sn=fd7f0472fb97a7da9199ffde0e17c07d&chksm=ec0e349adb79bd8c9961fe445b0f3cd6ef3a583f98a510a02aea18ff3be9710395961a92168f&token=342863021&lang=zh_CN&scene=21#wechat_redirect)和[limma配对检验](https://mp.weixin.qq.com/s?__biz=MzI5MTcwNjA4NQ==&mid=2247488116&idx=1&sn=62c480f623f37f2fc16d78a0be62685b&scene=21#wechat_redirect)。
-
-
 
