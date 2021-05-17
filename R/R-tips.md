@@ -1,4 +1,4 @@
-# R使用技巧与注意事项
+# R使用技巧
 > Collected by liuyujie0136
 
 ## [Statistics for Biologists - Nature Collection](https://www.nature.com/collections/qghhqm/)
@@ -173,4 +173,107 @@ options(scipen = 6, digits = 10)
 getOption("scipen")
 ```
 
+
+## R语言修改临时文件目录
+
+在`~/.Renviron`中添加：`TMP = /home/lyj/Data/tmp/Rtmpdir`即可。
+
+或，在R中运行：`write("TMP = '<your-desired-tempdir>'", file=file.path(Sys.getenv('R_USER'), '.Renviron'))`，与之类似。
+
+
+## 利用R语言解压与压缩 `.tar.gz` `.zip` `.gz` `.bz2` 等文件
+
+### `.zip`
+
+- 压缩：`zip()`
+- 解压：`unzip()`
+
+若要压缩文件，就直接在 `zip()` 函数的第一个参数里面输入压缩后的文件名，第二个参数输入压缩前的文件名。解压文件直接在 `unzip()` 里面加上需要解压的文件名称即可。
+
+### `.tar.gz`
+
+- 压缩：`tar()`
+- 解压：`untar()`
+
+同 `.zip` 后缀的压缩文件。
+
+### `.gz` 与 `.bz2`
+
+这两个压缩文件与前面的相比，是最与众不同的，因为这两种后缀的文件，可以称之为压缩文件，也可以直接作为一个数据文件，当成 `data frame` 直接进行读取。因为其本身就是数据文件。
+
+#### (1) 直接解压
+
+R 中默认没有解压相关文件的函数，需要使用一个包：`R.utils`，然后如下述代码所示，利用 `gunzip()` 函数，即可解压。
+
+```r
+library(R.utils)
+gunzip("file.gz", remove = TRUE)
+bunzip2("file.bz2", remove = TRUE)
+```
+
+注意是这个函数里面多了一个 `remove` 参数，选择 `TRUE` 就会只保留解压后的文件，原压缩包会被删除，默认是 `TRUE`。
+
+解压之后，我们可以直接用 `read.table()` 对其进行读取。
+
+#### (2) 直接读取
+
+当然，如果我们的目的只是读取其中的数据，而不是一定需要解压，则可以使用两个默认函数组合的形式，直接对数据进行读取：
+
+```r
+dat <- read.table(gzfile("file.gz"))  
+```
+
+而针对 2.10 版本之后的 R，还有另一种更方便的读取方式，就是直接使用 `read.table()` 对其进行读取。
+
+```r
+dat <- read.table("file.gz")
+```
+
+
+## Excel中像`dplyr::left_join`那样连接两个工作表
+
+最近处理数据时遇到需要将Excel中两个表数据按指定列作为条件进行连接合并的需求，而Excel内置函数`VLOOKUP`可以方便地处理这种需求。
+
+### 示例
+
+现在有两个表：
+
+Sheet1:
+
+userid | level
+:---:|:---:
+1001 | 12
+1002 | 15
+
+Sheet2:
+
+no | userid | username
+:---:|:---:|:---:
+1 | 1001 | test1
+2 | 1002 | test2
+
+希望合并后新得到的Sheet1:
+
+· | A | B | C
+:---:|:---:|:---:|:---:
+1 | userid | level | username
+2 | 1001 | 12 | test1
+3 | 1002 | 15 | test2
+
+### 处理方法
+
+在`C2`位置插入函数
+
+`=VLOOKUP(A2,Sheet2!$B:$C,2,FALSE)`
+
+敲回车，然后自动填充就都有数据了
+
+### `VLOOKUP`参数
+
+- 第一个参数`A2`指以Sheet1的`A2`单元格中数据作为查找的字符，指定查找的值
+- 第二个参数`Sheet2!$B:$C`指在工作表Sheet2中指定查找的范围
+- 第三个参数是需要引用的数据在查找范围中的列号，因为需要引用username，在C列，因查找范围为B至C列，故为第2列
+- 第四个参数为模糊查找开关，FALSE为精确匹配，TRUE为非精确
+- 另外Sheet2中的数据不需要和Sheet1中完全相同，可以多也可以少，排序也不需要相同，查找不到的行会显示"#N/A"
+- Sheet2中需要比对查找的列要放在第二个参数指定的比对区域的最前面，此处是B列
 

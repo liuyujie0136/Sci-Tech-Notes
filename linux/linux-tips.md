@@ -1,4 +1,4 @@
-# Linux使用技巧与注意事项
+# Linux使用技巧
 > Collected by liuyujie0136
 
 ## Docker
@@ -1279,7 +1279,7 @@ tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目录>][-f <�
 
 我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：`$n`。`n`代表一个数字，`1`为执行脚本的第一个参数，`2`为执行脚本的第二个参数，以此类推。
 
-## 示例
+### 示例
 
 ```bash
 #!/bin/bash
@@ -1302,7 +1302,7 @@ Shell 传递参数实例！
 第三个参数为：3
 ```
 
-## 参数处理
+### 参数处理
 
 * `$#`: 传递到脚本的参数个数
 * `$*`: 以一个单字符串显示所有向脚本传递的参数。如执行`"$*"`，以`"$1 $2 … $n"`的形式输出所有参数。
@@ -1318,7 +1318,7 @@ Shell 传递参数实例！
 * 方法一：`echo -n text`
 * 方法二：`echo -e "text\c"`
 * `echo -e`可以处理特殊字符，其后可接的特殊字符有：
-  ```
+  ```bash
   \c  最后不加上换行符号
   \f  换行但光标仍旧停留在原来的位置
   \n  换行且光标移至行首
@@ -1346,3 +1346,152 @@ split [OPTION]... [FILE [PREFIX]]
 split -l 7000 1.csv -d -a 2 test
 split -b 100M 1.csv -d -a 2 test
 ```
+
+
+## sed正则表达式匹配，各种括号的转义和不转义
+
+* \[ \] 需要匹配的时候，需要转义
+  ```bash
+  echo "[ ]" | sed 's/\[.*\]/aaa/g'
+  ```
+* ( ) 需要匹配的时候，不要转义
+  ```bash
+  echo "( )" | sed 's/( )/c/g'
+  ```
+* { } 需要匹配的时候，不要转义
+  ```bash
+  echo "{ }" | sed 's/{ }/c/g'
+  ```
+* 当需要匹配数字，字母等使用中括号时候，不要转义；但使用大括号作为特殊字符时（表示前面的字符出现的次数），需要转义
+  ```bash
+  echo "333" | sed 's/[0-9]\{3\}/ccc/g'
+  ```
+* 当需要适配符，需要使用`\1`来替换正则表达式的对应参数时，不能写`(regrexxxx)`，而要写`\(regrexxxx\)`；后面回溯引用写`\1`
+  ```bash
+  echo "{1234567}" | sed 's/{\([0-9]*\)}/\1/g'
+  ```
+* 在做为特别字符时候`+`必须转义为`\+`才有效，而`*`则不需要
+  ```bash
+  echo "ccc" | sed 's/c*/aaa/g'  #正确
+  echo "ccc" | sed 's/c\*/aaa/g' #错误
+  echo "ccc" | sed 's/c+/aaa/g'  #错误
+  echo "ccc" | sed 's/c\+/aaa/g' #正确
+  ```
+### Sed正则表达式详细介绍
+> 详见[此文](https://www.yiibai.com/sed/sed_regular_expressions.html)
+
+#### 行开始 `^`
+```bash
+sed -n '/^The/p' books.txt
+```
+
+#### 行尾 `$`
+```bash
+sed -n '/Coelho$/p' books.txt
+```
+
+#### 单个字符 `.`
+匹配除行字符结尾的任何单个字符
+```bash
+echo -e "cat\nbat\nrat\nmat\nbatting\nrats\nmats" | sed -n '/^..t$/p'
+```
+
+#### 匹配字符集合 `[]`
+匹配这些字符，仅占一个位置
+```bash
+echo -e "Call\nTall\nBall" | sed -n '/[CT]all/ p'
+```
+
+#### 不匹配字符集 `[^]`
+```bash
+echo -e "Call\nTall\nBall" | sed -n '/[^CT]all/ p'
+```
+
+#### 字符范围 `[-]`
+```bash
+echo -e "Call\nTall\nBall" | sed -n '/[C-Z]all/ p'
+```
+
+#### 零到一次出现 `\?`
+匹配零次或一次其前面的字符
+```bash
+echo -e "Behaviour\nBehavior" | sed -n '/Behaviou\?r/ p'
+```
+
+#### 一次或多次出现 `\+`
+匹配一次或多次其前面的字符
+```bash
+echo -e "111\n22\n123\n234\n456\n222" | sed -n '/2\+/ p'
+```
+
+#### 零或多次出现 `*`
+匹配零次或多次其前面的字符
+```bash
+echo -e "ca\ncat" | sed -n '/cat*/ p' 
+```
+
+#### n个重复 `\{n\}`
+共出现n个其前面的字符
+```bash
+sed -n '/^[0-9]\{3\}$/p' numbers.txt
+```
+
+#### 最少出现n个 `\{n,\}`
+最少出现n个其前面的字符
+```bash
+sed -n '/^[0-9]\{5,\}$/p' numbers.txt
+```
+
+#### m到n次出现 `\{m, n\}`
+```bash
+sed -n '/^[0-9]\{5,8\}$/p' numbers.txt
+```
+
+#### 或 `\|` `\(\|\)`
+```bash
+echo -e "str1\nstr2\nstr3\nstr4" | sed -n '/str\(1\|3\)/p'
+echo -e "str1\nstr2\nstr3\nstr4" | sed -n '/str1\|3/p'
+```
+
+
+## awk中的回溯引用 (back references)
+> 详见[此文](http://awk.freeshell.org/Backreferences)
+
+The usual (and correct) answer for backreferences in `awk` is: "you can't do backreferences in `awk`". That is only partly true.
+
+If you need to _**match**_ a pattern using a regular expression with backreferences, like what you do in `sed`:
+
+```bash
+sed -n '/\(foo\)\(bar\).*\2\1/p'  # prints lines with "foobar" and "barfoo" later in the line
+```
+or similar things, then well, you can't do that easily with `awk`.
+
+But if you are using backreferences during string substitution, to insert text previously captured by a capture group, then you will almost certainly be able to get what you want with `awk`. Following are some hints:
+
+- First and easiest answer (requires GNU `awk`): use `gensub()`. It supports backreferences natively. Example:
+
+```bash
+# reverse letter and following digit and insert "+" if letter is "a" or "c"
+echo 'a1-b2-c3-a5-s6-a7-f8-e9-a0' | gawk '{print gensub(/([ac])([0-9])/,"\\2+\\1","g",$0)}'
+# outcome: 1+a-b2-3+c-5+a-s6-7+a-f8-e9-0+a
+```
+
+Note that `gensub()`, unlike `sub()` and `gsub()`, returns the modified string without touching the original. Also note that the third parameter is much like `sed`'s match number specification in the `s/pattern/replacement/` command: it can either be a number, indicating to replace only that specific match, or the string "g" (as in the example), to indicate replacement of all matches. See the `gawk` manual for more information (including why backslashes must be escaped in the replacement text).
+
+- Second answer: sometimes you don't really need backreferences, since what you want can be accomplished without. Examples:
+
+```bash
+echo 'foo123bar' | sed 's/.*\([0-9]\{1,\}\).*/\1/'
+echo 'blah <a href="http://some.site.tld/page1.html">blah blah</a>' | sed 's/.*"\([^"]*\)".*/\1/'
+```
+
+Both things can be done in `awk` (and `sed` as well!) without the need of backreferences. You just delete the part of the line you don't need:
+
+```bash
+awk '{gsub(/^[a-z]*|[a-z]*$/,""); print}'   # 1st example
+awk '{gsub(/^[^"]*"|"[^"]*$/,""); print}'   # 2nd example
+```
+
+Generally speaking, however, the above methods (both `sed` and `awk`) require that you have only one matching substring to extract per line. For the same purpose, with some awks (see [AwkFeatureComparison](http://awk.freeshell.org/AwkFeatureComparison)), you can use the possibility to assign a regexp to RS to "pull out" substrings from the input (and without the limitation of at most one match per line). See the last part of [Pulling out things](http://awk.freeshell.org/AwkTips#toc10) for more information and examples.
+
+- Third answer: see [GeneralizedTextReplacement](http://awk.freeshell.org/GeneralizedTextReplacement) for a detailed discussion of a framework for generalized text replacement, including an explanation on how to emulate backreferences (and much more) with `awk`.

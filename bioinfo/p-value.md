@@ -21,8 +21,8 @@
 
 > 错误拒绝原假设的概率 P(Reject H0|H0=True) = α  
 > 决策正确的概率 P(No Reject H0|H0=True) = 1-α  
-> P(在m次检验全部决策正确)=$(1-α)^m$  
-> P(在m次检验中至少一次决策错误) = $1-(1-α)^m$
+> P(在m次检验全部决策正确)=(1-α)^m  
+> P(在m次检验中至少一次决策错误) = 1-(1-α)^m
 
 ![至少1个假阳性的概率](https://liuyujie0136.github.io/Sci-Tech-Notes/bioinfo/p-value-2.png)
 

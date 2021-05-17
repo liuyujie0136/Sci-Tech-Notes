@@ -1,4 +1,4 @@
-# Python使用技巧与注意事项
+# Python使用技巧
 > Collected by liuyujie0136
 
 ## VS Code 相关技巧
@@ -29,7 +29,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 
 ## Python计算排列数与组合数
 
-### 编写函数计算组合数<img src="http://chart.googleapis.com/chart?cht=tx&chl=C^{i}_{n}" style="border:none;">
+### 编写函数计算组合数$C_n^i$
 ```python
 def Combinatorial(n,i):
     '''设计组合数'''
@@ -278,4 +278,8 @@ with gzip.open(read_file_name, file_mode) as input_file:
 # use this code will return an object "i" just like commom "open" does,
 # so you can use "i.readline()" or "for line in i" and so on
 ```
+
+
+## [17 Statistical Hypothesis Tests in Python](https://machinelearningmastery.com/statistical-hypothesis-tests-in-python-cheat-sheet/)
+
 

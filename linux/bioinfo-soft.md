@@ -877,3 +877,9 @@ Options:
 有时候，我们需要提取出比对到一段参考序列的reads，进行小范围的分析，以利于debug等。这时需要将bam或sam文件转换为fastq格式。可以使用 `bedtools bamtofastq -i <BAM> -fq <FQ1> -fq2 <FQ2>` 完成。
 
 
+## GATK4
+
+[GATK4.0和全基因组数据分析实践（上）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798425&idx=1&sn=ae355ed362848578e5c853413f23dfd7&chksm=83c1d505b4b65c13124c9acd210356c4364ec9f5498bbd16fa4475be29811213abb64ea9720f&scene=21#wechat_redirect)
+
+[GATK4.0和全基因组数据分析实践（下）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798455&idx=1&sn=67a7407980a57ce138948eb46992b603&chksm=83c1d52bb4b65c3dde31df94e9686654bf616166c7311b531213ebf0010f67a32ce827e677b1&scene=21#wechat_redirect)
+
