@@ -6,7 +6,8 @@
   * [Volcano Plot 火山图简介](bioinfo/volcano-plot.md)
   * [生物信息学常见文件格式](bioinfo/file-format.md)
 * Evolution
-  * [分子演化与群体遗传笔记](evolution-notes.md)
+  * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
+  * [使用JCVI进行MCScan共线性分析与可视化](evolution/jcvi-MCScan.md)
 * Linux
   * [Linux使用技巧](linux/linux-tips.md)
   * [生物信息学常用Linux平台软件简介](linux/bioinfo-soft.md)
