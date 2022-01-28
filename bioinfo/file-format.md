@@ -1,5 +1,17 @@
 # 生物信息学常见文件格式
-
+- [生物信息学常见文件格式](#生物信息学常见文件格式)
+  - [BED文件](#bed文件)
+  - [GTF/GFF文件](#gtfgff文件)
+  - [FASTQ文件](#fastq文件)
+    - [附：Phred体系](#附phred体系)
+    - [如何判断是Phred33还是Phred64](#如何判断是phred33还是phred64)
+  - [VCF文件](#vcf文件)
+  - [SAM文件](#sam文件)
+    - [头部信息介绍](#头部信息介绍)
+    - [比对信息介绍](#比对信息介绍)
+      - [第二列`FLAG`取值](#第二列flag取值)
+      - [第五列`CIGAR`字符串](#第五列cigar字符串)
+      - [比对信息第12列及之后：可选字段](#比对信息第12列及之后可选字段)
 ## BED文件
 
 BED文件(Browser Extensible Data)格式是UCSC Genome Browser的一个格式，提供了一种灵活的方式来定义的数据行，以用来描述注释信息。BED行有3个必须的列和9个额外可选的列，每行的数据格式要求一致。
@@ -14,7 +26,7 @@ BED文件(Browser Extensible Data)格式是UCSC Genome Browser的一个格式，
 * score：在基因组浏览器中显示的灰度设定，值介于0-1000
 * strand：定义链的方向，`+`或者`-`
 * thickStart：起始位置(例如基因起始编码位置）
-* thickEnd：终止位置（例如基因终止编码位置）　
+* thickEnd：终止位置（例如基因终止编码位置）
 * itemRGB：是一个RGB值的形式, R, G, B (eg. 255, 0,0), 如果itemRgb设置为`On`, 这个RBG值将决定数据的显示的颜色
 * blockCount：BED行中的block数目，也就是外显子数目
 * blockSize：用逗号分割的外显子的大小, 这个item的数目对应于BlockCount的数目

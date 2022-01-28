@@ -4,13 +4,14 @@
 * Bioinformatics
   * [多重假设检验校正与P-value](bioinfo/p-value.md)
   * [Volcano Plot 火山图简介](bioinfo/volcano-plot.md)
+  * [生物信息学常用软件简介](bioinfo/biosoft.md)
   * [生物信息学常见文件格式](bioinfo/file-format.md)
+  * [基因组注释基本流程](bioinfo/genome-denovo-ann.md)
 * Evolution
   * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
   * [使用JCVI进行MCScan共线性分析与可视化](evolution/jcvi-MCScan.md)
 * Linux
   * [Linux使用技巧](linux/linux-tips.md)
-  * [生物信息学常用Linux平台软件简介](linux/bioinfo-soft.md)
 * R
   * [R使用技巧](R/R-tips.md)
   * [WEHI RNA-seq Workshop 2019](R/WEHI-intro2019.md)
