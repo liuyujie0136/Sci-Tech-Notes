@@ -15,7 +15,7 @@ SHOREmap的backcross和outcross都需要从突变重组库中获得的一致的�
 
 ### 前置安装
 
-SHOREmap需要[DISLIN](https://link.jianshu.com/?t=http://www.mps.mpg.de/dislin/)科学库进行数据可视化
+SHOREmap需要[DISLIN](http://www.mps.mpg.de/dislin/)科学库进行数据可视化
 
 但是在安装DISLIN之前还需要保证存在`/usr/lib/libXm.so*`和`/usr/lib/libXm.so*`，这两者的安全需要root权限，所以要么联系管理员，要么想办法绕开(这个办法，我还没有想到).
 
@@ -73,7 +73,7 @@ echo "export $HOME/bisoft/SHOREmap_v3.4" >> ~/.bashrc
 
 最后，可以重新启动一下bash验证
 
-![](https://upload-images.jianshu.io/upload_images/2013053-1fd2cc40485c1bf6.png?imageMogr2/auto-orient/strip|imageView2/2/w/665/format/webp)
+![](https://upload-images.jianshu.io/upload_images/2013053-1fd2cc40485c1bf6.png)
 
 ### 官方网站提供的两个常见问题的解答
 

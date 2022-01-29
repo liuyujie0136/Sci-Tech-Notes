@@ -38,7 +38,7 @@
     - [BWA-MEM 算法](#bwa-mem-算法)
     - [BWA-backtrack 算法](#bwa-backtrack-算法)
     - [BWA-SW 算法](#bwa-sw-算法)
-    - [`bwa` `aln`|`mem`|`bwasw`怎么选](#bwa-alnmembwasw怎么选)
+    - [`aln` `mem` `bwasw`怎么选](#aln-mem-bwasw怎么选)
     - [常用示例](#常用示例)
   - [samtools](#samtools)
     - [`samtools view`](#samtools-view)
@@ -601,7 +601,7 @@ bwa bwasw -t <threads> ref.fa reads_1.fq.gz [reads_2.fq.gz] > aln.sam
 
 有 2 个输入文件时，进行 paired-end 比对，此模式仅对 Illumina 的 short-insert 数据进行比对。在 Paired-end 模式下，`BWA-SW` 依然输出剪接性比对结果，但是这些结果会标记为 not properly paired; 同时如果有多个匹配位点，则不会写入 mate 的匹配位置。
 
-### `bwa` `aln`|`mem`|`bwasw`怎么选
+### `aln` `mem` `bwasw`怎么选
 
 * `bwa aln`+`bwa samse`：长度低于100bp的、**单端**测序的reads
 * `bwa aln`+`bwa sampe`:长度低于100bp的、**双端**测序的reads
@@ -1023,9 +1023,9 @@ bwa mem -R "$5" -o $4/$1.sam $2 $3/${1}_R1.fq.gz $3/${1}_R2.fq.gz
 > **Read Group 设置**  
 > **e.g.** `@RG\tID:Sample1\tPL:illumina\tSM:Sample1`  
 > 1. ID，一般为测序的lane ID。  
-> 2. PL，为测序的平台，需要准确填写。在GATK中，PL只被允许写为`ILLUMINA,SLX,SOLEXA,SOLID,454,LS454,COMPLETE,PACBIO,IONTORRENT,CAPILLARY,HELICOS或UNKNOWN` 等信息之一。如果这一步没有设定正确的PL名称，则后续使用GATK过程则可能会出现报错。  
-> 3. SM：为样本ID，因为我们在测序时，由于样本量较多，可能会分成许多不同的lane 被分别测出来，这时候可以使用SM 区分这些样本。  
-> 4. LB：测序文库的名字。一般如果ID 足够用于区分，则可以不设定LB。  
+> 2. PL，为测序的平台，需要准确填写。在GATK中，PL只被允许写为`ILLUMINA`,`SLX`,`SOLEXA`,`SOLID`,`454`,`LS454`,`COMPLETE`,`PACBIO`,`IONTORRENT`,`CAPILLARY`,`HELICOS`或`UNKNOWN`等信息之一。如果这一步没有设定正确的PL名称，则后续使用GATK过程则可能会出现报错。  
+> 3. SM：为样本ID，因为我们在测序时，由于样本量较多，可能会分成许多不同的lane被分别测出来，这时候可以使用SM区分这些样本。  
+> 4. LB：测序文库的名字。一般如果ID足够用于区分，则可以不设定LB。  
 > 对于序列比对而言，设定这四个参数就足够了。除此之外，在RG中还需要用制表符`\t`将各个内容区分开。
 
 #### 02.sam2bam.sh
