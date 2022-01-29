@@ -38,9 +38,9 @@ MUMmer核心是基于后缀树(suffix tree)数据结构的最大匹配路径。 
 
 `MUMmer`的聚类算法能够比较智能地把几个独立地匹配按照顺序聚成一块。分为两种模式`gaps`和`mgaps`(下图上下两个子图)。这两者差别在于是否允许重排,分别用于`run-mummer1`,`run-mummer3`.
 
-![gaps](https://upload-images.jianshu.io/upload_images/2013053-0253b2e225d9b1ee.gif)
+![gaps](figure/mummer_gaps.gif)
 
-![mgaps](https://upload-images.jianshu.io/upload_images/2013053-af765e2d4c9d861d.gif)
+![mgaps](figure/mummer_mgaps.gif)
 
 > 基于`gap`和`mgaps`的输出，第四版还提供了`annotate`和`combineMUMs`两个工具增加联配信息。
 
@@ -214,7 +214,7 @@ dnadiff IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta ~/referen
 
 以上顺序是`-i -l -u -q -r -g -m -1`.光看参数估计不太明白，来一波图解。referece的一个片段可以联配到query的多个片段上，同样的query的一个片段也可以联配到reference的多个片段上，那么如何取舍呢？
 
-![multi](https://upload-images.jianshu.io/upload_images/2013053-22510b4f02161663.jpg)
+![multi](figure/mummer_multi.jpg)
 
 通过`-i`,`-l`可以先过滤一些比较短，并且相似度比较低的匹配情况。进一步，计算长度和相似度的乘积(加权最长增加子集)，对于`-q`而言就是保留左2，对于`-r`则是保留右3. 这就是传说中的三角关系，这种关系可以用`-m`保留或者用`-q`消灭。
 
@@ -236,7 +236,7 @@ less IRGSP1_DHX2_i89_l1000_1.coord
 
 不难发现这个位置锚定的非常不错，至少暂时看起来没有重叠之处
 
-![coord](https://upload-images.jianshu.io/upload_images/2013053-22d43cfb51512b11.jpg)
+![coord](figure/mummer_coord.jpg)
 
 用`show-aligns`看某一个匹配的序列比对情况。
 
@@ -244,7 +244,7 @@ less IRGSP1_DHX2_i89_l1000_1.coord
 show-aligns IRGSP1_DHX2_i89_l1000_1.delta.filter chr01 DHX2_00006753 | less
 ```
 
-![alignment](https://upload-images.jianshu.io/upload_images/2013053-a34cd3bd38efe73e.jpg)
+![alignment](figure/mummer_alignment.jpg)
 
 针对reference有很长的组装序列的情况，还可以用`show-tilling`将contig回贴到reference上，如果装了`gnuplot`还能用`mummerplot`可视化点图.`show-tiling`会尝试根据contig和reference匹配信息构建出tiling path，主要用于**Mapping a draft sequence to a finished sequence**:
 

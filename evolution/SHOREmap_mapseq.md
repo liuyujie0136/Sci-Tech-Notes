@@ -73,8 +73,6 @@ echo "export $HOME/bisoft/SHOREmap_v3.4" >> ~/.bashrc
 
 最后，可以重新启动一下bash验证
 
-![](https://upload-images.jianshu.io/upload_images/2013053-1fd2cc40485c1bf6.png)
-
 ### 官方网站提供的两个常见问题的解答
 
 Note 1: if the compilation complains like "/usr/bin/ld: cannot find -lXt" (or "/usr/bin/ld: cannot find -ldislin_d"), please open the makefile with the command

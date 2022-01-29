@@ -124,7 +124,7 @@ bismark_methylation_extractor
 
 #### 输出文件
 
-1. `CHG/CHH/CpG_context_test.file.R1_bismark_bt2_pe.deduplicated.txt`
+(1)`CHG/CHH/CpG_context_test.file.R1_bismark_bt2_pe.deduplicated.txt`
 
 ```
 col1 : 比对上的序列ID
@@ -147,7 +147,7 @@ CHH：甲基化C下游的2个碱基都是H（A、C、T）
 CHG：甲基化的C下游的2个碱基是H和G
 ```
 
-2. `test.file.R1_bismark_bt2_pe.deduplicated.bedGraph.gz`
+(2)`test.file.R1_bismark_bt2_pe.deduplicated.bedGraph.gz`
 
 ```
 col1 : 染色体编号
@@ -156,7 +156,7 @@ col3 : 胞嘧啶（c）位置信息
 col4 : 甲基化率
 ```
 
-3. `test.file.R1_bismark_bt2_pe.deduplicated.bismark.cov.gz`
+(3)`test.file.R1_bismark_bt2_pe.deduplicated.bismark.cov.gz`
 
 ```
 col1 : 染色体编号
@@ -167,7 +167,7 @@ col5 : 甲基化数目
 col6 : 非甲基化数目 
 ```
 
-4. `test.file.R1_bismark_bt2_pe.deduplicated.CX_report.txt`
+(4)`test.file.R1_bismark_bt2_pe.deduplicated.CX_report.txt`
 
 ```
 col1 : 染色体编号
@@ -179,7 +179,7 @@ col6 : 类型
 col7 : 具体背景 
 ```
 
-5. `test.file.R1_bismark_bt2_pe.deduplicated.M-bias.txt/...R1.png/...R2.png`
+(5)`test.file.R1_bismark_bt2_pe.deduplicated.M-bias.txt/...R1.png/...R2.png`
 
 ```
 #reads中每个可能位置的甲基化比例
@@ -193,13 +193,13 @@ col5 : coverage
 
 M-bias plot 通过Perl模块`GD:：Graph`产生，没有模块的只产生M-bias.txt文件，可用`--ignore`参数忽略
 
-![test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R1.png](https://upload-images.jianshu.io/upload_images/26617878-a9702f851d7e7f9b.png)
+![test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R1.png](figure/test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R1.png)
 
-![test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R2.png](https://upload-images.jianshu.io/upload_images/26617878-8845827dce6bb755.png)
+![test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R2.png](figure/test.file.R1_bismark_bt2_pe.deduplicated.M-bias_R2.png)
 
-6. `test.file.R1_bismark_bt2_pe.deduplicated_splitting_report.txt` 甲基化总体报告
+(6)`test.file.R1_bismark_bt2_pe.deduplicated_splitting_report.txt` 甲基化总体报告
 
-![report.png](https://upload-images.jianshu.io/upload_images/26617878-0f8b6ff7410c9dee.png)
+![report.png](figure/bismark_report.png)
 
 
 ## swDMR

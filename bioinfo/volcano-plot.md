@@ -8,7 +8,7 @@
 
 ## 火山图的基本理解
 
-![图1](https://liuyujie0136.github.io/Sci-Tech-Notes/bioinfo/volcano-plot-1.jpg)
+![图1](figure/volcano-plot-1.jpg)
 
 如图一：
 * 每个点代表一个检测到的基因。
