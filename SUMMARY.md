@@ -7,9 +7,12 @@
   * [生物信息学常用软件简介](bioinfo/biosoft.md)
   * [生物信息学常见文件格式](bioinfo/file-format.md)
   * [基因组注释基本流程](bioinfo/genome-denovo-ann.md)
+  * [WGBS甲基化分析](bioinfo/bismark-swDMR.md)
 * Evolution
   * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
   * [使用JCVI进行MCScan共线性分析与可视化](evolution/jcvi-MCScan.md)
+  * [MUMmer大片段比对与基因组共线性](evolution/MUMmer_synteny.md)
+  * [使用SHOREmap做mapping-by-sequencing](evolution/SHOREmap_mapseq.md)
 * Linux
   * [Linux使用技巧](linux/linux-tips.md)
 * R

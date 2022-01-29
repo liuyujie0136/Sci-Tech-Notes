@@ -1,4 +1,5 @@
 # 生物信息学常用Linux平台软件简介
+
 - [生物信息学常用Linux平台软件简介](#生物信息学常用linux平台软件简介)
   - [Aspera](#aspera)
     - [NCBI-SRA和EBI-ENA数据库](#ncbi-sra和ebi-ena数据库)
@@ -37,6 +38,7 @@
     - [BWA-MEM 算法](#bwa-mem-算法)
     - [BWA-backtrack 算法](#bwa-backtrack-算法)
     - [BWA-SW 算法](#bwa-sw-算法)
+    - [`bwa` `aln`|`mem`|`bwasw`怎么选](#bwa-alnmembwasw怎么选)
     - [常用示例](#常用示例)
   - [samtools](#samtools)
     - [`samtools view`](#samtools-view)
@@ -55,6 +57,13 @@
     - [`samtools cat [-h header.sam] [-o out.bam] <in1.bam> [...<inN.bam>]`](#samtools-cat--h-headersam--o-outbam-in1bam-innbam)
     - [将bam文件转换为fastq文件](#将bam文件转换为fastq文件)
   - [GATK4](#gatk4)
+      - [BWA_GATK_pipeline.sh](#bwa_gatk_pipelinesh)
+      - [01.bwa_mem.sh](#01bwa_memsh)
+      - [02.sam2bam.sh](#02sam2bamsh)
+      - [03.gatk_make_gvcf.sh](#03gatk_make_gvcfsh)
+      - [04.gatk_call_variations.sh](#04gatk_call_variationssh)
+
+
 ## Aspera
 
 ### NCBI-SRA和EBI-ENA数据库
@@ -592,6 +601,13 @@ bwa bwasw -t <threads> ref.fa reads_1.fq.gz [reads_2.fq.gz] > aln.sam
 
 有 2 个输入文件时，进行 paired-end 比对，此模式仅对 Illumina 的 short-insert 数据进行比对。在 Paired-end 模式下，`BWA-SW` 依然输出剪接性比对结果，但是这些结果会标记为 not properly paired; 同时如果有多个匹配位点，则不会写入 mate 的匹配位置。
 
+### `bwa` `aln`|`mem`|`bwasw`怎么选
+
+* `bwa aln`+`bwa samse`：长度低于100bp的、**单端**测序的reads
+* `bwa aln`+`bwa sampe`:长度低于100bp的、**双端**测序的reads
+* `bwa mem`：长度位于70bp到1Mbp的、双端或者单端测序reads，对于70-100bp的reads其性能优于`bwa aln`
+* `bwa bwasw`：长度位于70bp到1Mbp的、双端或者单端测序reads
+
 ### 常用示例
 
 BWA works with a variety types of DNA sequence data, though the optimal algorithm and setting may vary. The following list gives the recommended settings:
@@ -934,7 +950,133 @@ Options:
 
 ## GATK4
 
-[GATK4.0和全基因组数据分析实践（上）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798425&idx=1&sn=ae355ed362848578e5c853413f23dfd7&chksm=83c1d505b4b65c13124c9acd210356c4364ec9f5498bbd16fa4475be29811213abb64ea9720f&scene=21#wechat_redirect)
+> 参考：  
+> [全基因组分析实践（参考：碱基矿工）](https://www.jianshu.com/p/4653805078f2)  
+> [GATK4.0和全基因组数据分析实践（上）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798425&idx=1&sn=ae355ed362848578e5c853413f23dfd7&chksm=83c1d505b4b65c13124c9acd210356c4364ec9f5498bbd16fa4475be29811213abb64ea9720f&scene=21#wechat_redirect)  
+> [GATK4.0和全基因组数据分析实践（下）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798455&idx=1&sn=67a7407980a57ce138948eb46992b603&chksm=83c1d52bb4b65c3dde31df94e9686654bf616166c7311b531213ebf0010f67a32ce827e677b1&scene=21#wechat_redirect)
 
-[GATK4.0和全基因组数据分析实践（下）](https://mp.weixin.qq.com/s?__biz=MzAxOTUxOTM0Nw==&mid=2649798455&idx=1&sn=67a7407980a57ce138948eb46992b603&chksm=83c1d52bb4b65c3dde31df94e9686654bf616166c7311b531213ebf0010f67a32ce827e677b1&scene=21#wechat_redirect)
+#### BWA_GATK_pipeline.sh
+```bash
+#!/bin/bash
+# Basic BWA-GATK4 Pipeline for Arabidopsis Resequencing Analysis
+# Author: liuyujie0136
+# Date: 1/4/2022
 
+## Install
+conda install -y bwa samtools gatk4
+
+## Go to Work Dir
+cd ~/arabidopsis_reseq_test
+mv *.fq.gz original_fq/
+mkdir renamed_fq/ sam_files/ bam_files/ gvcf_files/
+
+## BWA Index
+bwa index TAIR10.fa
+
+## Rename FastQ Files
+for i in `cat rename`
+do
+    ori=${i#*,}
+    ren=${i%,*}
+    
+    ln -s ../original_fq/${ori}_R1.fq.gz renamed_fq/${ren}_R1.fq.gz
+    ln -s ../original_fq/${ori}_R2.fq.gz renamed_fq/${ren}_R2.fq.gz
+done
+
+## BWA - mapping
+for i in `cat rename`
+do
+    base=${i%,*}
+    nohup bash 01.bwa_mem.sh $base TAIR10.fa renamed_fq/ sam_files/ "@RG\tID:${base}\tPL:illumina\tSM:${base}" &
+done
+
+## samtools - convert to bam and sort
+for i in `cat rename`
+do
+    base=${i%,*}
+    nohup bash 02.sam2bam.sh $base sam_files/ bam_files/ &
+done
+
+## GATK4 - mark duplicates and make GVCFs
+gatk CreateSequenceDictionary -R TAIR10.fa
+
+for i in `cat rename`
+do
+    base=${i%,*}
+    nohup bash 03.gatk_make_gvcf.sh $base TAIR10.fa bam_files/ gvcf_files/ &
+done
+
+## GATK4 - Joint Calling of GVCFs and filter
+nohup bash 04.gatk_call_variations.sh At_reseq_test TAIR10.fa gvcf_files/ ./ &
+```
+
+#### 01.bwa_mem.sh
+```bash
+#!/bin/bash
+# Usage: bash 01.bwa_mem.sh <FastQ Basename> <BWA Index> <Input FastQ Dir> <Output SAM Dir> <Read Group>
+# Author: liuyujie0136
+# Date: 1/4/2022
+
+bwa mem -R "$5" -o $4/$1.sam $2 $3/${1}_R1.fq.gz $3/${1}_R2.fq.gz
+```
+
+> **Read Group 设置**  
+> **e.g.** `@RG\tID:Sample1\tPL:illumina\tSM:Sample1`  
+> 1. ID，一般为测序的lane ID。  
+> 2. PL，为测序的平台，需要准确填写。在GATK中，PL只被允许写为`ILLUMINA,SLX,SOLEXA,SOLID,454,LS454,COMPLETE,PACBIO,IONTORRENT,CAPILLARY,HELICOS或UNKNOWN` 等信息之一。如果这一步没有设定正确的PL名称，则后续使用GATK过程则可能会出现报错。  
+> 3. SM：为样本ID，因为我们在测序时，由于样本量较多，可能会分成许多不同的lane 被分别测出来，这时候可以使用SM 区分这些样本。  
+> 4. LB：测序文库的名字。一般如果ID 足够用于区分，则可以不设定LB。  
+> 对于序列比对而言，设定这四个参数就足够了。除此之外，在RG中还需要用制表符`\t`将各个内容区分开。
+
+#### 02.sam2bam.sh
+```bash
+#!/bin/bash
+# Usage: bash 02.sam2bam.sh <SAM Basename> <Input SAM Dir> <Output BAM Dir>
+# Author: liuyujie0136
+# Date: 1/4/2022
+
+samtools view -b -h -o $3/$1.bam $2/$1.sam
+
+samtools sort -o $3/$1.sorted.bam $3/$1.bam
+
+rm $3/$1.bam
+
+samtools index $3/$1.sorted.bam
+```
+
+#### 03.gatk_make_gvcf.sh
+```bash
+#!/bin/bash
+# Usage: bash 03.gatk_make_gvcf.sh <BAM Basename> <Ref File> <Input BAM Dir> <Output GVCF Dir>
+# Author: liuyujie0136
+# Date: 1/4/2022
+
+gatk MarkDuplicates -I $3/$1.sorted.bam -O $3/$1.sorted.markdup.bam -M $3/$1.sorted.markdup.metrics
+
+samtools index $3/$1.sorted.markdup.bam
+
+gatk HaplotypeCaller -R $2 -I $3/$1.sorted.markdup.bam -O $4/$1.g.vcf.gz -ERC GVCF
+```
+
+#### 04.gatk_call_variations.sh
+```bash
+#!/bin/bash
+# Usage: bash 04.gatk_call_variations.sh <VCF Basename> <Ref File> <Input GVCF Dir> <Output VCF Dir>
+# Author: liuyujie0136
+# Date: 1/4/2022
+
+gvcf=""
+for i in `ls $3/*.g.vcf.gz`
+do
+    gvcf=$gvcf"-V $i "
+done
+
+gatk CombineGVCFs -R $2 $gvcf -O $3/$1.combined.g.vcf.gz
+
+gatk GenotypeGVCFs -R $2 -V $3/$1.combined.g.vcf.gz -O $4/$1.vcf.gz
+
+gatk VariantFiltration -V $4/$1.vcf.gz \
+    --filter-expression "QD < 2.0 || MQ < 40.0 || FS > 60.0 || SOR > 3.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
+    --filter-name "PASS" \
+    -O $4/$1.filtered.vcf.gz
+```
