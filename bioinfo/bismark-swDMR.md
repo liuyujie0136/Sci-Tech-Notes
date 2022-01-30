@@ -22,7 +22,7 @@ DNA甲基化是一个生物过程，它会在在DNA分子中引入甲基化基�
 
 最常见的是在**胞嘧啶的5号碳位置**，在酶和底物的作用下，引入一个甲基基团，变成了**5甲基胞嘧啶（5mC）**，从而改变了它的活性。
 
-![5mC](https://img-service.csdnimg.cn/img_convert/70e4952641d92e158181d5659a3533ad.png)
+![5mC](figure/met_5mC.png)
 
 腺嘌呤甲基化也在细菌，植物和哺乳动物DNA中均观察到了，但并不是研究热点。
 
@@ -44,14 +44,15 @@ CpG是胞嘧啶（C，Cytosine），磷酸（p，phosphoric acid），鸟嘌呤�
 
 在人基因组中，90%以上的CpG位点是被甲基化的，但是CpG岛甲基化程度通常很低，这种情况下，不影响蛋白结合到DNA的启动子区域来启动转录，进而使基因表达。
 
-![CpG_express](https://img-service.csdnimg.cn/img_convert/925d11716dae866158a404270b0b4e74.png)
+![CpG_express](figure/met_CpG_express.png)
 
 但是，如果这个DNA的CpG岛被甲基化后，蛋白不能结合DNA，进而使转录沉默，基因不表达。
 
-![CpG_silence](https://img-service.csdnimg.cn/img_convert/b04bddb211a09a421330b4c0101ac53f.png)
+![CpG_silence](figure/met_CpG_silence.png)
 
 通常我们也会在文章中看到下面这种图，每个“棒棒糖”代表一个甲基化位点，位点集中的区域就可能是CpG岛，如果在转录因子结合的地方恰好被甲基化（黑色棒棒糖），那么这个基因就废了，不会继续表达了。
-![CpG_island](https://img-service.csdnimg.cn/img_convert/4b3bd36c7bc92af14e9cb1af21036393.png)
+
+![CpG_island](figure/met_CpG_island.png)
 
 #### 2. 如何定义CpG岛
 
@@ -110,7 +111,7 @@ DNA甲基化可能以两种方式影响基因的转录：首先，DNA本身的�
 - 在胚胎植入阶段发生了甲基化波，保护了CpG岛免受甲基化。这导致整体抑制，并使管家基因在所有细胞中表达。
 - 在植入后阶段，甲基化模式是特定于阶段和组织的，其变化将定义每种单独的细胞类型，可长期稳定持续。
 
-![met_develop](https://img-service.csdnimg.cn/img_convert/853563cb4bd9f8c852e79badce097a08.png)
+![met_develop](figure/met_development.png)
 
 尽管DNA甲基化本身对于转录沉默而言并不是必需的，但是，它代表了一种“锁定”状态，可以使转录失活。
 
@@ -128,7 +129,7 @@ DNA甲基化可能以两种方式影响基因的转录：首先，DNA本身的�
 
 因此，用亚硫酸氢盐处理过的DNA**仅保留甲基化的胞嘧啶**。
 
-![bis_treat](https://img-service.csdnimg.cn/img_convert/df0cea3cbe60739d67dd2c564bf0fb88.png)
+![bis_treat](figure/met_bis_treat.png)
 
 上图中，
 
