@@ -28,4 +28,4 @@
   * [Python语言程序设计课程案例 @ 北理工MOOC](python/python-mooc-BIT.md)
   * [简单网页版IGV](python/python-igv.md)
 * LaTeX
-  * [LaTex使用技巧](python/latex-tips.md)
+  * [LaTeX使用技巧](python/latex-tips.md)

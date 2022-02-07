@@ -15,17 +15,17 @@
   - [Bash和Sh的区别](#bash和sh的区别)
   - [利用.bashrc个性化配制bash环境](#利用bashrc个性化配制bash环境)
   - [利用.vimrc个性化配置vim](#利用vimrc个性化配置vim)
-  - [Bash下使用rsync和crontab备份文件](#bash下使用rsync和crontab备份文件)
+  - [Bash下使用`rsync`和`crontab`备份文件](#bash下使用rsync和crontab备份文件)
   - [Linux中for循环的几个常用写法](#linux中for循环的几个常用写法)
   - [Linux下将文件夹命名为今天的日期的方法](#linux下将文件夹命名为今天的日期的方法)
   - [Linux下使ls命令只显示目录的方法](#linux下使ls命令只显示目录的方法)
-  - [Linux下替换^M字符方法](#linux下替换m字符方法)
+  - [Linux下替换`^M`字符方法](#linux下替换m字符方法)
   - [Linux下将多行文件合并为一行](#linux下将多行文件合并为一行)
   - [Linux中cut命令](#linux中cut命令)
   - [Ubuntu镜像使用帮助](#ubuntu镜像使用帮助)
   - [Ubuntu下使用apt install XX(or sudo apt install XX)报错Unable to locate package](#ubuntu下使用apt-install-xxor-sudo-apt-install-xx报错unable-to-locate-package)
   - [Linux管理员修改普通用户密码](#linux管理员修改普通用户密码)
-  - [Linux下使用sudo命令出现not in the sudoers file](#linux下使用sudo命令出现not-in-the-sudoers-file)
+  - [Linux下使用`sudo`命令出现not in the sudoers file](#linux下使用sudo命令出现not-in-the-sudoers-file)
   - [Linux下安装Miniconda](#linux下安装miniconda)
   - [WSL更改登录用户](#wsl更改登录用户)
   - [WSL中Vim字体改变的解决方案](#wsl中vim字体改变的解决方案)
@@ -33,7 +33,7 @@
     - [截取](#截取)
     - [删除与替换](#删除与替换)
     - [变量声明](#变量声明)
-  - [Linux下nohup命令](#linux下nohup命令)
+  - [Linux下`nohup`命令](#linux下nohup命令)
     - [耗时很长的程序忘加nohup就运行了怎么办](#耗时很长的程序忘加nohup就运行了怎么办)
   - [awk基本操作符、内置函数与变量](#awk基本操作符内置函数与变量)
     - [awk操作符的优先级](#awk操作符的优先级)
@@ -43,7 +43,7 @@
   - [Linux下文件批量重命名](#linux下文件批量重命名)
     - [`mv`命令](#mv命令)
     - [`rename`命令](#rename命令)
-  - [Bash中括号及expr的用法](#bash中括号及expr的用法)
+  - [Bash中括号及`expr`的用法](#bash中括号及expr的用法)
     - [小括号`()`](#小括号)
     - [中括号`[]`](#中括号)
     - [大括号`{}`](#大括号)
@@ -54,9 +54,9 @@
     - [语法](#语法)
     - [参数](#参数)
     - [示例](#示例-1)
-  - [Shell 传递参数](#shell-传递参数)
-    - [示例](#示例-2)
-    - [参数处理](#参数处理)
+  - [Bash脚本传递参数](#bash脚本传递参数)
+    - [位置参数](#位置参数)
+    - [参数名匹配](#参数名匹配)
   - [Linux `echo` 不换行输出的两种方式](#linux-echo-不换行输出的两种方式)
   - [Linux下批量中止多个进程](#linux下批量中止多个进程)
   - [Linux下`split`命令将一个大文件按行拆分成小文件](#linux下split命令将一个大文件按行拆分成小文件)
@@ -81,7 +81,8 @@
 ## Docker
 > Docker is a tool to run Linux containers based on selected images.
 
-### [Docker从入门到实践](https://yeasy.gitbook.io/docker_practice/)
+### Docker从入门到实践
+> [https://yeasy.gitbook.io/docker_practice/](https://yeasy.gitbook.io/docker_practice/)
 
 ### Win10家庭版用WSL2运行Docker Desktop，将数据从C盘迁移到其他目录
 
@@ -152,17 +153,25 @@ docker exec -it bioinfo_tsinghua bash
 docker exec -it -u root bioinfo_tsinghua bash
 ```
 
-## [鳥哥的Linux私房菜](http://linux.vbird.org/linux_basic/)
 
-## [Linux常用命令](https://mp.weixin.qq.com/s/cri9CEbVJizZIO9WwiCJ0g)
+## 鳥哥的Linux私房菜
+> [http://linux.vbird.org/linux_basic/](http://linux.vbird.org/linux_basic/)
 
-## [Linux特殊符号](https://mp.weixin.qq.com/s/IO8Ckahig14RIvyDPX5lhw)
+## Linux常用命令
+> [https://mp.weixin.qq.com/s/cri9CEbVJizZIO9WwiCJ0g](https://mp.weixin.qq.com/s/cri9CEbVJizZIO9WwiCJ0g)
 
-## [三十分钟学会AWK](https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AAWK.md)
+## Linux特殊符号
+> [https://mp.weixin.qq.com/s/IO8Ckahig14RIvyDPX5lhw](https://mp.weixin.qq.com/s/IO8Ckahig14RIvyDPX5lhw)
 
-## [三十分钟学会SED](https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9ASED.md)
+## 三十分钟学会AWK
+> [https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AAWK.md](https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9AAWK.md)
 
-## [Learn Vim Progressively](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+## 三十分钟学会SED
+> [https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9ASED.md](https://github.com/mylxsw/growing-up/blob/master/doc/%E4%B8%89%E5%8D%81%E5%88%86%E9%92%9F%E5%AD%A6%E4%BC%9ASED.md)
+
+## Learn Vim Progressively
+> [http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+
 
 ## Linux查看系统基本信息
 
@@ -208,6 +217,7 @@ id <usr>    查看指定用户信息
 ```
 * [更多内容](https://blog.csdn.net/qq_31278903/article/details/83146031)
 
+
 ## Bash和Sh的区别
 > Bash is the most commonly used linux shell.
 
@@ -242,6 +252,7 @@ id <usr>    查看指定用户信息
 # 3. 使用dash
 #!/bin/dash
 ```
+
 
 ## 利用.bashrc个性化配制bash环境
 
@@ -407,6 +418,7 @@ alias c="clear"
 alias ca="cat -A"
 ```
 
+
 ## 利用.vimrc个性化配置vim
 
 * 复制一份vim配置模板到个人目录下
@@ -481,7 +493,8 @@ set backspace=2     "设置退格键可用
 * 保存退出
 * [更多内容](https://blog.csdn.net/amoscykl/article/details/80616688)
 
-## Bash下使用rsync和crontab备份文件
+
+## Bash下使用`rsync`和`crontab`备份文件
 
 * Install `rsync` and `crontab`
 ```bash
@@ -531,6 +544,7 @@ exit 0
       10   5  * * *   ~/backup.sh > ~/backup.log
   ```
   * exit and save
+
 
 ## Linux中for循环的几个常用写法
 
@@ -598,12 +612,14 @@ done
 exit 0
 ```
 
+
 ## Linux下将文件夹命名为今天的日期的方法
 
 ```bash
 alias today="date +F%"  # +F% format is like 2020-01-01
 mkdir results-$(today)
 ```
+
 
 ## Linux下使ls命令只显示目录的方法
 
@@ -628,7 +644,8 @@ done
 exit 0
 ```
 
-## Linux下替换^M字符方法
+
+## Linux下替换`^M`字符方法
 
 在Linux下使用`vi`或`cat -A`查看一些在Windows下创建的文本文件，有时会发现在行尾有一些`^M`，既影响文件的查看，也影响利用`awk`等命令对文件进行操作，见下：
 ```bash
@@ -660,6 +677,7 @@ dos2unix text.txt
 sed -e 's/^M/\n/g' text.txt #注意：^M需使用[ctrl-v] [ctrl-m]生成，并非直接输入
 ```
 * 注：在vim的.vimrc文件中把fileformat=unix去掉便不会显示（默认不显示^M）
+
 
 ## Linux下将多行文件合并为一行
 
@@ -700,6 +718,7 @@ done
 exit 0
 ```
 
+
 ## Linux中cut命令
 
 * cut是一个选取命令，其以行为单位，选择性输出符合条件的内容到标准输出，使用格式为：
@@ -733,6 +752,7 @@ cut -d ' ' -f 2-5 text.txt  #输出第二至五列，列分隔符改为空格
 cut -d ',' -f 2- text.txt   #输出第二至最后，列分隔符改为逗号（常见于csv文件）
 ```
 
+
 ## Ubuntu镜像使用帮助
 
 * [清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)
@@ -753,6 +773,7 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
 ```
 
+
 ## Ubuntu下使用apt install XX(or sudo apt install XX)报错Unable to locate package
 * 正常情况下，只需要更新软件列表
 ```bash
@@ -763,6 +784,7 @@ sudo apt update
 sudo apt upgrade
 ```
 * 注：一般情况下更改了软件源之后需要重新`update`
+
 
 ## Linux管理员修改普通用户密码
 
@@ -776,12 +798,14 @@ sudo passwd <user_name>
 passwd
 ```
 
-## Linux下使用sudo命令出现not in the sudoers file
+
+## Linux下使用`sudo`命令出现not in the sudoers file
 
 * 使用`su -`命令切换到root身份。注意该命令有`-`，与`su`不同，在用命令`su`的时候只是切换到root，但没有把root的环境变量传过去，还是当前用户的环境变量，用`su -`命令将环境变量也一起带过去，就像和root登录一样
 * 使用`visudo`命令编辑`sudo`权限文件。注意，该命令为一个单词
 * 出现vim编辑窗口，在文件合适位置加入`<user_name>   ALL=(ALL) ALL`语句
 * 保存退出后，便把自己加入了`sudo`组，可以使用`sudo`命令了
+
 
 ## Linux下安装Miniconda
 
@@ -800,14 +824,17 @@ passwd
   ```
 8. 注：若不希望终端前一直显示`base`，仅在需用`conda`时才调用，可在`.bashrc`最后加上一句`conda deactivate`使其默认不运行。需使用时输入`conda activate`激活之。
 
+
 ## WSL更改登录用户
 
 * 对于Ubuntu系统，在`Windows PowerShell`中运行`ubuntu config --default-user <username>`即可
+
 
 ## WSL中Vim字体改变的解决方案
 
 * 问题：安装好WSL版本的Ubuntu1804之后，由于默认字体不适合长时间阅读且不美观，便从属性窗口设置了新字体，但是发现在启动Vim的时候会出现字体变回原来的字体的情况。
 * 解决方法：运行`regedit`修改注册表，定位至`HKEY_CURRENT_USER\Console\C:_Program Files_WindowsApps_CanonicalGroupLimited.Ubuntu18.04onWindows_1804<...>ubuntu1804.exe`，方括号中内容根据实际情况修改，在其中添加：`CodePage`（`DWORD`类型、值`0x01b5`）
+
 
 ## Linux字符串变量操作
 
@@ -927,7 +954,8 @@ hello456hello456
 ### 变量声明
 ![变量声明操作](figure/linux-var.png)
 
-## Linux下nohup命令
+
+## Linux下`nohup`命令
 
 `nohup`英文全称no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。在默认情况下（非重定向时），程序会输出一个名叫 nohup.out 的文件到当前目录下，如果当前目录的 nohup.out 文件不可写，则输出重定向到 $HOME/nohup.out 文件中。
 
@@ -996,6 +1024,7 @@ ps -auwx | grep rsync
   * 如果程序运行时，已加了`&`放入后台了，则只需运行`jobs`获得作业号，再运行`disown`不挂断即可。
   * 程序作业号不一定都是1，如果之前就有程序在后台运行，作业号相应的会自加。
   * `nohup`和`disown`都可以使程序不挂断，可以获得一样的效果，但原理不太一致。`nohup`可以使程序忽略挂断信号(SIGHUP)或者使程序脱离终端的控制，从而终端不能再对其发送挂断信号(SIGHUP)；`disown`则是内生于shell，告诉shell在终止时不对程序发送挂断信号(SIGHUP)。
+
 
 ## awk基本操作符、内置函数与变量
 
@@ -1067,6 +1096,7 @@ awk中同样定义了很多内置变量，我们可以直接像使用普通变�
 [N] SUBSEP      数组下标分隔符（默认值是34）
 ```
 
+
 ## awk同时处理多个文件
 
 `awk`的数据输入有两个来源，标准输入和文件，后一种方式支持多个文件。
@@ -1097,6 +1127,7 @@ awk '{...}' a.txt b.txt c.txt ...
    2. 利用命令行参数数组: `awk 'FILENAME==ARGV[1]{...}FILENAME==ARGV[2]{...}FILENAME==ARGV[3]{...}...' file1 file2 file3 ...`
    3. 把文件名直接加入判断，但不通用: `awk 'FILENAME=="file1"{...}FILENAME=="file2"{...}FILENAME=="file3"{...}...' file1 file2 file3 ...`
 
+
 ## Linux下文件批量重命名
 
 ### `mv`命令
@@ -1113,7 +1144,8 @@ done
 * perl版本：`rename 's/old/new/[g]' file_list`
   * Example：`rename 's/chr/chrom/g' *.gz*`
 
-## Bash中括号及expr的用法
+
+## Bash中括号及`expr`的用法
 
 ### 小括号`()`
 * 单小括号`(...)`
@@ -1255,12 +1287,14 @@ expr length "abcde"         #result: 5      计算字符串长度
 expr $a : ".*"              #result: 5      同上
 ```
 
+
 ## Linux下按Tab补全命令时忽略大小写
 
 执行`vim ~/.inputrc`，添加如下内容，保存重启终端后即可。
 ```vim
 set completion-ignore-case on
 ```
+
 
 ## Linux `tar` 命令
 
@@ -1352,34 +1386,34 @@ tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目录>][-f <�
 * 解压文件：`tar -xzvf test.tar.gz`
 * 排除目录中的某些文件，然后进行压缩：`tar --exclude=folder/*.txt -czvf test.tgz folder`
 
-## Shell 传递参数
 
-我们可以在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：`$n`。`n`代表一个数字，`1`为执行脚本的第一个参数，`2`为执行脚本的第二个参数，以此类推。
+## Bash脚本传递参数
 
-### 示例
+### 位置参数
+
+通过在命令行的位置，来表示传入对应脚本的参数。这是最简单的一种，如下我们将4个参数对应START, END, SCFID 和 GENE 进行传入参数。
 
 ```bash
 #!/bin/bash
 
-echo "Shell 传递参数实例！";
-echo "执行的文件名：$0";
-echo "第一个参数为：$1";
-echo "第二个参数为：$2";
-echo "第三个参数为：$3";
+START=${1}
+END=${2}
+SCFID=${3}
+GENE=${4}
+
+echo The ${GENE} is on Chr${SCFID}:${START}-${END} 
 ```
 
-为脚本设置可执行权限，并执行脚本，输出结果如下所示：
+这时在执行的时候，只需在命令行输入对应参数即可，参数之间使用空格分割。
+
 ```bash
-$ chmod +x test.sh 
-$ ./test.sh 1 2 3
-Shell 传递参数实例！
-执行的文件名：./test.sh
-第一个参数为：1
-第二个参数为：2
-第三个参数为：3
+bash gene.sh 5000000 6000000 785 Cyp6a9
+## The Cyp6a9 is on Chr785:5000000-6000000
 ```
 
-### 参数处理
+这种方法虽然简单，但是输入参数的时候必须严格对应，不能空缺参数，不能颠倒位置，这对脚本的新用户是十分不友好的。
+
+**参数处理**
 
 * `$#`: 传递到脚本的参数个数
 * `$*`: 以一个单字符串显示所有向脚本传递的参数。如执行`"$*"`，以`"$1 $2 … $n"`的形式输出所有参数。
@@ -1389,6 +1423,72 @@ Shell 传递参数实例！
 * 注：`$*`与`$@`，相同点都是引用所有参数，不同点只有在双引号中体现出来。假设在脚本运行时写了三个参数`1、2、3`，则`"$*"`等价于`"1 2 3"`（传递了一个参数），而`"$@"`等价于`"1" "2" "3"`（传递了三个参数）。
 * `$-`: 显示Shell使用的当前选项，与`set`命令功能相同。
 * `$?`: 显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误。
+
+### 参数名匹配
+
+另一种传递参数的方式就是使用关键词，通过关键词匹配进行参数传递，这种情况下的参数传入方式就比较灵活了，不依赖于参数位置。
+
+```bash
+#!/bin/bash
+usage() {
+  echo "Usage: ${0} [-s|--start] [-e|--end] [-i|--scfid] [-g|--gene]" 1>&2
+  exit 1 
+}
+while [[ $# -gt 0 ]];do
+  key=${1}
+  case ${key} in
+    -s|--start)
+      START=${2}
+      shift 2
+      ;;
+    -e|--end)
+      END=${2}
+      shift 2
+      ;;
+    -i|--scfid)
+      SCFID=${2}
+      shift 2
+      ;;
+    -g|--gene)
+      GENE=${2}
+      shift 2
+      ;;
+    *)
+      usage
+      shift
+      ;;
+  esac
+done
+    
+echo The ${GENE} is on Chr${SCFID}:${START}-${END}
+```
+
+这时在命令行，可以不按照顺序输入参数，也可以使用双横线和全称的方式输入：
+
+```bash
+bash gene.sh -s 5000000 -e 6000000 -i 785 -g Cyp6a2 
+bash gene.sh -e 6000000 -i 785 -g Cyp6a2 -s 5000000
+bash gene.sh -e 6000000 -i 785 --gene Cyp6a2 -s 5000000
+## ...
+```
+
+当然，如果命令参数没有找到匹配，会提示错误：
+
+```bash
+bash gene.sh dsafda
+## Usage: ./gene.sh [-s|--start] [-e|--end] [-i|--scfid] [-g|--gene]
+```
+
+这种参数传入的方式有两个关键，一个是使用`case`语句，另一个是使用了`shift`。`shift`的作用主要是移动位置参数。每执行一次都讲第一个位置参数向右移动一次。当然，如果是`shift n`就是每执行一次，向右移动n个位置。参考：
+
+[https://www.computerhope.com/unix/bash/shift.htm](https://link.zhihu.com/?target=https%3A//www.computerhope.com/unix/bash/shift.htm)
+
+有时候我们常使用等号`=`来进行参数传递，整体做法和使用上述空格是一样的。
+
+```bash
+bash gene.sh -s=5000000 -e=6000000 -i=785 -g=Cyp6a2 
+```
+
 
 ## Linux `echo` 不换行输出的两种方式
 
@@ -1405,11 +1505,13 @@ Shell 传递参数实例！
   \\  插入\字符
   ```
 
+
 ## Linux下批量中止多个进程
 
 ```bash
 ps -f | grep python | grep -v grep | cut -c 9-15 | xargs kill -9
 ```
+
 
 ## Linux下`split`命令将一个大文件按行拆分成小文件
 

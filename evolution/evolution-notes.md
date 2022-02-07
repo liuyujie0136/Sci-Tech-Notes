@@ -35,7 +35,6 @@
     - [Literature cited](#literature-cited)
   - [Determination of Haplotypes from Genotype information](#determination-of-haplotypes-from-genotype-information)
   - [群体遗传学与重测序分析](#群体遗传学与重测序分析)
-- [群体遗传学与重测序分析](#群体遗传学与重测序分析-1)
 - [0 几种变异类型](#0-几种变异类型)
 - [1 重测序和从头组装](#1-重测序和从头组装)
 - [2 重测序分析流程](#2-重测序分析流程)
@@ -73,6 +72,25 @@
 - [8 群体重测序方案推荐](#8-群体重测序方案推荐)
 - [参考文献](#参考文献)
   - [群体演化模型与π的计算](#群体演化模型与π的计算)
+- [基础的序列术语](#基础的序列术语)
+- [【群体遗传学】1.1进化模型](#群体遗传学11进化模型)
+- [Wright-Fisher模型](#wright-fisher模型)
+- [Moran模型](#moran模型)
+- [【群体遗传学】 π （pi）的计算](#群体遗传学-π-pi的计算)
+- [杂合度 _heterozygosity_](#杂合度-heterozygosity)
+- [!\pi](#)
+- [!\theta_W](#-1)
+- [群体遗传学统计指标——种群核苷酸多样性（π值）](#群体遗传学统计指标种群核苷酸多样性π值)
+- [理论](#理论)
+- [使用VCFTOOLS计算种群核苷酸多样性](#使用vcftools计算种群核苷酸多样性)
+  - [VCF文件处理](#vcf文件处理)
+      - [给VCF文件添加ID](#给vcf文件添加id)
+      - [SNP位点过滤](#snp位点过滤)
+  - [准备样本ID文件](#准备样本id文件)
+  - [计算核苷酸多样性（π）](#计算核苷酸多样性π)
+  - [数据可视化](#数据可视化)
+      - [那如用R何画折线图嘞？](#那如用r何画折线图嘞)
+- [记录一个关于计算核酸多样性（pi）的经历（附计算pi的perl脚本）](#记录一个关于计算核酸多样性pi的经历附计算pi的perl脚本)
 
 
 ## 群体遗传演化名词解释
@@ -355,22 +373,17 @@ Watterson's 多态性估值，从理论上说，在中性条件下，应当有θ
 - Wright, S. 1978. Evolution and the Genetics of Populations, Vol. 4. University of Chicago Press, Chicago.
 
 
-## [Determination of Haplotypes from Genotype information](http://www.biorecipes.com/Haplotypes/code.html)
+## Determination of Haplotypes from Genotype information
+> [http://www.biorecipes.com/Haplotypes/code.html](http://www.biorecipes.com/Haplotypes/code.html)
 
 
 ## 群体遗传学与重测序分析
 > https://www.jianshu.com/p/807e54278539
 
-# 群体遗传学与重测序分析
+分子层面对生物的研究，在个体水平上主要是看单个基因的变化以及全转录本的变化（RNA-seq）；在对个体的研究的基础上，开始了群体水平的研究。如果说常规的遗传学主要的研究对象是个体或者个体家系的话，那么群体遗传学则是主要研究由不同个体组成的群体的遗传规律。
 
-[![](https://upload.jianshu.io/users/upload_avatars/3454743/374bf3a9-1563-42b3-b332-e93f5cc4949a.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/ef4cfe3d9189)
+在测序技术大力发展之前，对群体主要是依靠表型进行研究，如加拉巴哥群岛的13中鸟雀有着不同的喙，达尔文认为这是自然选择造成的后果\[1\]。达尔文的进化论对应的观点可以简单概括为“物竞天择，适者生存”，这也是最为大众所接受的一种进化学说。直到1968年，日本遗传学家提出了中性进化理论\[2\]，也叫中性演化理论。中性理论的提出很大程度上是基于分子生物化学的发展。可以这样理解中性理论：一群人抽奖，在没有内幕的情况下，每个人抽到一等奖的概率是相等的，这个可能性和参与抽奖的人的身高、年龄、爱好等因素都没有关系。中性理论常作为群体遗传研究中的假设理论（CK）来计算其他各种统计指标。
 
-[研究僧小蓝哥](https://www.jianshu.com/u/ef4cfe3d9189)关注
-
-42020.01.05 16:58:14字数 5,324阅读 11,259
-
-分子层面对生物的研究，在个体水平上主要是看单个基因的变化以及全转录本的变化（RNA-seq）；在对个体的研究的基础上，开始了群体水平的研究。如果说常规的遗传学主要的研究对象是个体或者个体家系的话，那么群体遗传学则是主要研究由不同个体组成的群体的遗传规律。  
-在测序技术大力发展之前，对群体主要是依靠表型进行研究，如加拉巴哥群岛的13中鸟雀有着不同的喙，达尔文认为这是自然选择造成的后果![^{[1]}](https://math.jianshu.com/math?formula=%5E%7B%5B1%5D%7D)。达尔文的进化论对应的观点可以简单概括为“物竞天择，适者生存”，这也是最为大众所接受的一种进化学说。直到1968年，日本遗传学家提出了中性进化理论\[2\]，也叫中性演化理论。中性理论的提出很大程度上是基于分子生物化学的发展。可以这样理解中性理论：一群人抽奖，在没有内幕的情况下，每个人抽到一等奖的概率是相等的，这个可能性和参与抽奖的人的身高、年龄、爱好等因素都没有关系。中性理论常作为群体遗传研究中的假设理论（CK）来计算其他各种统计指标。  
 群体遗传学，研究的单位是群体，比如粳稻、籼稻、野生稻，就能够构成不同的群体；我们国内的各省份的水稻也可以作为一个个群体。 群体遗传学大概可以分为群体内的研究和群体间的研究。比如研究云南元阳的水稻的遗传多样性；如果研究是的云南元阳的水稻和东北的水稻，那就可以算成是群体间的研究。群体间和群体内的研究是相互的。  
 测序价格的急剧下降\[3\]使得大规模的群体测序得以实现。  
 
@@ -868,3 +881,430 @@ NC文章图\[30\]
 > https://www.jianshu.com/p/53727b4f646b
 
 
+进化开始于一个个体的一条染色体上的一个突变。分子群体遗传学研究的是这些突变在群体中频率的升高或降低。许多进化力量能够通过群体来加速或减缓这些突变的传递。通过个体间分子突变的模式能够推断出具体是哪些进化力量在起作用。
+
+遗传标记的使用最早是1990年ABO血型的发现，而“分子”遗传学则可以追溯到Harris(1966)、Lewontin及Hubby(1966)等人开创性的研究。这些研究者的开创性研究发现个体间在分子水平上的突变数量远超过之前从形态学研究中观察到的数量。这些研究使用同工酶（allozymes）来揭示分子变异。这种方法只能观察到所有变异中的一部分—这些突变能够通过改变电荷使得蛋白以不同的速度通过凝胶。直到1983年才出现了第一个关于核酸分子变异的研究（Aquadro and Greenberg 1983; Kreitman 1983）。这些研究通过对每个核苷酸进行测序，让我们能够全面观察到自然群体中的遗传变异。
+
+分子群体遗传学研究更广泛地关注进化过程对自然群体的影响。鉴于此，通常使用少量个体样本的DNA序列来探究那些作用于整个群体的进化力量。哪怕是一个位点上的遗传变异模式都可以用于进化、重组和自然选择等力量的推断，还可以对群体历史进行推断（如相对大小和迁移史）。基于过去100多年大量群体遗传理论的建立和发展，这样的一些推断是可行的。这些理论告诉我们当每种进化力量发生作用时，我们应该（期望）观察到什么。关于群体遗传学早期的理论研究并没有利用分子数据，但是分子方法的快速发展崛起极大地促进了相关研究的开展，这些研究工作对分子进化过程进行了建模。
+
+要想从DNA序列中推断出正确的推论，那分子群体遗传学理论是至关重要必不可少的。因此，了解主要的模型和它们对应的假设是很重要的。
+
+**在本章中会对这些模型进行简单的介绍，但是不会把群体遗传学的基础的都覆盖到。我们假设读者是有一定基础的。**
+
+本章主要着重于最相关的理论和模型，并将这些理论和模型应用到群体遗传数据上。理解用于序列推断的模型的结构对于理解这些推断是如何实现的是至关重要的。此外，本章节尝试阐明在群体遗传中经常被混淆的术语，并定义它们在本书中的表示和用法。最后讨论的是分子进化的中性理论，尝试在解释这个概念的同时将其易混淆的地方也作简单说明。
+
+# 基础的序列术语
+
+分子群体遗传研究中获取的DNA序列通常如图1那样排列比对在一块。图1所示的是4调序列排列比对的结果。每条序列有15个核苷酸；4条序列来自染色体的同一位点。
+
+![](//upload-images.jianshu.io/upload_images/3454743-2e71c3f33228b3a3.png?imageMogr2/auto-orient/strip|imageView2/2/w/542/format/webp)
+
+因为这4条序列来在4条单独的同源染色体，所以“我”将这4条同源DNA链称为序列（`sequence`）或者是染色体（`chromosomes`）（不管这4条序列是否是独特的）。在本书中我们将使用这个术语，但是在文献中对这4条序列还可以用其他的术语来表述，如基因（`gene`）、`alleles`、`samples`、`cistrons`以及`allele copies`。和20年前一样，用`gene`来描述来自一个单一位点的多条序列并不是常见的，尤其是现在个别研究者会从一个物种的多个基因中采集多条序列。但是许多的研究还是使用`allele`来表示每个染色体，实际上是使用“等位基因”的“不同来源”进行定义。“我”只有在描述个体的某个位点上核苷酸（或氨基酸）不同时才使用`allele`。这种是根据等位基因状态的差异进行定义的。因此，对于图1，我们可以说染色体为_n_\=4。需要注意的是，这个术语并不取决于这4条序列是否随机来自2个二倍体个体，或四倍体个体，或4个独立的自交二倍体。在所有的例子中，我们都是从自然界中采集4条染色体。
+
+在这个比对图中，我们能够看到某些位点是不同的，但我们主要关注的是双等位位点（因为它们是最常见的变异类型，尽管在一个位点上可能有2个以上的变异）。有许多的术语用于描述这种DNA序列上的差异。我们可以看到在我们的样品中有6个多态性（`polymorphism`），或者是分隔点（`segregating site`），或者是突变（`mutations`），或者是单核苷酸多态性（`single nucleotide polymorphisms`，SNPs）。虽然之前多态性和分隔点是使用最多的术语，但是现在更常用的说法是SNP（发音是`snip`，最早是1994年）。一个单一序列上所有等位基因的集合叫做单倍型（`haplotype`）。
+
+突变（`mutations`）在不同的领域有着完全不同的意思。突变可以用来表示DNA发生变化的过程或该过程中产生的新的等位基因。有时候突变是多态性的同义词；在更注重医学的人体群体遗传学中，仅仅是指稀有的多态性（发生的次数<1-5%，或者仅仅是单一序列）。所有的多态性最初都是以突变为表现形式出现的。在本书中，“我”用突变来表示变异产生的过程以及在这个过程中新突变的出现。最后，“替换”（`substitution`）表示的是那些在物种间观察到的DNA差异，以区别于物种内的变异。
+
+通常，我们认为`indel`(insertion/deletion)不是分离位点（`segregating sites`）（虽然有时候插入1bp的碱基也算作分离位点）。这样的划分的原因是当两段序列有多个核苷酸插入时，很难区分真真正正的差异碱基数目。比如，2bp的`indel`算1个多态性位点还是两个？这个答案取决于我们是把这个2bp的`indel`看作是一个单独的突变还是2个分离的长度为1bp的突变？通常不将`indel`等类似的数据加入到分析中。
+
+
+
+# 【群体遗传学】1.1进化模型
+
+[![](https://upload.jianshu.io/users/upload_avatars/3454743/374bf3a9-1563-42b3-b332-e93f5cc4949a.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/ef4cfe3d9189)
+
+[研究僧小蓝哥](https://www.jianshu.com/u/ef4cfe3d9189)关注
+
+12020.10.05 09:08:43字数 1,996阅读 1,451
+
+# Wright-Fisher模型
+
+在所有群体中，就多态性（`polymorphisms`）来说，遗传漂变（`genetic drift`）能够改变等位基因的频率。由于群体的有限性加上在每代新个体中某些染色体比其他的染色体有更多的机会传到下一代，所以漂变对等位基因频率的影响是随机的。遗传漂变不同于自然选择（因为在后代中，等位基因或基因型之间并没有稳定持续的差异，因此每个个体的等位基因在频率上并没有持续升高或降低）。
+
+遗传漂变模型能够解释群体中的个体是如何一代代进行更替的。最常见的模型是`Wright-Fisher 模型`。这个模型假设一个群体的大小是固定的，_N_ 倍性雌雄同体。我们把他们理解成雌雄同体的，这样一来群体中的一个个体就能另外一个进行结合。但是这个群体是可以推广到具有不同性别的群体的。因为群体中的个体是二倍体，因此在该群体的每一代中就有_2N_条染色体（常染色体）。如果我们把性染色体加入到该模型中，那就有_1.5N_条`X`染色体或`Z`染色体，0.5`N`条`Y`染色体或`W`染色体，以及_0.5N_条线粒体或叶绿体基因组（这些数量取决于我们研究的生物）。为了形成下一代个体，我们假设个体间是随机结合的并统一对染色体近行采样并分配给下一代。没有个体存活到下一代，相反，整个群体都被新一代个体所取代。这个模型最适用于一年生植物和昆虫（只存活一年这一类）等没有世代重叠的群体（一年生脊椎动物很少但是确实是存在的）。
+
+现在来看遗传漂变对`Wright-Fisher模型`中等位基因频率的影响。假设某个核苷酸位点上有两种等位基因（`Allele`）：A
+
+![_1](https://math.jianshu.com/math?formula=_1)
+
+和A
+
+![_2](https://math.jianshu.com/math?formula=_2)
+
+。在第_t_代中，有_i_条染色条携带了A
+
+![_1](https://math.jianshu.com/math?formula=_1)
+
+，则频率为：
+
+![P_t = \frac{i}{2N}](https://math.jianshu.com/math?formula=P_t%20%3D%20%5Cfrac%7Bi%7D%7B2N%7D)
+
+也就是说有_2N-i_ 条染色体携带了A
+
+![_2](https://math.jianshu.com/math?formula=_2)
+
+，频率为：
+
+![q_t = 1 - p_t](https://math.jianshu.com/math?formula=q_t%20%3D%201%20-%20p_t)
+
+下一代染色体采样就相当于从参数为_2N_ 和
+
+![\frac{i}{2N}](https://math.jianshu.com/math?formula=%5Cfrac%7Bi%7D%7B2N%7D)
+
+的二项分布中进行抽样。因此，`Wright-Fisheries模型`中下一代的_p_的均值和方差为：
+
+![E(p_{t+1}) = p_t](https://math.jianshu.com/math?formula=E(p_%7Bt%2B1%7D)%20%3D%20p_t)
+
+![Var(p_{t+1}) = \frac{p_{t}q_{t}}{2N}](https://math.jianshu.com/math?formula=Var(p_%7Bt%2B1%7D)%20%3D%20%5Cfrac%7Bp_%7Bt%7Dq_%7Bt%7D%7D%7B2N%7D)
+
+![E(.)](https://math.jianshu.com/math?formula=E(.))
+
+表示一个随机变量的期望（均值），
+
+![Var(.)](https://math.jianshu.com/math?formula=Var(.))
+
+表示的是方差。这些式子表示当只有遗传漂变在发挥作用时（没有突变没有选择），也就意味着随着时间的改变，等位基因的频率在期望上是不变的。因为我们的期望中，等位基因频率是不会改变的，所以我们并不能对任何一个等位基因进行预测。另外，在这个过程中，方差是和群体大小直接相关的。因此，在小群体中，等位基因频率会有更大的改变。更重要的是，即使我们预计不会发生重大的变化，以相同的等位基因频率开始的独立群体将不可避免地在平均等位基因频率上产生差异，这样一来就形成了 进化趋异。等位基因通常是朝着0或1进行漂变的。如果某个等位基因的在群体中的频率是1，那我们就称其为`fixed`。如果一旦发生“固定”，那就不会又其他的变化发生，因为两个alleles中的其中一个已经从群体中消失了。
+
+当遗传漂变是唯一的进化力量时，对一个群体来说，遗传变异的水平是会下降的。如果我们将杂合度（`heterozygosity`）定义为随机选择的两个染色体具有不同等位基因的概率的话，那在一个随机交配的群体中一个双等位基因的杂合度就是_`2pq`_。如果其中一个allele比另外一个更常见的话，杂合度就会降低。在`Wright-Fisher模型`中，期望在每代中杂合度降低的速率是
+
+![\frac{1}{2N}](https://math.jianshu.com/math?formula=%5Cfrac%7B1%7D%7B2N%7D)
+
+。虽然杂合度下降并不能用于衡量等位基因频率的变化，但是上述的这些结果表明当遗传漂变是唯一的进化力量时，等位基因变化的速率是极低的。
+
+# Moran模型
+
+`Moran模型`在某些方面比`Wright-Fisher模型`更接近真实情况，也更容易在数学上进行某些处理。在`Moran模型`中，不同年龄的个体是可以共存的，也就不用像`Wright-Fisher模型`那样新的一代会完全替代上一代。严格来说，`Moran模型`只能用于单倍体群体，但是为了和`Wright-Fisher模型`进行比较，我们假设一个固定大小的群体中有_2N_个单倍体个体。在一个给定的时间点，一个个体随机被选择然后进行繁衍，另外一个个体被随机选择后面对死亡。如果我们将这个过程重复_2N_遍，我们将得到和`Wright-Fisher模型`一样大小的一代群体。可以这样理解：平均来说，每个个体会被下一代取代；但是某些个体存活的时间少于1代，而有的个体存活的时间超过一代（编者注：就像有的人超过人类平均年龄后才去世，但是有的人在平均年龄之前就去世了）。
+
+在这个模型中，当携带一个等位基因的个体进行繁殖而另外一个个体面临死亡时，等位基因的频率才会发生改变。当让，也可能是携带相同等位基因的两个个体都死亡了，那现在的情况是没有等位基因频率发生变化。在经过_2N_次的出生-死亡迭代后，我们能够知道下一代中等位基因频率的均值和方差。还是考虑一个和`Wright-Fisher模型`中相同的双等位基因位点。在`Moran模型`的下一代中，等位基因频率_p_的均值和方差分别是：
+
+![E(p_{t+1}) = p_t](https://math.jianshu.com/math?formula=E(p_%7Bt%2B1%7D)%20%3D%20p_t)
+
+![Var(p_{t+1}) = \frac{2p_{t}q_{t}}{2N}](https://math.jianshu.com/math?formula=Var(p_%7Bt%2B1%7D)%20%3D%20%5Cfrac%7B2p_%7Bt%7Dq_%7Bt%7D%7D%7B2N%7D)
+
+和`Wright-fisher模型`一样，平均等位基因频率的均值是不变的，但是此时的方差是`Wright-Fisher模型`中的两倍。这是因为在`Moran模型`中，每个个体后代的数量是`Wright-Fisher模型`的两倍。这种差异的结果就是在`Moran`模型中，遗传漂变的次数是`Wright-Fisher模型`的两倍，杂合度也就降低了一半：_1/N_。有遗传漂变引起的进化在`Moran模型`中任然是很慢的，但是速度比`Wright-Fisher模型`快了两倍。
+
+此处的两种模型对大多数物种来说都是“不真实的”。在某些应用场景下需要的是更接近真实情况的模型，`Cannings模型`就是其中之一。在这个模型中，子代数可以有任意的方差。这个模型属于`Wright-Fisher模型`的推广模型。但`Wright-Fisher模型`不仅直观，还能从中推到出一些重要的进化结论。`Wright-fisher模型`还可以对其他模型的结果进行验证，相当于一个可以用于验证其他模型的模型。
+
+# 【群体遗传学】 π （pi）的计算
+
+[![](https://upload.jianshu.io/users/upload_avatars/3454743/374bf3a9-1563-42b3-b332-e93f5cc4949a.png?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/ef4cfe3d9189)
+
+[研究僧小蓝哥](https://www.jianshu.com/u/ef4cfe3d9189)关注
+
+12020.10.21 17:05:25字数 1,277阅读 3,701
+
+# 杂合度 _heterozygosity_
+
+某个位点的第![i](https://math.jianshu.com/math?formula=i)个等位基因的样本频率为![p_i](https://math.jianshu.com/math?formula=p_i)，那么该位点所有等位基因的频率和应该是1。先考虑二倍体的双等位基因，那就是![p_1 + p_2 = 1](https://math.jianshu.com/math?formula=p_1%20%2B%20p_2%20%3D%201)。衡量单个多态位点变异（variation）的一个方法是计算样本杂合度（_heterozygosity_），公式如下：
+
+![h = \frac{n}{n-1}(1-\sum{p_i^2})](https://math.jianshu.com/math?formula=h%20%3D%20%5Cfrac%7Bn%7D%7Bn-1%7D(1-%5Csum%7Bp_i%5E2%7D))
+
+在公式中，![n](https://math.jianshu.com/math?formula=n)代表的是样本中序列的数量。
+
+# ![\pi](https://math.jianshu.com/math?formula=%5Cpi)
+
+上面这个公式是针对一个位点的，如果是正对一条序列的话，那其实就就是将整条序列的杂合度加起来即可。
+
+![\pi = \sum_{j=1}^{S}h_j](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7BS%7Dh_j)
+
+其中![S](https://math.jianshu.com/math?formula=S)表示的是分离位点的数量，![h_j](https://math.jianshu.com/math?formula=h_j)表示的是第![j](https://math.jianshu.com/math?formula=j)个分离位点的杂合度。在Wright-Fisher模型（无限位点的二倍体）下，![E(\pi) = \theta](https://math.jianshu.com/math?formula=E(%5Cpi)%20%3D%20%5Ctheta)，因此有时这个统计量也叫![\theta_{\pi}](https://math.jianshu.com/math?formula=%5Ctheta_%7B%5Cpi%7D)。我们需要注意的是在单态位点（monomorphic site）时杂合度是0。
+
+先看这样一个例子：
+
+![](//upload-images.jianshu.io/upload_images/3454743-234c3f45cc4d613a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+
+假设现在有4个样本，15个位点，但是只有6个位点是分离位点，我们先计算每个分离位点的杂合度：
+
+根据公式可知，对分离位点1（图中的第二列序列），有两个等为位点，分别是T和C，其中T有3个，C有1个，那么对T来说，它的频率就是0.75，对C来说它的频率就是0.25。根据公式可得：
+
+![h = \frac{4}{3}\sum[1-(0.75^2 + 0.25^2) ]= 0.50](https://math.jianshu.com/math?formula=h%20%3D%20%5Cfrac%7B4%7D%7B3%7D%5Csum%5B1-(0.75%5E2%20%2B%200.25%5E2)%20%5D%3D%200.50)
+
+我们以此计算就能得到其他5个分离位点的杂合度分别为：0.667，0.5，0.667，0.5，0.5。
+
+那么就能计算![\pi](https://math.jianshu.com/math?formula=%5Cpi)值了：
+
+![\pi = 0.5 + 0.667 + 0.5 +0.667 + 0.5 + 0.5 = 3.33](https://math.jianshu.com/math?formula=%5Cpi%20%3D%200.5%20%2B%200.667%20%2B%200.5%20%2B0.667%20%2B%200.5%20%2B%200.5%20%3D%203.33)
+
+但是我们通常关注的是每个位点![\pi](https://math.jianshu.com/math?formula=%5Cpi)的均值：
+
+![\pi = \frac{3.33}{15} = 0.222](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Cfrac%7B3.33%7D%7B15%7D%20%3D%200.222)
+
+我们将![\pi](https://math.jianshu.com/math?formula=%5Cpi)的计算进行推广就能得到下面这个公式：
+
+![\pi = \frac{\sum_{i < j}k_{ij}}{n(n-1)/2}](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Cfrac%7B%5Csum_%7Bi%20%3C%20j%7Dk_%7Bij%7D%7D%7Bn(n-1)%2F2%7D)
+
+其中![k_{ij}](https://math.jianshu.com/math?formula=k_%7Bij%7D)表示的是第![i](https://math.jianshu.com/math?formula=i)条序列和第![j](https://math.jianshu.com/math?formula=j)条序列之间不同核苷酸的数量，分母表示的是![n](https://math.jianshu.com/math?formula=n)个序列之间进行比较的唯一次数（非重复比较）。现在我们将这个公式应用到上面的序列中。
+
+![](//upload-images.jianshu.io/upload_images/3454743-cb0de4959c872bc0.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+
+现在是有4条序列，所以![n = 4](https://math.jianshu.com/math?formula=n%20%3D%204). 然后以此进行比较:
+
+第一条VS第二条:3个不同的核苷酸
+
+第一条VS第三条:4个不同的核苷酸
+
+第一条VS第四条:3个不同的核苷酸
+
+第二条VS第三条:5个不同的核苷酸
+
+第二条VS第四条:0个不同的核苷酸
+
+第三条VS第四条:5个不同的核苷酸
+
+所以,![\pi = \frac{3+4+3+5+0+5}{4(4-1)/2} = 3.33](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Cfrac%7B3%2B4%2B3%2B5%2B0%2B5%7D%7B4(4-1)%2F2%7D%20%3D%203.33)
+
+**需要注意的是当数据量很大的时候,使用公式![\pi = \sum_{j=1}^{S}h_j](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7BS%7Dh_j)计算更快**。
+
+正如前面说到的，我们在计算序列之间的差异时通常是省略`indel`将其变成缺失值进行处理的。当使用公式![\pi = \sum_{j=1}^{S}h_j](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7BS%7Dh_j)并且将`indel`变成缺失值时，针对不同位点![n](https://math.jianshu.com/math?formula=n)是不同的。使用公式![\pi = \frac{\sum_{i < j}k_{ij}}{n(n-1)/2}](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Cfrac%7B%5Csum_%7Bi%20%3C%20j%7Dk_%7Bij%7D%7D%7Bn(n-1)%2F2%7D)的话，通常会省略gap位置。
+
+比如这个例子：
+
+![](//upload-images.jianshu.io/upload_images/3454743-cf3950b3fa0d0dbe.png?imageMogr2/auto-orient/strip|imageView2/2/w/592/format/webp)
+
+如果用第一个公式，那么![\pi = 3.49](https://math.jianshu.com/math?formula=%5Cpi%20%3D%203.49)，但是如果用第二个公式的话，![\pi = 2.83](https://math.jianshu.com/math?formula=%5Cpi%20%3D%202.83)。原因是第一个公式将`indel`当作缺失值进行处理，而第二个公式将`indel`当作gap直接省略了这些位点（哪怕是在这些位点并不是分离位点）。不同的公式给出的结果也不一样，尤其是正对平均的每个位点时。因此，在处理基因组这种大数据时，通常使用![\pi = \sum_{j=1}^{S}h_j](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Csum_%7Bj%3D1%7D%5E%7BS%7Dh_j)这个公式。
+
+我们可以把![\pi](https://math.jianshu.com/math?formula=%5Cpi)的期望方差表示成参数为![\theta](https://math.jianshu.com/math?formula=%5Ctheta)的函数。虽然在中性进化模型下，这个参数没啥用😄。
+
+如果没有重组发生的话：
+
+![Var(\pi) = \frac{n + 1}{3(n + 1)}\theta + \frac{n(n^2 + n + 3)}{9n(n - 1)}\theta^2](https://math.jianshu.com/math?formula=Var(%5Cpi)%20%3D%20%5Cfrac%7Bn%20%2B%201%7D%7B3(n%20%2B%201)%7D%5Ctheta%20%2B%20%5Cfrac%7Bn(n%5E2%20%2B%20n%20%2B%203)%7D%7B9n(n%20-%201)%7D%5Ctheta%5E2)
+
+从公式可以看出，和![\pi](https://math.jianshu.com/math?formula=%5Cpi)相关的方差很大，即使样本很大时，方差也不接近于0。
+
+# ![\theta_W](https://math.jianshu.com/math?formula=%5Ctheta_W)
+
+![\theta_W](https://math.jianshu.com/math?formula=%5Ctheta_W)通常叫![Watterson‘s \theta。用](https://math.jianshu.com/math?formula=Watterson%E2%80%98s%20%5Ctheta%E3%80%82%E7%94%A8)\\pi![表示核苷酸变异的另外一种方法是利用样品中所有分离位点的数量](https://math.jianshu.com/math?formula=%E8%A1%A8%E7%A4%BA%E6%A0%B8%E8%8B%B7%E9%85%B8%E5%8F%98%E5%BC%82%E7%9A%84%E5%8F%A6%E5%A4%96%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%E6%98%AF%E5%88%A9%E7%94%A8%E6%A0%B7%E5%93%81%E4%B8%AD%E6%89%80%E6%9C%89%E5%88%86%E7%A6%BB%E4%BD%8D%E7%82%B9%E7%9A%84%E6%95%B0%E9%87%8F)S![进行衡量，但是需要注意的是样本量太大时会得到很大的](https://math.jianshu.com/math?formula=%E8%BF%9B%E8%A1%8C%E8%A1%A1%E9%87%8F%EF%BC%8C%E4%BD%86%E6%98%AF%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%E6%A0%B7%E6%9C%AC%E9%87%8F%E5%A4%AA%E5%A4%A7%E6%97%B6%E4%BC%9A%E5%BE%97%E5%88%B0%E5%BE%88%E5%A4%A7%E7%9A%84)S![，因此需要对](https://math.jianshu.com/math?formula=%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%9C%80%E8%A6%81%E5%AF%B9)S$进行校正：
+
+![\theta_W = \frac{S}{a}](https://math.jianshu.com/math?formula=%5Ctheta_W%20%3D%20%5Cfrac%7BS%7D%7Ba%7D)
+
+![a = \sum_{i = 1}^{n-1}\frac{1}{i}](https://math.jianshu.com/math?formula=a%20%3D%20%5Csum_%7Bi%20%3D%201%7D%5E%7Bn-1%7D%5Cfrac%7B1%7D%7Bi%7D)
+
+对类似于Wright-Fisher模型处于平衡状态且有无限突变位点的群体，![\theta_W](https://math.jianshu.com/math?formula=%5Ctheta_W)也是![\theta](https://math.jianshu.com/math?formula=%5Ctheta)的估计量。
+
+那么综上：
+
+![\theta:E(S) = \theta{a}](https://math.jianshu.com/math?formula=%5Ctheta%3AE(S)%20%3D%20%5Ctheta%7Ba%7D)
+
+将这个公式应用到这个例子上：
+
+![](//upload-images.jianshu.io/upload_images/3454743-a3534a6106957e19.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+
+![\theta_W = \frac{6}{1/1+1/2+1/3} = 3.28](https://math.jianshu.com/math?formula=%5Ctheta_W%20%3D%20%5Cfrac%7B6%7D%7B1%2F1%2B1%2F2%2B1%2F3%7D%20%3D%203.28)
+
+可以看到这个公式得到的结果和前面公式计算得到的3.33很接近。
+
+还是和前面说的一样，遇到`indel`不同的处理方式得到的结果不一样：
+
+![](//upload-images.jianshu.io/upload_images/3454743-de679ef9827ceb2e.png?imageMogr2/auto-orient/strip|imageView2/2/w/592/format/webp)
+
+1. 如果将`indel`当作缺失值进行处理，那![\theta_W = 5/(1/1+1/2+1/3) = 2.73](https://math.jianshu.com/math?formula=%5Ctheta_W%20%3D%205%2F(1%2F1%2B1%2F2%2B1%2F3)%20%3D%202.73)
+2. 如果将`indel`当作gap进行处理，那![\theta_W = 1/(1/1+1/2) = 0.667](https://math.jianshu.com/math?formula=%5Ctheta_W%20%3D%201%2F(1%2F1%2B1%2F2)%20%3D%200.667)
+
+将这两种不同方法得到的结果相加：
+
+![\theta_W = 2.73 + 0.667 = 3.40](https://math.jianshu.com/math?formula=%5Ctheta_W%20%3D%202.73%20%2B%200.667%20%3D%203.40)
+
+同样，我们可以用参数为![\theta](https://math.jianshu.com/math?formula=%5Ctheta)的函数来表示![S](https://math.jianshu.com/math?formula=S)的期望方差（Wright-Fisher模型，没有重组发生）：
+
+![Var(s) = \sum_{i=1}^{n-1}\frac{1}{i}\theta + \sum_{i=1}^{n-1}\frac{1}{i^2}\theta^{2}](https://math.jianshu.com/math?formula=Var(s)%20%3D%20%5Csum_%7Bi%3D1%7D%5E%7Bn-1%7D%5Cfrac%7B1%7D%7Bi%7D%5Ctheta%20%2B%20%5Csum_%7Bi%3D1%7D%5E%7Bn-1%7D%5Cfrac%7B1%7D%7Bi%5E2%7D%5Ctheta%5E%7B2%7D)
+
+如果是自由重组的话，就只是前半部分。
+
+还可以从这个公式推断出：
+
+![Var(\theta_W) = \frac{Var(S)}{a^2}](https://math.jianshu.com/math?formula=Var(%5Ctheta_W)%20%3D%20%5Cfrac%7BVar(S)%7D%7Ba%5E2%7D)
+
+我们通常会看到关于![\theta](https://math.jianshu.com/math?formula=%5Ctheta)的两种估计值：![\pi](https://math.jianshu.com/math?formula=%5Cpi)和![\theta_W](https://math.jianshu.com/math?formula=%5Ctheta_W)，测序错误等会造成不同的影响，因此通常需要两个值都看，还有更多的统计参数可以使用（如Tajima's D）。
+
+
+
+# 群体遗传学统计指标——种群核苷酸多样性（π值）
+
+[![](https://upload.jianshu.io/users/upload_avatars/23339616/11cf55e6-8aa3-411c-a1df-23af4b1163ec.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/92f34db5d264)
+
+[EwanH](https://www.jianshu.com/u/92f34db5d264)关注
+
+12021.02.04 10:23:47字数 1,308阅读 7,532
+
+# 理论
+
+种群核苷酸多样性，顾名思义指的就是核苷酸多样性，值越大说明核苷酸多样性越高。通常用于衡量群体内的核苷酸多样性，也可以用来推演进化关系。计算公式为：
+
+  
+
+![](//upload-images.jianshu.io/upload_images/23339616-c4fddb33de803081.png?imageMogr2/auto-orient/strip|imageView2/2/w/331/format/webp)
+
+核苷酸多样性计算公式
+
+计算群体的π值，可以理解成先把群体内每个样本两两求解，再求得群体的均值。
+
+计算的软件最常见的是vcftools，也有对应的R包PopGenome。通常是选定某一基因组区域，设定好窗口大小，然后滑动窗口进行计算。
+
+# 使用VCFTOOLS计算种群核苷酸多样性
+
+## VCF文件处理
+
+#### 给VCF文件添加ID
+
+SNP data通常都是以VCF格式文件呈现，老规矩，拿到VCF文件的第一件事情就是添加各个SNP位点的ID。
+
+先看一下最开始生成的VCF文件：
+
+![](//upload-images.jianshu.io/upload_images/23339616-0fc9995176a79920.png?imageMogr2/auto-orient/strip|imageView2/2/w/1081/format/webp)
+
+原始VCF文件
+
+可以看到，ID列都是"."，需要我们自己加上去。我用的是某不知名大神写好的perl脚本，可以去我的github上下载(https://github.com/Wanyi-Huang/VCF\_add\_id)，用法：
+
+> perl path2file/VCF\_add\_id.pl YourDataName.vcf YourDataNameWithId.vcf
+
+当然也可以用excel手工添加。添加后的文件如下图所示（格式：CHROMID\_\_POS）：
+
+![](//upload-images.jianshu.io/upload_images/23339616-ff6260360c9e838a.png?imageMogr2/auto-orient/strip|imageView2/2/w/1040/format/webp)
+
+添加ID后的VCF文件
+
+#### SNP位点过滤
+
+原始Call出来的SNP实在是太多了，而且有一些低频位点会影响后续的分析（软件有时候还会报错），不仅会影响速度，也会影响最后结果的准确性，因此我们去掉他们。此处用到强大的plink软件，用法：
+
+> plink --vcf YourDataNameWithId.vcf --maf 0.05 --geno 0.2 --recode vcf-iid -out YourDataNameWithId-maf0.05 --allow-extra-chr
+
+参数解释：--maf 0.05：过滤掉次等位基因频率低于0.05的位点；--geno 0.2：过滤掉有20%的样品缺失的SNP位点；--allow-extra-chr：我的参考数据是Contig级别的，个数比常见分析所用的染色体多太多，所以需要加上此参数。
+
+## 准备样本ID文件
+
+非常简单，把某群体的全部样本ID放在一个TXT文件里就行，注意要每一行一个ID。
+
+## 计算核苷酸多样性（π）
+
+> vcftools --vcf YourDataNameWithId.vcf --keep YourDataName.txt --window-pi 10000 --out YourDataName\_pi
+
+\--window-pi 指定窗口的大小，这里我设置了10000，具体大小根据基因组大小选择
+
+\--out 指定输出文件的前缀名
+
+## 数据可视化
+
+数据可视化就是~花式~展示你的结果。在多样性分析中，π值越大表明群体中该位点的核苷酸多样性越大，反之亦然。那么我们所画的图，应该要展示基因组各个区域π值的大小。因此，我们可以选择散点图or折线图。
+
+  
+
+![](//upload-images.jianshu.io/upload_images/23339616-a500749932084de0.png?imageMogr2/auto-orient/strip|imageView2/2/w/699/format/webp)
+
+某文章描述群体核苷酸多样性使用的散点图
+
+画散点图的方法，之前在[群体分歧度检验](https://www.jianshu.com/p/bb0beec0ed63)中已经分享过啦，各位移步参考。
+
+#### 那如用R何画折线图嘞？
+
+我的数据集如下图所示：
+
+  
+
+![](//upload-images.jianshu.io/upload_images/23339616-1c6a8b8bb4928664.png?imageMogr2/auto-orient/strip|imageView2/2/w/293/format/webp)
+
+用于画图的数据表pi.txt
+
+注：第一列为位置信息；第二列为对应位置的pi值；第三列为需要的颜色；最后一列为染色体位置信息（非必要）。
+
+分享一下我写得一个R流程：（大家需要自己根据自己的数据就行调整，但是万变不离其中，你们可以的！）
+
+> #读入数据；
+> 
+> dt1<- read.delim("pi.txt",sep="\\t", header = T, check.names = F)
+> 
+> \# 加载ggplot2包；
+> 
+> library(ggplot2)
+> 
+> #定义染色体位置。
+> 
+> #我分析的物种有8条染色体，我将所有的染色体都串起来作图，因此需要标出每条染色体的中间位置在哪。
+> 
+> br = c(440000, 1370000, 2410000, 3515000, 4610000,5800000,7095000,8399791)
+> 
+> la = c("1","2","3","4","5","6","7","8")
+> 
+> #自定义图表主题，对图表做精细调整；
+> 
+> mytheme<-theme(panel.grid.major =element\_blank(),
+> 
+>                 panel.grid.minor = element\_blank(),
+> 
+>                 panel.background = element\_blank(),
+> 
+>                 panel.border = element\_blank(),
+> 
+>                 axis.line.y = element\_line(color = "black"),
+> 
+>                 axis.line.x = element\_line(color = "black"),
+> 
+>                 #axis.title.x = element\_text(size = rel(1.2)),
+> 
+>                 axis.title.y = element\_text(size = rel(1.2)),
+> 
+>                 axis.text.y = element\_text(size=rel(1.2),color="black"),
+> 
+>                 #axis.text.x = element\_text(size=rel(1.2),color="black"),
+> 
+>                 plot.margin=unit(x=c(top.mar,right.mar,bottom.mar,left.mar),units="inches"))
+> 
+> #绘制
+> 
+> pa<-ggplot(data=dt1, mapping = aes(x=No,y=pop1))+geom\_line(color=dt1$Color1,size=1)
+> 
+> #设置x轴范围，避免点的溢出绘图区；
+> 
+> pa<-pa+scale\_x\_continuous(limits = c(-1000, 9230000),breaks = br,labels = la)
+> 
+> #设置y轴范围
+> 
+> pa<-pa+scale\_y\_continuous(limits = c(-0.0005,0.01),breaks = c(0,0.002,0.004,0.006,0.008,0.010),labels = c("0.0","2.0","4.0","6.0","8.0","10.0"))
+> 
+> #设置图例、坐标轴、图表的标题；
+> 
+> pa<-pa+labs(y="Pi (10e-3)",x=NULL)
+> 
+> #自定义图表主题，对图表做精细调整；
+> 
+> pa<-pa+mytheme
+> 
+> #出图
+> 
+> pa
+
+  
+
+参考：
+
+[Vcftools Manual](https://links.jianshu.com/go?to=http%3A%2F%2Fvcftools.sourceforge.net%2Fman_latest.html)
+
+[Comparative genomics revealed adaptive admixture in Cryptosporidium hominis in Africa](https://links.jianshu.com/go?to=https%3A%2F%2Fpubmed.ncbi.nlm.nih.gov%2F33355530%2F)
+
+21人点赞
+
+[群体遗传学实战](https://www.jianshu.com/nb/47222028)
+
+
+
+# 记录一个关于计算核酸多样性（pi）的经历（附计算pi的perl脚本）
+
+![](https://csdnimg.cn/release/blogv2/dist/pc/img/original.png)
+
+[Xulei0737](https://blog.csdn.net/weixin_43362619) ![](https://csdnimg.cn/release/blogv2/dist/pc/img/newCurrentTime.png) 于 2020-07-09 23:46:48 发布 ![](https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png) 3214 ![](https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png) ![](https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png) 收藏  3 
+
+版权声明：本文为博主原创文章，遵循 [CC 4.0 BY-SA](http://creativecommons.org/licenses/by-sa/4.0/) 版权协议，转载请附上原文出处链接和本声明。
+
+本文链接：[https://blog.csdn.net/weixin\_43362619/article/details/107239012](https://blog.csdn.net/weixin_43362619/article/details/107239012)
+
+版权
+
+  之前在做叶绿体基因组核酸多样的时候，先是用全基因组做，选择窗口和步长使用dnasp5来求pi值。后来发现文章里放的都是编码序列和非编码序列，或者每个基因的pi值。叶绿体的编码序列一般在80个多个，如果再加上非编码区，那么有一百多个序列需要计算，手动算的话挺费时费劲的，一分钟算三个的话得近一个小时。。。作为懒人的我肯定是不愿意每天花一个小时做这样的重复工作，于是……  
+  我找了文章里的计算方法，发现使用的竟然全部是dnasp（难道都是一个个算的么？dnasp是windows的一款GUI软件，似乎并不能批量计算），后来发现vcftools好像可以计算pi，而且是[linux](https://so.csdn.net/so/search?q=linux&spm=1001.2101.3001.7020)版本的，通过脚本很容易实现批量计算，于是抓紧试了试。但是vcftools只支持vcf格式的文件，没关系，把比对的序列转成vcf格式就行了，最终实现批量计算多个基因的pi值，小小开心下。但是有个问题，同样的序列用vcftools计算得到的pi和用dnasp计算得到的pi不一样。开始是觉得我转换得到vcf的时候不对。于是我找到了另一款计算pi的工具：perl中有个Bio::PopGen::Statistics模块，可以计算pi，而且输入的是比对后的序列。但是！结果仍然和dnasp计算的不一样！令人惊讶的是，popgene和vcftools的计算结果是相同的，我百思不得其解。难道是dnasp算的有问题。于是找到了计算pi的公式，手动算了下，结果和dnasp的值相同。难道。。。另外两个算错了？？？于是研究了Bio::PopGen::Statistics模块中计算pi值的代码，终于找到了原因。  
+   Bio::PopGen::Statistics在计算pi的时候和vcftools类似，先把比对结果转换成vcf格式，然后计算。但是不同的是，如果两个序列比如AAA,AAT，直接计算的话差异碱基数为1。当转成vcf的时候是用 3 A T 0/0 1/1，来表示(3号位点其中一个是A，另一个是T)。这时候的差异碱基数就变成了4（把0/0，1/1分别看成两个位点，如果还原成序列的话就是A，A，T，T，及从原来的2条序列变成了4条。。。。），实际计算的时候是把样品数当成4而不是2。也就是说，差异碱基数变成了原先的四倍，样品（序列）数变成了原先的两倍，所以最终算的值和dnasp的结果不同。  
+   考虑到vcftools是用于vcf文件的计算，如果有个位点的信息是0/1，那么确实要表示成两个碱基，所以样品数量要变成原先的两倍，计算的也没毛病。dnasp是直接计算序列的pi，没有考虑太多，和直接套公式计算的结果相同，结果没得说。Bio::PopGen::Statistics呢，我给的是比对的序列，然后你按照vcf的来算，似乎并不友好（没详细看它的文档），按理说我给它的序列和给dnasp的序列是相同的，结果应该也是相同的，但是实际情况并不是。  
+   综上所述，如果想计算的是比对后序列的pi，dnasp首选，在这里也是唯一的选择，因为即使你把序列给Bio::PopGen::Statistics算，它算的结果依旧不是你想要的。。。如果你的结果是群体的变异位点信息，那么就选择vcftools把~（当然，不怕麻烦的话也可以把变异位点还原成序列，然后用dnasp来做……）。  
+   到这里就结束了？？怎么可能，我还没找到批量计算对齐后序列的pi（和dnasp计算的结果相同）方法呢。于是自己根据公式造了小轮子。这里注意到有的对齐序列是有indel的（用“-”字符表示），计算的时候是不把含有indel的位点算进去的。这也就是为什么在设置步长和窗口的时候，dnasp给的结果中，窗口的数值有的不是我们设置的倍数，如下图，设置的窗口时200，最后竟然出现了706，这就是由于501到706中间有6个位点是“-”，这个计算的时候要把它去掉，窗口200再加上6个“-”，所以出现了706。此外，最后一个窗口往往要小于设置的窗口，程序计算的时候也需要注意下。计算脚本用perl完成（只会perl…），支持步长和窗口的设置，计算结果和dnasp一样，但是比其灵活：便于做批量的计算。  
+![dnasp计算pi的结果](https://img-blog.csdnimg.cn/20200709231650805.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzM2MjYxOQ==,size_16,color_FFFFFF,t_70)  
+   最后，代码就不放到这了，有需要的话可以加群：936427018。
