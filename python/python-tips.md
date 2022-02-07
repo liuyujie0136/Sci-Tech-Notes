@@ -1,5 +1,32 @@
 # Python使用技巧
-> Collected by liuyujie0136
+
+- [Python使用技巧](#python使用技巧)
+  - [VS Code 相关技巧](#vs-code-相关技巧)
+    - [缩进快捷键](#缩进快捷键)
+    - [同时编辑多行](#同时编辑多行)
+  - [Python更换pip源(pypi镜像) - 清华大学开源软件镜像站](#python更换pip源pypi镜像---清华大学开源软件镜像站)
+  - [Python计算排列数与组合数](#python计算排列数与组合数)
+    - [编写函数计算组合数$C_n^i$](#编写函数计算组合数c_ni)
+    - [使用第三方模块scipy计算排列组合的具体数值](#使用第三方模块scipy计算排列组合的具体数值)
+    - [使用阶乘的方式求组合数](#使用阶乘的方式求组合数)
+    - [使用itertools列出排列组合的全部情况](#使用itertools列出排列组合的全部情况)
+    - [附：MATLAB计算排列组合数](#附matlab计算排列组合数)
+  - [Python中`if __name__ == '__main__':`的作用和原理](#python中if-__name__--__main__的作用和原理)
+    - [作用](#作用)
+    - [原理](#原理)
+  - [修改Python IDLE初始默认文件打开/保存路径的方法](#修改python-idle初始默认文件打开保存路径的方法)
+  - [Biopython教程与手册](#biopython教程与手册)
+  - [Python教程系列-王的机器](#python教程系列-王的机器)
+  - [Python基础教程-C语言中文网](#python基础教程-c语言中文网)
+  - [Python中统计列表元素的出现次数并降序排序](#python中统计列表元素的出现次数并降序排序)
+  - [Python有序字典(OrderedDict)与普通字典(dict)](#python有序字典ordereddict与普通字典dict)
+    - [无序字典（普通字典）](#无序字典普通字典)
+    - [有序字典](#有序字典)
+  - [Python `gzip`模块](#python-gzip模块)
+    - [编写压缩文件](#编写压缩文件)
+    - [读取压缩文件](#读取压缩文件)
+  - [17 Statistical Hypothesis Tests in Python](#17-statistical-hypothesis-tests-in-python)
+
 
 ## VS Code 相关技巧
 
@@ -165,8 +192,6 @@ import test
 ## 修改Python IDLE初始默认文件打开/保存路径的方法
 
 找到桌面或者开始菜单里的Python IDLE快捷方式，或者直接打开安装目录下的pythonw.exe。右击之，选择“属性”，在属性窗口中可对“起始位置”进行修改，即可更改默认文件打开/保存路径。
-
-![python-IDLE-settings](https://liuyujie0136.github.io/Sci-Tech-Notes/python/python-IDLE.png)
 
 ## [Biopython教程与手册](https://biopython-cn.readthedocs.io/zh_CN/latest/)
 

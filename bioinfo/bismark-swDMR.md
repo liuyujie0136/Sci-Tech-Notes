@@ -1,6 +1,5 @@
 # 全基因组重亚硫酸盐测序（Whole Genome Bisulfite Sequencing）甲基化分析
 
-> 参考：  
 > https://github.com/FelixKrueger/Bismark  
 > https://github.com/xflicsu/swDMR  
 > https://www.jianshu.com/p/0aa453ba9476  
@@ -340,5 +339,78 @@ M-bias plot 通过Perl模块`GD:：Graph`产生，没有模块的只产生M-bias
 
 ![report.png](figure/bismark_report.png)
 
+### 示例代码
+
+```bash
+## Using bismark to analysis bisulfite-sequencing data
+# Usage: sbatch bismark_pipeline_paired_end.sh <FastQ Basename> <Genome Folder> <5' Clip bp>
+# Author: Yujie Liu
+# Date: 1/7/2022
+
+# get file name
+fq1=${1}_1.fastq.gz
+fq2=${1}_2.fastq.gz
+fq1_trimmed=${1}_val_1.fq.gz
+fq2_trimmed=${1}_val_2.fq.gz
+
+# trim adapters
+trim_galore \
+    --clip_R1 $3 \
+    --clip_R2 $3 \
+    --basename $1 \
+    --paired $fq1 $fq2
+
+# run bismark (Note: be cautious to use "--non_directional")
+bismark \
+    --local \
+    -X 800 \
+    --un --ambiguous \
+    --genome $2 \
+    -1 ${fq1_trimmed} \
+    -2 ${fq2_trimmed}
+
+# remove duplicates
+deduplicate_bismark \
+    --paired ${1}_val_1_bismark_bt2_pe.bam
+
+# call methylation
+bismark_methylation_extractor \
+    --gzip \
+    --bedGraph \
+    --no_overlap \
+    --comprehensive \
+    --counts \
+    --CX_context \
+    --cytosine_report \
+    --genome_folder $2 \
+    -o ${1}_report \
+    ${1}_val_1_bismark_bt2_pe.deduplicated.bam
+```
 
 ## swDMR
+
+### 示例代码
+
+```bash
+perl ~/Software/swDMR-1.0.7/swDMR \
+    --samples WT_CX_report.txt,MUT_CX_report.txt \
+    --name WT,MUT \
+    --outdir CHH_DMR_result \
+    --statistics Fisher \
+    --cytosineType CHH \
+    --window 200 \
+    --stepSize 50 \
+    --length 100 \
+    --pvalue 0.01 \
+    --coverage 4 \
+    --points 5 \
+    --diff 0.1 \
+    --fold 2 \
+    --fdr 0.05 \
+    --chromosome 1 \
+    --position 2 \
+    --ctype 6 \
+    --methy 4 \
+    --unmethy 5 \
+    --processes 6
+```

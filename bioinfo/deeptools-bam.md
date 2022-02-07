@@ -1,7 +1,6 @@
 # 使用deeptools处理BAM文件
 
-> 参考：  
-> https://deeptools.readthedocs.io/en/develop/index.html  
+> [deepTools Docs](https://deeptools.readthedocs.io/en/develop/index.html)  
 > https://www.jianshu.com/p/b494426ecd32
 
 

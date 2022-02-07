@@ -1,5 +1,82 @@
 # Linux使用技巧
-> Collected by liuyujie0136
+
+- [Linux使用技巧](#linux使用技巧)
+  - [Docker](#docker)
+    - [Docker从入门到实践](#docker从入门到实践)
+    - [Win10家庭版用WSL2运行Docker Desktop，将数据从C盘迁移到其他目录](#win10家庭版用wsl2运行docker-desktop将数据从c盘迁移到其他目录)
+    - [Docker创建共享文件夹](#docker创建共享文件夹)
+  - [鳥哥的Linux私房菜](#鳥哥的linux私房菜)
+  - [Linux常用命令](#linux常用命令)
+  - [Linux特殊符号](#linux特殊符号)
+  - [三十分钟学会AWK](#三十分钟学会awk)
+  - [三十分钟学会SED](#三十分钟学会sed)
+  - [Learn Vim Progressively](#learn-vim-progressively)
+  - [Linux查看系统基本信息](#linux查看系统基本信息)
+  - [Bash和Sh的区别](#bash和sh的区别)
+  - [利用.bashrc个性化配制bash环境](#利用bashrc个性化配制bash环境)
+  - [利用.vimrc个性化配置vim](#利用vimrc个性化配置vim)
+  - [Bash下使用rsync和crontab备份文件](#bash下使用rsync和crontab备份文件)
+  - [Linux中for循环的几个常用写法](#linux中for循环的几个常用写法)
+  - [Linux下将文件夹命名为今天的日期的方法](#linux下将文件夹命名为今天的日期的方法)
+  - [Linux下使ls命令只显示目录的方法](#linux下使ls命令只显示目录的方法)
+  - [Linux下替换^M字符方法](#linux下替换m字符方法)
+  - [Linux下将多行文件合并为一行](#linux下将多行文件合并为一行)
+  - [Linux中cut命令](#linux中cut命令)
+  - [Ubuntu镜像使用帮助](#ubuntu镜像使用帮助)
+  - [Ubuntu下使用apt install XX(or sudo apt install XX)报错Unable to locate package](#ubuntu下使用apt-install-xxor-sudo-apt-install-xx报错unable-to-locate-package)
+  - [Linux管理员修改普通用户密码](#linux管理员修改普通用户密码)
+  - [Linux下使用sudo命令出现not in the sudoers file](#linux下使用sudo命令出现not-in-the-sudoers-file)
+  - [Linux下安装Miniconda](#linux下安装miniconda)
+  - [WSL更改登录用户](#wsl更改登录用户)
+  - [WSL中Vim字体改变的解决方案](#wsl中vim字体改变的解决方案)
+  - [Linux字符串变量操作](#linux字符串变量操作)
+    - [截取](#截取)
+    - [删除与替换](#删除与替换)
+    - [变量声明](#变量声明)
+  - [Linux下nohup命令](#linux下nohup命令)
+    - [耗时很长的程序忘加nohup就运行了怎么办](#耗时很长的程序忘加nohup就运行了怎么办)
+  - [awk基本操作符、内置函数与变量](#awk基本操作符内置函数与变量)
+    - [awk操作符的优先级](#awk操作符的优先级)
+    - [awk内置函数](#awk内置函数)
+    - [awk内置变量](#awk内置变量)
+  - [awk同时处理多个文件](#awk同时处理多个文件)
+  - [Linux下文件批量重命名](#linux下文件批量重命名)
+    - [`mv`命令](#mv命令)
+    - [`rename`命令](#rename命令)
+  - [Bash中括号及expr的用法](#bash中括号及expr的用法)
+    - [小括号`()`](#小括号)
+    - [中括号`[]`](#中括号)
+    - [大括号`{}`](#大括号)
+    - [示例](#示例)
+    - [expr用法](#expr用法)
+  - [Linux下按Tab补全命令时忽略大小写](#linux下按tab补全命令时忽略大小写)
+  - [Linux `tar` 命令](#linux-tar-命令)
+    - [语法](#语法)
+    - [参数](#参数)
+    - [示例](#示例-1)
+  - [Shell 传递参数](#shell-传递参数)
+    - [示例](#示例-2)
+    - [参数处理](#参数处理)
+  - [Linux `echo` 不换行输出的两种方式](#linux-echo-不换行输出的两种方式)
+  - [Linux下批量中止多个进程](#linux下批量中止多个进程)
+  - [Linux下`split`命令将一个大文件按行拆分成小文件](#linux下split命令将一个大文件按行拆分成小文件)
+  - [sed正则表达式匹配，各种括号的转义和不转义](#sed正则表达式匹配各种括号的转义和不转义)
+    - [Sed正则表达式详细介绍](#sed正则表达式详细介绍)
+      - [行开始 `^`](#行开始-)
+      - [行尾 `$`](#行尾-)
+      - [单个字符 `.`](#单个字符-)
+      - [匹配字符集合 `[]`](#匹配字符集合-)
+      - [不匹配字符集 `[^]`](#不匹配字符集-)
+      - [字符范围 `[-]`](#字符范围--)
+      - [零到一次出现 `\?`](#零到一次出现)
+      - [一次或多次出现 `\+`](#一次或多次出现-)
+      - [零或多次出现 `*`](#零或多次出现-)
+      - [n个重复 `\{n\}`](#n个重复-n)
+      - [最少出现n个 `\{n,\}`](#最少出现n个-n)
+      - [m到n次出现 `\{m, n\}`](#m到n次出现-m-n)
+      - [或 `\|` `\(\|\)`](#或--)
+  - [awk中的回溯引用 (back references)](#awk中的回溯引用-back-references)
+
 
 ## Docker
 > Docker is a tool to run Linux containers based on selected images.
@@ -848,7 +925,7 @@ hello456hello456
 ```
 
 ### 变量声明
-![变量声明操作](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/linux-var.png)
+![变量声明操作](figure/linux-var.png)
 
 ## Linux下nohup命令
 
@@ -923,7 +1000,7 @@ ps -auwx | grep rsync
 ## awk基本操作符、内置函数与变量
 
 ### awk操作符的优先级
-![awk操作符](https://liuyujie0136.github.io/Sci-Tech-Notes/linux/awk-operators.png)
+![awk操作符](figure/awk-operators.png)
 
 ### awk内置函数
 

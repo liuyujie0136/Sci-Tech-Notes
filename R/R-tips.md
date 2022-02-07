@@ -1,5 +1,25 @@
 # R使用技巧
-> Collected by liuyujie0136
+
+- [R使用技巧](#r使用技巧)
+  - [Statistics for Biologists - Nature Collection](#statistics-for-biologists---nature-collection)
+  - [Quick-R](#quick-r)
+  - [R Graphics Cookbook, 2nd edition](#r-graphics-cookbook-2nd-edition)
+  - [ggplot2高效实用指南 - 生信宝典](#ggplot2高效实用指南---生信宝典)
+  - [ggplot2实用教程精选 - YuLabSMU](#ggplot2实用教程精选---yulabsmu)
+  - [修改RStudio的help文档样式](#修改rstudio的help文档样式)
+  - [R参数控制: `options()` - 示例](#r参数控制-options---示例)
+  - [R语言修改临时文件目录](#r语言修改临时文件目录)
+  - [利用R语言解压与压缩 `.tar.gz` `.zip` `.gz` `.bz2` 等文件](#利用r语言解压与压缩-targz-zip-gz-bz2-等文件)
+    - [`.zip`](#zip)
+    - [`.tar.gz`](#targz)
+    - [`.gz` 与 `.bz2`](#gz-与-bz2)
+      - [(1) 直接解压](#1-直接解压)
+      - [(2) 直接读取](#2-直接读取)
+  - [Excel中像`dplyr::left_join`那样连接两个工作表](#excel中像dplyrleft_join那样连接两个工作表)
+    - [示例](#示例)
+    - [处理方法](#处理方法)
+    - [`VLOOKUP`参数](#vlookup参数)
+
 
 ## [Statistics for Biologists - Nature Collection](https://www.nature.com/collections/qghhqm/)
 

@@ -1,6 +1,5 @@
 # 使用JCVI进行MCScan共线性(synteny)分析与可视化
 
-> 参考：  
 > https://github.com/tanghaibao/jcvi  
 > https://sr-c.github.io/2019/01/11/jcvi-MCscan/
 

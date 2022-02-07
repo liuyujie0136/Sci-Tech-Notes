@@ -1,7 +1,6 @@
 # 使用SHOREmap做mapping-by-sequencing
 
-> 参考：  
-> http://bioinfo.mpipz.mpg.de/shoremap/  
+> [SHOREmap Guide](http://bioinfo.mpipz.mpg.de/shoremap/guide.html)  
 > https://www.jianshu.com/p/9f4de8573b6c
 
 

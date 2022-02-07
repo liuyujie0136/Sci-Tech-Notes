@@ -1,7 +1,6 @@
 # MUMmer大片段比对与基因组共线性
 
-> 参考：  
-> http://mummer.sourceforge.net/manual/  
+> [MUMmer3 Manual](http://mummer.sourceforge.net/manual/)  
 > https://www.jianshu.com/p/2e184e5c15b7  
 > https://github.com/MariaNattestad/Assemblytics
 

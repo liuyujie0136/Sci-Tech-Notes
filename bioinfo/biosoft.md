@@ -62,6 +62,9 @@
       - [02.sam2bam.sh](#02sam2bamsh)
       - [03.gatk_make_gvcf.sh](#03gatk_make_gvcfsh)
       - [04.gatk_call_variations.sh](#04gatk_call_variationssh)
+  - [bowtie与bowtie2](#bowtie与bowtie2)
+  - [vcftools](#vcftools)
+    - [vcftools群体遗传参数计算示例](#vcftools群体遗传参数计算示例)
 
 
 ## Aspera
@@ -187,6 +190,7 @@ tabix example.vcf.gz 11:2343540-2343596
 
 
 ## snpEff-SnpSift
+> [SnpEff Manual](https://pcingola.github.io/SnpEff/)
 
 在进行基因组学研究中，需要对一些SNP和Indel进行分析，而注释它们就需要用到SnpEff，SnpEff是一个变异注释和预测变异影响(氨基酸和核酸改变)的工具。输入文件通常是VCF(variant call format)文件，也接受BED文件(如来自ChIP-Seq peaker)。运行后会输出变异的注释并预测对已知基因的影响。详见[官网帮助文档](https://pcingola.github.io/SnpEff/)。
 
@@ -225,6 +229,7 @@ cat Sample1.snpEff.summary.genes.txt | sed 's/\t/,/g' > Sample1.snpEff.summary.g
 
 
 ## bedtools
+> [BEDtools Tutorial](http://quinlanlab.org/tutorials/bedtools/bedtools.html)
 
 BEDTools是可用于genomic features的比较，相关操作及进行注释的工具。而genomic features通常使用Browser Extensible Data (BED) 或者 General Feature Format (GFF)文件表示，用UCSC Genome Browser进行可视化比较。bedtools总共有二三十个工具/命令来处理基因组数据。
 比较典型而且常用的功能举例如下：
@@ -339,6 +344,7 @@ bedtools merge [OPTION] –i <bed/gff/vcf>
 
 
 ## bcftools
+> [BCFtools Manual](https://samtools.github.io/bcftools/bcftools.html)
 
 ### 下载与安装
 ```bash
@@ -462,6 +468,8 @@ bcftools query -f '%CHROM\t%POS\t%REF\t%ALT[\t%SAMPLE=%GT]\n' sample1.vcf.gz
 
 
 ## BWA
+> [BWA Manual](http://bio-bwa.sourceforge.net/bwa.shtml)  
+> https://github.com/lh3/bwa
 
 ### 简介
 
@@ -639,6 +647,7 @@ BWA-MEM is recommended for query sequences longer than ~70bp for a variety of er
 
 
 ## samtools
+> [SAMtools Manual](http://www.htslib.org/doc/samtools.html)
 
 samtools是一个用于操作sam和bam文件的工具合集。
 
@@ -1079,4 +1088,73 @@ gatk VariantFiltration -V $4/$1.vcf.gz \
     --filter-expression "QD < 2.0 || MQ < 40.0 || FS > 60.0 || SOR > 3.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
     --filter-name "PASS" \
     -O $4/$1.filtered.vcf.gz
+```
+
+
+## bowtie与bowtie2
+> [Bowtie Manual](http://bowtie-bio.sourceforge.net/manual.shtml)  
+> [Bowtie2 Manual](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml)
+
+
+## vcftools
+> [VCFtools Manual](https://vcftools.github.io/man_latest.html)
+
+### vcftools群体遗传参数计算示例
+
+1\. **Tajima's D**，这个是选择相关的一个参数，大于0代表群体观测杂合度高于预期杂合度，稀有等位基因频率降低（群体收缩或者平衡选择），小于0说明群体观测杂合位点少于预期值，稀有等位基因频率增加（群体扩张或者低频选择）。 也就是说，只有0是正常的，其他都是选择发生。
+
+```bash
+vcftools \
+  --vcf test.vcf \
+  --TajimaD 500000 \
+  --out taj
+```
+
+2\. **π**，核苷酸多样性，越大说明核苷酸多样性越高，越低说明两个座位DNA序列差异越小。
+
+```bash
+vcftools \
+  --vcf test.vcf \
+  --window-pi 500000 \
+  --out pi
+```
+
+3\. **Fst**, 分化系数，从0到1说明亲缘关系越来越远。接近于0说明两个个体亲缘关系近，接近1说明亲缘关系远。10number.txt和20number.txt是想要分组的个体文件，每行一个个体，跟vcf中的个体名称一致。
+
+```bash
+vcftools \
+  --vcf test.vcf \
+  --weir-fst-pop pop1.txt \
+  --weir-fst-pop pop2.txt \
+  --out pop1vspop2 \
+  --fst-window-size 500000
+```
+
+4\. **Hardy-Weinberg平衡检测**，这个主要是检测基因型频率是否等于基因频率乘积。比如A:0.3,a:0.7那么Aa的频率是否为0.42
+
+```bash
+vcftools \
+  --vcf test.vcf \
+  --hardy \
+  --out hw
+```
+
+5\. **XP-CLR**
+
+> [https://github.com/hardingnj/xpclr](https://github.com/hardingnj/xpclr)
+
+这个是计算群体分化的一个指标，主要是基于选择清除（selective sweep）信息进行群体分化的计算。个人感觉比Fst更新的地方是用了多个SNP对应的等位基因频率估计染色体一段区域的分化情况，而Fst是用单个SNP对应的等位基因频率。相对来说，XP-CLR估计群体分化会更准确一些。
+
+```bash
+xpclr \
+  --format vcf \
+  --input test.vcf \
+  --samplesA pop1.txt \
+  --samplesB pop2.txt \
+  --chr 1 \
+  --minsnps 20 \
+  --maxsnps 600 \
+  --size 10000 \
+  --step 10000 \
+  --out out.chr1.xpclr
 ```

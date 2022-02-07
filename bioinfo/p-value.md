@@ -1,6 +1,4 @@
 # 多重假设检验校正与P-value
-> originally from 生信宝典  
-> only for self study
 
 ## 单次检验的I类错误
 
