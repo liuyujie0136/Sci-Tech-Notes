@@ -1047,7 +1047,7 @@ srand(sed)  将 rand 函数的种子值设置为 sed
 ```
 * 字符串
 ```bash
-gsub(reg,str1,str2)     使用str1替换所有str2中符合正则表达式reg的子串
+gsub(reg,str1,str2)     使用str1替换所有str2中符合正则表达式reg的子串，无赋值操作
 sub(reg,str1,str2)      含义与gsub相同，只不过gsub是替换所有匹配，sub只替换第一个匹配
 index(str,sub)          返回sub在str中第一次出现的索引，注意索引从1开始计算，如果没有则返回0
 length(str)             返回str字符串的长度，length函数还可以返回数组元素的个数
