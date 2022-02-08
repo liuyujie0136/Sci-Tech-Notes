@@ -11,6 +11,7 @@
   * [deeptools处理BAM文件](bioinfo/deeptools-bam.md)
 * Evolution
   * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
+  * [分子群体遗传笔记 by Evan](evolution/mol_popgen_notes.md)
   * [使用JCVI进行MCScan共线性分析与可视化](evolution/jcvi-MCScan.md)
   * [MUMmer大片段比对与基因组共线性](evolution/MUMmer_synteny.md)
   * [使用SHOREmap做mapping-by-sequencing](evolution/SHOREmap_mapseq.md)

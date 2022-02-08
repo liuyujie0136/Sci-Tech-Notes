@@ -28,15 +28,21 @@
     - [Related articles](#related-articles)
 
 
-## [Statistics for Biologists - Nature Collection](https://www.nature.com/collections/qghhqm/)
+## Statistics for Biologists - Nature Collection
+> [https://www.nature.com/collections/qghhqm/](https://www.nature.com/collections/qghhqm/)
 
-## [Quick-R](https://www.statmethods.net/)
+## Quick-R
+> [https://www.statmethods.net/](https://www.statmethods.net/)
 
-## [R Graphics Cookbook, 2nd edition](https://r-graphics.org/)
+## R Graphics Cookbook, 2nd edition
+> [https://r-graphics.org/](https://r-graphics.org/)
 
-## [ggplot2高效实用指南 - 生信宝典](https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ)
+## ggplot2高效实用指南 - 生信宝典
+> [https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ](https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ)
 
-## [ggplot2实用教程精选 - YuLabSMU](https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw)
+## ggplot2实用教程精选 - YuLabSMU
+> [https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw](https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw)
+
 
 ## 修改RStudio的help文档样式
 
