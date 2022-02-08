@@ -395,9 +395,13 @@ Watterson's 多态性估值，从理论上说，在中性条件下，应当有θ
 
 #### 4.3 核苷酸多样性
 
-![\pi](https://math.jianshu.com/math?formula=%5Cpi)指的是核苷酸多样性，值越大说明核苷酸多样性越高。通常用于衡量群体内的核苷酸多样性，也可以用来推演进化关系\[11\]。计算公式为：  
-![\pi = \sum_{ij}x_ix_j\pi_{ij}=2*\sum_{i = 2}^{n}\sum_{j=1}^{i-1}x_ix_j\pi{ij}](https://math.jianshu.com/math?formula=%5Cpi%20%3D%20%5Csum_%7Bij%7Dx_ix_j%5Cpi_%7Bij%7D%3D2*%5Csum_%7Bi%20%3D%202%7D%5E%7Bn%7D%5Csum_%7Bj%3D1%7D%5E%7Bi-1%7Dx_ix_j%5Cpi%7Bij%7D)  
-可以理解成现在群体内两两求![\pi](https://math.jianshu.com/math?formula=%5Cpi)，再计算群体的均值。计算的软件最常见的是`vcftools`，也有对应的R包`PopGenome`。通常是选定有一定的基因组区域，设定好窗口大小，然后滑动窗口进行计算。
+![\pi](https://math.jianshu.com/math?formula=%5Cpi)指的是核苷酸多样性，值越大说明核苷酸多样性越高。通常用于衡量群体内的核苷酸多样性，也可以用来推演进化关系\[11\]。计算公式为：
+
+![pi](figure/evol_pi_formula.png)
+
+where ![x_i](https://math.jianshu.com/math?formula=x_i) and ![x_j](https://math.jianshu.com/math?formula=x_j) are the (original) respective frequencies of the ![i](https://math.jianshu.com/math?formula=i) th and ![j](https://math.jianshu.com/math?formula=j) th sequences, ![\pi_{ij}](https://math.jianshu.com/math?formula=%5Cpi_{ij}) is the number of nucleotide differences per nucleotide site between the ![i](https://math.jianshu.com/math?formula=i) th and ![j](https://math.jianshu.com/math?formula=j) th sequences, and ![n](https://math.jianshu.com/math?formula=n) is the number of sequences in the sample.
+
+可以理解成先在群体内两两求![\pi](https://math.jianshu.com/math?formula=%5Cpi)，再计算群体的均值。计算的软件最常见的是`vcftools`，也有对应的R包`PopGenome`。通常是选定有一定的基因组区域，设定好窗口大小，然后滑动窗口进行计算。
 
 3KRG文章就计算了水稻不同亚群间4号染色体部分区域上的![\pi](https://math.jianshu.com/math?formula=%5Cpi)值\[12\]，能够看出控制水稻籽粒落粒性的基因 _Sh4_\[13\] 位置多态性在所有的亚群中都降低了。说明这个基因在所有的亚群中都是受到选择的，这可能是人工选择的结果。
 
