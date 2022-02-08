@@ -1,6 +1,9 @@
 # ggplot2使用技巧
 
 - [ggplot2使用技巧](#ggplot2使用技巧)
+  - [R Graphics Cookbook, 2nd edition](#r-graphics-cookbook-2nd-edition)
+  - [ggplot2高效实用指南 - 生信宝典](#ggplot2高效实用指南---生信宝典)
+  - [ggplot2实用教程精选 - YuLabSMU](#ggplot2实用教程精选---yulabsmu)
   - [Use R package export to export Rplots to PPT](#use-r-package-export-to-export-rplots-to-ppt)
     - [Get the latest development version from GitHub](#get-the-latest-development-version-from-github)
     - [Getting Started](#getting-started)
@@ -9,6 +12,15 @@
   - [Use `coord_cartesian` instead of `scale_y_continuous`](#use-coord_cartesian-instead-of-scale_y_continuous)
   - [在散点图上添加线性拟合方程和R值](#在散点图上添加线性拟合方程和r值)
 
+
+## R Graphics Cookbook, 2nd edition
+> [https://r-graphics.org/](https://r-graphics.org/)
+
+## ggplot2高效实用指南 - 生信宝典
+> [https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ](https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ)
+
+## ggplot2实用教程精选 - YuLabSMU
+> [https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw](https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw)
 
 ## Use R package export to export Rplots to PPT
 > export is an R package to easily export active R graphs and statistical output in publication quality to Microsoft Office, HTML, and Latex. More information on [GitHub](https://github.com/tomwenseleers/export).

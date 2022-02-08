@@ -3,9 +3,6 @@
 - [R使用技巧](#r使用技巧)
   - [Statistics for Biologists - Nature Collection](#statistics-for-biologists---nature-collection)
   - [Quick-R](#quick-r)
-  - [R Graphics Cookbook, 2nd edition](#r-graphics-cookbook-2nd-edition)
-  - [ggplot2高效实用指南 - 生信宝典](#ggplot2高效实用指南---生信宝典)
-  - [ggplot2实用教程精选 - YuLabSMU](#ggplot2实用教程精选---yulabsmu)
   - [修改RStudio的help文档样式](#修改rstudio的help文档样式)
   - [R参数控制: `options()` - 示例](#r参数控制-options---示例)
   - [R语言修改临时文件目录](#r语言修改临时文件目录)
@@ -33,15 +30,6 @@
 
 ## Quick-R
 > [https://www.statmethods.net/](https://www.statmethods.net/)
-
-## R Graphics Cookbook, 2nd edition
-> [https://r-graphics.org/](https://r-graphics.org/)
-
-## ggplot2高效实用指南 - 生信宝典
-> [https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ](https://mp.weixin.qq.com/s/v3qtAgIMpo6vxxHUjlFagQ)
-
-## ggplot2实用教程精选 - YuLabSMU
-> [https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw](https://mp.weixin.qq.com/s/8dZA2HkrBytuvlSepQ1Ucw)
 
 
 ## 修改RStudio的help文档样式

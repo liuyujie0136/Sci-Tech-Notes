@@ -6,7 +6,7 @@
     - [同时编辑多行](#同时编辑多行)
   - [Python更换pip源(pypi镜像) - 清华大学开源软件镜像站](#python更换pip源pypi镜像---清华大学开源软件镜像站)
   - [Python计算排列数与组合数](#python计算排列数与组合数)
-    - [编写函数计算组合数$C_n^i$](#编写函数计算组合数c_ni)
+    - [编写函数计算组合数!C_n^i](#编写函数计算组合数)
     - [使用第三方模块scipy计算排列组合的具体数值](#使用第三方模块scipy计算排列组合的具体数值)
     - [使用阶乘的方式求组合数](#使用阶乘的方式求组合数)
     - [使用itertools列出排列组合的全部情况](#使用itertools列出排列组合的全部情况)
@@ -80,7 +80,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U
 
 ## Python计算排列数与组合数
 
-### 编写函数计算组合数$C_n^i$
+### 编写函数计算组合数![C_n^i](https://math.jianshu.com/math?formula=C_n^i)
 ```python
 def Combinatorial(n,i):
     '''设计组合数'''

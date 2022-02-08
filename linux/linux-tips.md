@@ -1479,9 +1479,7 @@ bash gene.sh dsafda
 ## Usage: ./gene.sh [-s|--start] [-e|--end] [-i|--scfid] [-g|--gene]
 ```
 
-这种参数传入的方式有两个关键，一个是使用`case`语句，另一个是使用了`shift`。`shift`的作用主要是移动位置参数。每执行一次都讲第一个位置参数向右移动一次。当然，如果是`shift n`就是每执行一次，向右移动n个位置。参考：
-
-[https://www.computerhope.com/unix/bash/shift.htm](https://link.zhihu.com/?target=https%3A//www.computerhope.com/unix/bash/shift.htm)
+这种参数传入的方式有两个关键，一个是使用`case`语句，另一个是使用了`shift`。`shift`的作用主要是移动位置参数。每执行一次都讲第一个位置参数向右移动一次。当然，如果是`shift n`就是每执行一次，向右移动n个位置。参考：[https://www.computerhope.com/unix/bash/shift.htm](https://link.zhihu.com/?target=https%3A//www.computerhope.com/unix/bash/shift.htm)
 
 有时候我们常使用等号`=`来进行参数传递，整体做法和使用上述空格是一样的。
 
