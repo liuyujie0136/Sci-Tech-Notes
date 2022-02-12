@@ -178,7 +178,7 @@ SAM文件由两部分组成：头部信息和比对信息，都是以tab键分�
 7. `RNEXT` 配对片段（即mate）比对上的参考序列的编号，没有另外的片段，这里是`*`，同一个片段，用`=`
 8. `PNEXT` 配对片段（即mate）比对到参考序列上的第一个碱基位置，若无mate,则为0
 9. `TLEN`  Template（文库插入序列）的长度，最左边的为正，最右边的为负，中间的不用定义正负，不分区段（single-segment)的比对上，或者不可用时，此处为0(ISIZE，Inferred fragment size.详见Illumina中paired end sequencing 和 mate pair sequencing，是负数，推测应该是两条read之间的间隔(待查证)，若无mate则为0)
-10. `SEQ` 序列片段的序列信息，如果不存储此类信息，此处为`*`，注意CIGAR中`M/I/S/=/X`对应数字的和要等于序列长度；
+10. `SEQ` 序列片段的序列信息，如果不存储此类信息，此处为`*`，注意CIGAR中`M/I/S/=/X`对应数字的和要等于序列长度。**比对到正链上，此处即为read的序列；比对到互补链上，则是read序列的反向互补（即此处序列与参考基因组正链方向一致）**
 11. `QUAL` 序列的质量信息, read质量的ASCII编码。格式同FASTQ一样。
 12. 第十二列及之后：Optional fields，以tab建分割。
 
