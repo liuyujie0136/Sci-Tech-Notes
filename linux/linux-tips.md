@@ -76,6 +76,12 @@
       - [m到n次出现 `\{m, n\}`](#m到n次出现-m-n)
       - [或 `\|` `\(\|\)`](#或--)
   - [awk中的回溯引用 (back references)](#awk中的回溯引用-back-references)
+  - [Linux两个文件求交集、并集、差集](#linux两个文件求交集并集差集)
+    - [定义](#定义)
+    - [方法一：`sort`+`uniq`](#方法一sortuniq)
+    - [方法二：`comm`，用于比较两个已排过序的文件](#方法二comm用于比较两个已排过序的文件)
+    - [方法三：`grep`](#方法三grep)
+    - [方法四：`awk`](#方法四awk)
 
 
 ## Docker
@@ -1672,3 +1678,57 @@ awk '{gsub(/^[^"]*"|"[^"]*$/,""); print}'   # 2nd example
 Generally speaking, however, the above methods (both `sed` and `awk`) require that you have only one matching substring to extract per line. For the same purpose, with some awks (see [AwkFeatureComparison](http://awk.freeshell.org/AwkFeatureComparison)), you can use the possibility to assign a regexp to RS to "pull out" substrings from the input (and without the limitation of at most one match per line). See the last part of [Pulling out things](http://awk.freeshell.org/AwkTips#toc10) for more information and examples.
 
 - Third answer: see [GeneralizedTextReplacement](http://awk.freeshell.org/GeneralizedTextReplacement) for a detailed discussion of a framework for generalized text replacement, including an explanation on how to emulate backreferences (and much more) with `awk`.
+
+
+## Linux两个文件求交集、并集、差集
+
+### 定义
+
+- 交集：两个文件中都出现的行
+- 并集：两个文件中的所有行加起来，去掉重复
+- 差集：在一个文件中存在，而在另一个文件中不存在
+
+### 方法一：`sort`+`uniq`
+
+- 交集: `sort a.txt b.txt | uniq -d` （用sort将a.txt b.txt文件进行排序，uniq使得两个文件中的行唯一，使用-d输出两个文件中次数大于1的内容，即是得到交集）
+- 并集: `sort a.txt b.txt | uniq` （将a.txt b.txt文件进行排序，uniq使得两个文件中的内容为唯一的，即可得到两个文件的并集）
+- 差集:
+  - a.txt-b.txt: `sort a.txt b.txt b.txt | uniq -u` （将两个文件排序，最后输出a.txt b.txt b.txt文件中只出现过一次的内容，因为有两个b.txt所以只会输出只在a.txt出现过一次的内容，即是a.txt-b.txt差集）
+  - b.txt-a.txt: `sort b.txt a.txt a.txt | uniq -u`
+- `uniq`参数说明:
+  - `-d` 仅显示重复出现的行列
+  - `-u` 仅显示出一次的行列
+
+### 方法二：`comm`，用于比较两个已排过序的文件
+
+- 交集: `comm -12 a.txt b.txt`
+- 差集:
+  - a.txt-b.txt: `comm -23 a.txt b.txt`
+  - b.txt-a.txt: `comm -13 a.txt b.txt`
+- 注: a.txt b.txt两个文件需要先分别排序；`comm`默认输出为三列，第一列为是A-B，第二列B-A，第三列为A交B
+- `comm`参数说明:
+  - `-1` 不显示只在第1个文件里出现过的列
+  - `-2` 不显示只在第2个文件里出现过的列
+  - `-3` 不显示只在第1和第2个文件里出现过的列。
+
+### 方法三：`grep`
+
+- 交集: `grep -F -f a.txt b.txt`
+- 差集:
+  - a.txt-b.txt: `grep -F -v -f b.txt a.txt`
+  - b.txt-a.txt: `grep -F -v -f a.txt b.txt`
+- 注: grep求交集不要求输入文件是排序的，但最好是唯一的；差集时注意输入文件的顺序
+- `grep`参数说明:
+  - `-F` 将样式视为固定字符串的列表
+  - `-f` 指定规则文件，其内容含有一个或多个规则样式，查找符合规则条件的文件内容，格式为每行一个规则样式
+  - `-v` 显示不包含匹配文本的所有行
+
+### 方法四：`awk`
+
+- 交集: `awk 'NR==FNR{ a[$1]=a[$1]+1} NR>FNR{ if(a[$1]>=1 &&b[$1]<1){ print $1;b[$1]=b[$1]+1}}' a.txt b.txt`
+- 差集:
+  - a.txt-b.txt: `awk 'NR==FNR{a[$1]=$1} NR>FNR{if(a[$1] == ""){print $1}}' b.txt a.txt`
+  - b.txt-a.txt: `awk 'NR==FNR{a[$1]=$1} NR>FNR{if(a[$1] == ""){print $1}}' a.txt b.txt`
+- 当NR(表示已经处理的行数)==FNR(表示当前文件处理的行数)时，处理的是a.txt，NR>FNR时，处理的是b.txt，在处理a.txt时，把a数组记录不同字符串个数，且起到去重作用。在处理b.txt时，判断a数组中是否含当前字符串，并且在本文件中出现的次数小于1，同样也是起到了去重的作用。
+
+
