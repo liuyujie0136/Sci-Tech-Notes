@@ -393,6 +393,7 @@ bismark_methylation_extractor \
 
 ```bash
 perl ~/Software/swDMR-1.0.7/swDMR \
+    --processes 8 \
     --samples WT_CX_report.txt,MUT_CX_report.txt \
     --name WT,MUT \
     --outdir CHH_DMR_result \
@@ -411,6 +412,5 @@ perl ~/Software/swDMR-1.0.7/swDMR \
     --position 2 \
     --ctype 6 \
     --methy 4 \
-    --unmethy 5 \
-    --processes 6
+    --unmethy 5
 ```
