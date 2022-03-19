@@ -49,6 +49,11 @@
       - [Kruskal-Wallis H Test](#kruskal-wallis-h-test)
       - [Friedman Test](#friedman-test)
     - [Further Reading](#further-reading)
+  - [python循环删除列表元素常见错误与正确方法](#python循环删除列表元素常见错误与正确方法)
+    - [常见错误一:使用固定长度循环删除列表元素](#常见错误一使用固定长度循环删除列表元素)
+    - [常见错误二:正序循环遍历删除列表元素](#常见错误二正序循环遍历删除列表元素)
+    - [正确的方法一:倒序循环遍历](#正确的方法一倒序循环遍历)
+    - [正确的方法二:遍历拷贝的list，操作原始的list](#正确的方法二遍历拷贝的list操作原始的list)
 
 
 ## VS Code 相关技巧
@@ -953,4 +958,108 @@ This section provides more resources on the topic if you are looking to go deepe
 - [How to Use Parametric Statistical Significance Tests in Python](https://machinelearningmastery.com/parametric-statistical-significance-tests-in-python/)
 - [A Gentle Introduction to Statistical Hypothesis Tests](https://machinelearningmastery.com/statistical-hypothesis-tests/)
 
+
+## python循环删除列表元素常见错误与正确方法
+> https://blog.csdn.net/u013555719/article/details/84550700
+
+### 常见错误一:使用固定长度循环删除列表元素
+
+```python
+# 使用固定长度循环pop方法删除列表元素
+num_list_1 = [1, 2, 2, 2, 3]
+
+for i in range(len(num_list_1)):
+    if num_list_1[i] == 2:
+        num_list_1.pop(i)
+    else:
+        print(num_list_1[i])
+
+print("num_list_1:", num_list_1)
+# IndexError: list index out of range
+```
+
+原因是在删除list中的元素后，list的实际长度变小了，但是循环次数没有减少，依然按照原来list的长度进行遍历，所以会造成索引溢出
+
+### 常见错误二:正序循环遍历删除列表元素
+
+不能删除连续的情况
+
+```python
+# 正序循环遍历删除列表元素
+num_list_2 = [1, 2, 2, 2, 3]
+
+for item in num_list_2:
+    if item == 2:
+        num_list_2.remove(item)
+    else:
+        print("item", item)
+    print("num_list_2", num_list_2)
+
+print("after remove op", num_list_2)
+
+# item 1
+# num_list [1, 2, 2, 2, 3]
+# num_list [1, 2, 2, 3]
+# num_list [1, 2, 3]
+# after remove op [1, 2, 3]
+```
+
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvOTQ5MjQxLzIwMTgxMS85NDkyNDEtMjAxODExMjYxNTU0MTc3MjQtMTA4MjA1OTkyMi5wbmc?x-oss-process=image/format,png)
+
+当符合条件，删除元素\[2\]之后，后面的元素全部往前移，但是索引并不会随着值向前移动而变化，而是接着上一个位置向后移动。这样就会漏掉解
+
+### 正确的方法一:倒序循环遍历
+
+```python
+# 倒序循环遍历删除列表元素
+num_list_3 = [1, 2, 2, 2, 3]
+
+for item in num_list_3[::-1]:
+    if item == 2:
+        num_list_3.remove(item)
+    else:
+        print("item", item)
+    print("num_list_3", num_list_3)
+
+print("after remove op", num_list_3)
+
+# item 3
+# num_list_3 [1, 2, 2, 2, 3]
+# num_list_3 [1, 2, 2, 3]
+# num_list_3 [1, 2, 3]
+# num_list_3 [1, 3]
+# item 1
+# num_list_3 [1, 3]
+# after remove op [1, 3]
+```
+
+![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvOTQ5MjQxLzIwMTgxMS85NDkyNDEtMjAxODExMjYxNjIxMjM2OTUtOTMwMjU5NjYwLnBuZw?x-oss-process=image/format,png)
+
+### 正确的方法二:遍历拷贝的list，操作原始的list
+
+原始的list是num\_list，那么其实，num\_list\[:\]是对原始的num\_list的一个拷贝，是一个新的list，所以，我们遍历新的list，而删除原始的list中的元素，则既不会引起索引溢出，最后又能够得到想要的最终结果。此方法的缺点可能是，对于过大的list，拷贝后可能很占内存。那么对于这种情况，可以用倒序遍历的方法来实现。
+
+```python
+# 遍历拷贝的list，操作原始的list
+num_list_4 = [1, 2, 2, 2, 3]
+
+for item in num_list_4[:]:
+    if item == 2:
+        num_list_4.remove(item)
+    else:
+        print("item", item)
+
+    print("num_list_4", num_list_4)
+
+print("after remove op", num_list_4)
+
+# item 1
+# num_list_4 [1, 2, 2, 2, 3]
+# num_list_4 [1, 2, 2, 3]
+# num_list_4 [1, 2, 3]
+# num_list_4 [1, 3]
+# item 3
+# num_list_4 [1, 3]
+# after remove op [1, 3]
+```
 
