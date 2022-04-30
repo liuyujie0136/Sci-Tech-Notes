@@ -85,6 +85,7 @@
   - [`perl` `sed` `awk` `grep` 等对正则表达式的支持的差别](#perl-sed-awk-grep-等对正则表达式的支持的差别)
   - [使用Xshell登录Linux子系统 (WSL)](#使用xshell登录linux子系统-wsl)
   - [WSL重启方法](#wsl重启方法)
+  - [conda 创建/删除环境](#conda-创建删除环境)
 
 
 ## Docker
@@ -1784,4 +1785,14 @@ sudo service ssh --full-restart   ## 可将该命令保存为service.sh，存在
 net stop LxssManager    #停止
 net start LxssManager   #启动
 ```
+
+
+## conda 创建/删除环境
+```bash
+conda create --name envName python=3.7
+conda create --name envName python=3.9 numpy scipy
+conda env list
+conda remove --name envName --all
+```
+
 
