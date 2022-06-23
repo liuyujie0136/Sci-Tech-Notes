@@ -28,5 +28,7 @@
   * [Python使用技巧](python/python-tips.md)
   * [Python语言程序设计课程案例 @ 北理工MOOC](python/python-mooc-BIT.md)
   * [简单网页版IGV](python/python-igv.md)
+* Perl
+  * [Perl使用技巧](python/perl-tips.md)
 * LaTeX
   * [LaTeX使用技巧](python/latex-tips.md)
