@@ -12,7 +12,7 @@
 
 下图是一个大概的 RNA-seq 基本流程
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-5eea833bf2f60cfa.png)
+![](figure/strand-specific_RNAseq_fig/1.png)
 
 把 RNA 破碎成小片段，然后将 RNA 转变成一条 cDNA，这一步需要用到反转录酶 reverse transcriptase (RT) 才能用 RNA 作为模板合成 DNA。
 
@@ -38,25 +38,25 @@
 
 大概的意思就是下面两张图。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-eb661f70fc881cee.png)
+![](figure/strand-specific_RNAseq_fig/2.png)
 
 加了接头以后进行 PCR 的扩增。扩增后就开始测序，测序的过程如下图所示。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-7d8f36fe1cccaef0.png)
+![](figure/strand-specific_RNAseq_fig/3.png)
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-28e35a6abcaa94fd.png)
+![](figure/strand-specific_RNAseq_fig/4.png)
 
 测序的基本思想是机器识别四种碱基发出的不同颜色的荧光，可以理解为一个 flow cell 立着非常多序列，机器一层一层扫过去，通过识别荧光而判断这一层每个序列的碱基是什么。
 
 因为一个 cell 密密麻麻的全是荧光信号，机器并不是总能把每一个判断的非常准确，如果某一个荧光信号没有那么清晰，这个碱基的测序质量就比较低，如下图。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-98f3e249a43a5ea9.png)
+![](figure/strand-specific_RNAseq_fig/5.png)
 
 有的时候，如果一大片点都是同一种荧光，机器也可能犯晕，不知道到底哪一个荧光属于哪一个序列。这种情况尤其是在序列的前几个碱基容易发生。
 
 > The sequencing machine uses the first few bases to establish where the cDNA fragments are on the flow cell. If all of the bases in one part of the flow cell are all the same, like 'C', and all show up green in the picture, then the colors will bleed together and it will not be clear where exactly all of the reads are. In contrast, if you have a lot of different colors in a region, it's easier to determine where each one is, even with a little color bleed.
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-3dfc59942b411cdd.png)
+![](figure/strand-specific_RNAseq_fig/6.png)
 
 ## 链特异性测序
 
@@ -64,13 +64,13 @@
 
 链特异性建库方式有不止一种，对应到不同的软件又有不同的叫法，下面是几种称呼。**要记住的是 dUTP 测序方式的名字是 fr-firstrand，也是 RF。** 至于具体的 read 方向接下来通过更详细的 IGV 截图说明问题。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-7711241cd6231dcf.png)
+![](figure/strand-specific_RNAseq_fig/7.png)
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-2ee5582a097129a8.png)
+![](figure/strand-specific_RNAseq_fig/8.png)
 
 链特异性建库方式（以目前最常用的 dUTP 为例，如下图所示）首先利用随机引物合成 RNA 的一条 cDNA 链，在合成第二条链的时候用 dUTP 代替 dTTP，加 adaptor 后用 UDGase 处理，将有 U 的第二条 cDNA 降解掉。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-d2cee6b7279efb66.png)
+![](figure/strand-specific_RNAseq_fig/9.png)
 
 这样**最后的 insert DNA fragment 都是来自于第一条 cDNA，也就是 dUTP 叫 fr-firststrand 的原因**。对于 dUTP 数据，**tophat**的参数应该为`–library-type fr-firststrand`。这里的 first-strand cDNA 可不是 RNA strand，在使用**htseq-count** 时，真正的正义链应该是使用参数`-s reverse` 得到的结果。
 
@@ -106,11 +106,11 @@ DNA 的正链和负链，就是那两条反向互补的链。参考基因组给�
 
 **总结，dUTP 测序中 pair read 中的 read1（R1）和基因方向相反，read2（R2）和基因方向相同**
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-028cba0a8033c66c.png)
+![](figure/strand-specific_RNAseq_fig/10.png)
 
 再看下面这张图
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-8d88e440355bf719.png)
+![](figure/strand-specific_RNAseq_fig/11.png)
 
 这张图展示了两个基因 1 和 2，我们可以发现**gene1 的正义链就在正链上**，而**gene2 的正义链其实是在反链上**。看 read 情况，a，c 两个 read 虽然针对正链负链而言方向一致，都是负链方向，但是如果把**a 是 pair 中的 read1（first of pair ）**，而**c 是 pair 中的 read2（second of pair）**。也就是说，**read 方向一致，但一个是 read1 一个是 read2，说明这两个 read 对应的基因一定是反向的。**同样的道理，虽然**b，d 都是两个方向为负链的 read，但是 b 其实是所在 pair 的 read2（second of pair），而 d 是所在 pair 的 read1（first of pair）。**
 
@@ -120,13 +120,13 @@ DNA 的正链和负链，就是那两条反向互补的链。参考基因组给�
 
 如果这个时候把**颜色选项改为按照`first of pair of strand`来区分**，会出现下图的变化。
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-37a185b87324569b.png)
+![](figure/strand-specific_RNAseq_fig/12.png)
 
 geng1 的 read 全部变成了紫色，而 gene2 的 read 全部变成了粉色。
 
 如果是非链特异性测序，在`first of pair of strand`模式下，同一个 gene 相关的 read 颜色也是明显混杂的。如下图
 
-![](https://kaopubear-1254299507.file.myqcloud.com/picgo/177622-fa296437d1301175.png)
+![](figure/strand-specific_RNAseq_fig/13.png)
 
 **再一次总结：**
 
