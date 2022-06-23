@@ -9,6 +9,7 @@
   * [基因组注释基本流程](bioinfo/genome-denovo-ann.md)
   * [WGBS甲基化分析](bioinfo/bismark-swDMR.md)
   * [deeptools处理BAM文件](bioinfo/deeptools-bam.md)
+  * [链特异性测序那点事](bioinfo/strand-specific_RNAseq.md)
 * Evolution
   * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
   * [分子群体遗传笔记 by Evan](evolution/mol_popgen_notes.md)
