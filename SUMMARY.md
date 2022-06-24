@@ -10,6 +10,8 @@
   * [WGBS甲基化分析](bioinfo/bismark-swDMR.md)
   * [deeptools处理BAM文件](bioinfo/deeptools-bam.md)
   * [链特异性测序那点事](bioinfo/strand-specific_RNAseq.md)
+  * [关于readsCount、RPKM/FPKM、RPM(CPM)、TPM的理解](bioinfo/RPKM_TPM.md)
+  * [学习一遍ChIPseeker的使用](bioinfo/ChIPseeker_tutorial.md)
 * Evolution
   * [分子演化与群体遗传笔记](evolution/evolution-notes.md)
   * [分子群体遗传笔记 by Evan](evolution/mol_popgen_notes.md)
