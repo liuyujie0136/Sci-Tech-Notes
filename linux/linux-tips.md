@@ -92,6 +92,7 @@
       - [不显示配色](#不显示配色)
       - [对于777的文件夹不显示背景色](#对于777的文件夹不显示背景色)
     - [附加材料](#附加材料)
+    - [附：`LS_COLORS`的妙用](#附ls_colors的妙用)
 
 
 ## Docker
@@ -1845,9 +1846,90 @@ Linux系统中是使用`LS_COLORS`环境变量负责运行`ls`命令时看到的
 37 = 灰色   46 = 青色背景   0 =默认颜色  
 90 = 深灰色 47 = 灰色背景   1 =粗体
 
+### 附：`LS_COLORS`的妙用
+> https://blog.csdn.net/u010119335/article/details/17398595  
+> http://linux-sxs.org/housekeeping/lscolors.html
 
+Here is an easy way to set different colours for different kinds of files when using the ls command.
 
+Add the following lines to the bottom of your `~/.bashrc` file: 
 
+```bash
+alias ls='ls --color'
+LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
+export LS_COLORS
+```
 
+The first line makes `ls` use the `--color` parameter by default, which tells ls to display files in different colours based on the setting of the `LS_COLORS` variable.
+
+The second line is the tricky one, and what I have worked out so far has been by trial and error. The parameters (`di`, `fi`, etc.) refer to different Linux file types. I have worked them out as shown
+
+```bash
+di = directory  
+fi = file  
+ln = symbolic link  
+pi = fifo file  
+so = socket file  
+bd = block (buffered) special file  
+cd = character (unbuffered) special file  
+or = symbolic link pointing to a non-existent file (orphan)  
+mi = non-existent file pointed to by a symbolic link (visible when you type ls -l)  
+ex = file which is executable (ie. has 'x' set in permissions).
+```
+
+The `*.rpm=90` parameter at the end tells ls to display any files ending in `.rpm` in the specified colour, in this case colour 90 (dark grey). This can be applied to any types of files (e.g. you could use `*.png=35` to make jpeg files appear purple) As many or as few parameters as you like can go into the `LS_COLORS` variable, as long as the parameters are separated by colons.
+
+Using trial and error (and a little bash script I wrote... my first one ever! :) I worked out all the colour codes, at least my interpretation of them
+
+```bash
+0   = default colour  
+1   = bold  
+4   = underlined  
+5   = flashing text  
+7   = reverse field  
+31 = red  
+32 = green  
+33 = orange  
+34 = blue  
+35 = purple  
+36 = cyan  
+37 = grey  
+40 = black background  
+41 = red background  
+42 = green background  
+43 = orange background  
+44 = blue background  
+45 = purple background  
+46 = cyan background  
+47 = grey background  
+90 = dark grey  
+91 = light red  
+92 = light green  
+93 = yellow  
+94 = light blue  
+95 = light purple  
+96 = turquoise  
+100 = dark grey background  
+101 = light red background  
+102 = light green background  
+103 = yellow background  
+104 = light blue background  
+105 = light purple background  
+106 = turquoise background
+```
+
+These can even be combined, so that a parameter like 
+`di=5;31;42` in your `LS_COLORS` variable would make directories appear in flashing red text with a green background!
+
+Setting `LS_COLORS` does more than just make your ls listings look pretty (although it certainly does do that), it is also very helpful in identifying files while wading through a file system.
+
+**One Example:**
+```bash
+LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=0  
+1;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:*.sh=01;32:*.csh=01;32  
+:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;3  
+1:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm  
+=01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'  
+```
 
 
