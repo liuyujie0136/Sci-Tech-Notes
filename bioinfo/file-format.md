@@ -13,6 +13,9 @@
       - [第二列`FLAG`取值](#第二列flag取值)
       - [第五列`CIGAR`字符串](#第五列cigar字符串)
       - [比对信息第12列及之后：可选字段](#比对信息第12列及之后可选字段)
+  - [THE DEVIL 0 AND 1 COORDINATE SYSTEMS IN GENOMICS](#the-devil-0-and-1-coordinate-systems-in-genomics)
+    - [The TWO systems](#the-two-systems)
+    - [Mistakes can happen if not consider the coordinate system carefully](#mistakes-can-happen-if-not-consider-the-coordinate-system-carefully)
 
 
 ## BED文件
@@ -253,3 +256,60 @@ X | 8 | read碱基与参考序列不同 | yes | yes
        1.  `XT:A` 比对Type: Unique/Repeat/N/Mate-sw 如 XT:A:U 表示唯一比对
        2.  `XM:i` 比对中mismatch的数目
 
+
+## THE DEVIL 0 AND 1 COORDINATE SYSTEMS IN GENOMICS
+> https://tidyomics.com/blog/2018/12/09/2018-12-09-the-devil-0-and-1-coordinate-system-in-genomics/
+
+We need to be aware that there are two genomics coordinate systems: 1 based and 0 based. There is really no mystery between these two. You EITHER count start at 0 OR at 1. However, this can make confusions when analyzing genomic data and one may make mistakes if not keep it in mind.
+
+### The TWO systems
+
+See the figure below to understand the two systems. credit due to Vince Buffalo from his book **Bioinformatics data skills**.
+
+![](figure/genomic_coordinate.png)
+
+There is a nice digital cheat sheet from this [post](https://www.biostars.org/p/84686/) by Obi Griffith, a professor of Medicine (Oncology) and Genetics at Washington University five years ago. We frequently go back to reference it.
+
+![](figure/coord_cheatsheet1.png)
+
+![](figure/coord_cheatsheet2.png)
+
+### Mistakes can happen if not consider the coordinate system carefully
+
+The problem is that different file format uses different coordinate systems. Well, you know it is bioinFORMATics :)
+
+some files such as `bed` file is 0 based. Two genomic regions:
+
+```r
+chr1    0    1000
+chr1    1000    2000
+```
+
+when you import that bed file into R using `rtracklayer::import()`, it will become
+
+```r
+chr1     1    1000
+chr1    1001    2000
+```
+
+The function converts it to 1 based internally (**R is 1 based unlike python**).
+
+When you read the bed file with `read.table` and use `GenomicRanges::makeGRangesFromDataFrame()` to convert it to a `GRanges` object, do not forget to add 1 to the start before doing it.
+
+Similarly, when you write a GRanges object to disk using `rtracklayer::export`, you do not need to worry, R will convert it back to 0 based in file.However, if you make a dataframe out of the GRanges object, and write that dataframe to file, remember to do `start -1` before doing it.
+
+A full list of coordinate systems for different files can be found below from **Bioinformatics data skills**.
+
+| Format/library | Type |
+| --- | --- |
+| BED | 0-based |
+| GTF | 1-based |
+| GFF | 1-based |
+| SAM | 1-based |
+| BAM | 0-based ?|
+| VCF | 1-based |
+| BCF | 0-based ?|
+| Wiggle | 1-based |
+| GenomicRanges | 1-based |
+| BLAST | 1-based |
+| GenBank/EMBL Feature Table | 1-based |
