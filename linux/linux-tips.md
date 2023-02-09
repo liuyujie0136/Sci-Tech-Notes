@@ -93,6 +93,7 @@
       - [对于777的文件夹不显示背景色](#对于777的文件夹不显示背景色)
     - [附加材料](#附加材料)
     - [附：`LS_COLORS`的妙用](#附ls_colors的妙用)
+  - [URL Encoding](#url-encoding)
 
 
 ## Docker
@@ -1931,5 +1932,9 @@ LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;
 1:*.bz2=01;31:*.bz=01;31:*.tz=01;31:*.rpm=01;31:*.cpio=01;31:*.jpg=01;35:*.gif=01;35:*.bmp=01;35:*.xbm  
 =01;35:*.xpm=01;35:*.png=01;35:*.tif=01;35:'  
 ```
+
+
+## URL Encoding
+> [http://blooberry.com/indexdot/html/topics/urlencoding.htm](http://blooberry.com/indexdot/html/topics/urlencoding.htm)
 
 
