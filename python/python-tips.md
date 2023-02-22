@@ -6,7 +6,7 @@
     - [同时编辑多行](#同时编辑多行)
   - [Python更换pip源(pypi镜像) - 清华大学开源软件镜像站](#python更换pip源pypi镜像---清华大学开源软件镜像站)
   - [Python计算排列数与组合数](#python计算排列数与组合数)
-    - [编写函数计算组合数!C_n^i](#编写函数计算组合数)
+    - [编写函数计算组合数](#编写函数计算组合数)
     - [使用第三方模块scipy计算排列组合的具体数值](#使用第三方模块scipy计算排列组合的具体数值)
     - [使用阶乘的方式求组合数](#使用阶乘的方式求组合数)
     - [使用itertools列出排列组合的全部情况](#使用itertools列出排列组合的全部情况)
@@ -49,11 +49,15 @@
       - [Kruskal-Wallis H Test](#kruskal-wallis-h-test)
       - [Friedman Test](#friedman-test)
     - [Further Reading](#further-reading)
-  - [python循环删除列表元素常见错误与正确方法](#python循环删除列表元素常见错误与正确方法)
+  - [Python循环删除列表元素常见错误与正确方法](#python循环删除列表元素常见错误与正确方法)
     - [常见错误一:使用固定长度循环删除列表元素](#常见错误一使用固定长度循环删除列表元素)
     - [常见错误二:正序循环遍历删除列表元素](#常见错误二正序循环遍历删除列表元素)
     - [正确的方法一:倒序循环遍历](#正确的方法一倒序循环遍历)
     - [正确的方法二:遍历拷贝的list，操作原始的list](#正确的方法二遍历拷贝的list操作原始的list)
+  - [Python汉字拼音转换工具——`pypinyin`](#python汉字拼音转换工具pypinyin)
+    - [安装](#安装)
+    - [基本使用](#基本使用)
+    - [高级使用](#高级使用)
 
 
 ## VS Code 相关技巧
@@ -959,7 +963,7 @@ This section provides more resources on the topic if you are looking to go deepe
 - [A Gentle Introduction to Statistical Hypothesis Tests](https://machinelearningmastery.com/statistical-hypothesis-tests/)
 
 
-## python循环删除列表元素常见错误与正确方法
+## Python循环删除列表元素常见错误与正确方法
 > https://blog.csdn.net/u013555719/article/details/84550700
 
 ### 常见错误一:使用固定长度循环删除列表元素
@@ -1062,4 +1066,57 @@ print("after remove op", num_list_4)
 # num_list_4 [1, 3]
 # after remove op [1, 3]
 ```
+
+
+## Python汉字拼音转换工具——`pypinyin`
+> https://zhuanlan.zhihu.com/p/374674547?utm_id=0
+
+### 安装
+```bash
+pip install pypinyin
+```
+
+### 基本使用
+
+```python
+from pypinyin import pinyin, lazy_pinyin, Style
+
+pinyin('中心')
+# [['zhōng'], ['xīn']]
+
+pinyin('中心', heteronym=True) # 启用多音字模式
+# [['zhōng', 'zhòng'], ['xīn']]
+
+pinyin('中心', style=Style.FIRST_LETTER) # 设置拼音风格
+# [['z'], ['x']]
+
+# TONE2 在相应字母的后面显示音调
+pinyin('中心', style=Style.TONE2, heteronym=True)
+# [['zho1ng', 'zho4ng'], ['xi1n']]
+
+# TONE3 拼音的最后显示音调
+pinyin('中心', style=Style.TONE3, heteronym=True)
+# [['zhong1', 'zhong4'], ['xin1']]
+
+lazy_pinyin('中心') # 不考虑多音字的情况
+# ['zhong', 'xin']
+
+lazy_pinyin('战略', v_to_u=True) # 不使用 v 表示 ü
+# ['zhan', 'lüe']
+
+# 使用 5 标识轻声
+lazy_pinyin('衣裳', style=Style.TONE3, neutral_tone_with_five=True)
+# ['yi1', 'shang5']
+```
+
+使用命令行一键识别拼音：
+
+```bash
+python -m pypinyin 音乐
+# yīn yuè
+```
+
+### 高级使用
+
+详见参考链接
 

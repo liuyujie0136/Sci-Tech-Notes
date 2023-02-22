@@ -39,3 +39,7 @@
 ## `r3dmol`: 结构可视化
 
 [在R中对分子结构进行3D可视化](https://mp.weixin.qq.com/s/lOfc6ZRFBI3EWoSgpd5guw)
+
+## `reshape2`: 数据结构转换
+
+[R包reshape2 | 轻松实现长、宽数据表格转换](https://cloud.tencent.com/developer/article/1526683)
