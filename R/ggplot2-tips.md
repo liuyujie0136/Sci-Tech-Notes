@@ -11,6 +11,7 @@
   - [对数据框的不同列循环作图](#对数据框的不同列循环作图)
   - [Use `coord_cartesian` instead of `scale_y_continuous`](#use-coord_cartesian-instead-of-scale_y_continuous)
   - [在散点图上添加线性拟合方程和R值](#在散点图上添加线性拟合方程和r值)
+  - [ggplot2多子图对齐坐标轴](#ggplot2多子图对齐坐标轴)
 
 
 ## R Graphics Cookbook, 2nd edition
@@ -178,3 +179,18 @@ ggsave("p1.pdf",
        height = 4,
        width = 4)
 ```
+
+
+## ggplot2多子图对齐坐标轴
+> https://zhuanlan.zhihu.com/p/161401082
+
+使用`cowplot::plot_grid(align = "vh")`，（`align = "v"`：垂直方向上对齐，`align = "h"`：水平方向上对齐）
+
+例：`plot_grid(p1, p2, p3, p4, ncol = 2, align = "vh")`
+
+另，可用于 ggplot2 子图排版的 package 有：
+
+- gridExtra
+- patchwork
+- cowplot
+
