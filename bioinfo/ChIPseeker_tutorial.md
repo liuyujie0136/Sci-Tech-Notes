@@ -531,9 +531,3 @@ dotplot(cc, showCategory=10)
 ```
 
 ![](figure/ChIPseeker_tutorial_fig/9376801-1f4cca3bed72f6fe.png)
-
-欢迎关注我们的公众号～\_～　　  
-我们是两个农转生信的小硕，打造**生信星球**，想让它成为一个不拽术语、通俗易懂的生信知识平台。需要帮助或提出意见请后台留言或发送邮件到[jieandze1314@gmail.com](mailto:jieandze1314@gmail.com)  
-
-![](figure/ChIPseeker_tutorial_fig/9376801-8a0adfaf13550bcd.png)
-

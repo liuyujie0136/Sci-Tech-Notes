@@ -1,7 +1,7 @@
 # PCA降维与KMeans聚类
-> https://zhuanlan.zhihu.com/p/433947355
-> https://zhuanlan.zhihu.com/p/342052190
-> https://blog.csdn.net/qq_19672707/article/details/106857918
+> https://zhuanlan.zhihu.com/p/433947355  
+> https://zhuanlan.zhihu.com/p/342052190  
+> https://blog.csdn.net/qq_19672707/article/details/106857918  
 > https://juejin.cn/post/7000772832934232100
 
 - [PCA降维与KMeans聚类](#pca降维与kmeans聚类)
@@ -442,8 +442,6 @@ X, _ = load_energy()
 visualizer = rank1d(X, color="r")
 ```
 
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9dd66a6a0097433fa6bc46b8bb7bd35b~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 默认情况下，Rank2D可视化工具使用皮尔逊相关系数检测两个特征之间的相关性。
 
 ```python
@@ -454,8 +452,6 @@ X, _ = load_credit()
 print(X[['limit','sex', 'edu']].head())
 visualizer = rank2d(X)
 ```
-
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/973d15d2570740c88051486545585d41~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 平行坐标（Parallel Coordinates）
 
@@ -469,8 +465,6 @@ X, y = load_wine(return_X_y=True)
 print(X.shape,y.shape) #(178, 13) (178,)
 visualizer = parallel_coordinates(X, y, normalize="standard")
 ```
-
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/05ad9eea06f44f2c8768f65d2be5e639~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 径向坐标可视化（Radial Visualization）
 
@@ -490,8 +484,6 @@ X, y = load_occupancy()
 visualizer = radviz(X, y, colors=["maroon", "gold"])
 ```
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/bbedba30af824f24b5391ad19e9dad8d~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 #### PCA
 
 PCA 分解可视化器利用主成分分析将高维数据分解为两个或三个维度，以便可以将每个实例绘制在散点图中。 PCA 的使用意味着这些`投影的数据集`可以沿着主要变化的轴进行分析，并且可以被解释，以确定是否可以利用球面距离度量。
@@ -504,8 +496,6 @@ X, y = load_spam()
 print(X.shape,y.shape) # (4600, 57) (4600,)
 visualizer = pca_decomposition(X, y)
 ```
-
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9ca62fdf15fe4e41be65801993809420~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 流形（Manifold）
 
@@ -520,8 +510,6 @@ from yellowbrick.features import manifold_embedding
 X, y = load_iris(return_X_y=True)
 visualizer = manifold_embedding(X, y)
 ```
-
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/5b1a7941bbf04d3fbeae8932720727c0~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 ### 分类模型可视化
 
@@ -548,8 +536,6 @@ visualizer = class_prediction_error(
 )
 ```
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2183b5b8339043c1ae056681c893bb24~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 #### 分类报告（Classification Report）
 
 分类报告可视化器显示模型的准确率、召回率、F1分数。 为了更容易的解释和问题检测，该报告将数字分数与颜色编码的热图相结合。 所有热图都在 `(0.0, 1.0)` 范围内，以便于在不同分类报告之间轻松比较分类模型。
@@ -564,8 +550,6 @@ visualizer = classification_report(
     RandomForestClassifier(n_estimators=10), X, y
 )
 ```
-
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d04faa13dbde466383eef446ba1b1d50~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 混淆矩阵（Confusion Matrix）
 
@@ -584,8 +568,6 @@ X = OneHotEncoder().fit_transform(X)
 visualizer = confusion_matrix(RidgeClassifier(), X, y, cmap="Greens")
 ```
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dd9d36ef3ec8440fae02ffd774612b79~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 #### 精确率/召回率曲线（Precision/Recall）
 
 PrecisionRecallCurve 显示了分类器精度（结果相关性的度量）和召回率（完整性的度量）之间的权衡。
@@ -600,8 +582,6 @@ from yellowbrick.classifier import precision_recall_curve
 X, y = load_occupancy()
 visualizer = precision_recall_curve(GaussianNB(), X, y)
 ```
-
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7321eda502ea4308b823a40de4c59bdb~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### ROC/AUC
 
@@ -620,8 +600,6 @@ X, y = load_spam()
 visualizer = roc_auc(LogisticRegression(), X, y)
 ```
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d439d71fbd264cfc9076508d2ccba7e8~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 #### 判别阈值（Discrimination Threshold）
 
 精度、召回率、f1 分数等指标是对二元分类器的判别阈值的可视化。
@@ -638,8 +616,6 @@ visualizer = discrimination_threshold(
     LogisticRegression(multi_class="auto", solver="liblinear"), X, y
 )
 ```
-
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2d9b2f2004e5433ebeddbfd627ed0cb3~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 ### 回归模型可视化
 
@@ -660,8 +636,6 @@ visualizer = residuals_plot(
 )
 ```
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/32fdeb3cbfd44c888c3d5baba4f5e120~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 #### 预测误差图（Prediction Error）
 
 预测误差图显示了数据集中的实际目标与我们的模型生成的预测值。 这使我们能够看到模型中有多少方差。
@@ -676,8 +650,6 @@ from yellowbrick.regressor import prediction_error
 X, y = load_bikeshare()
 visualizer = prediction_error(Lasso(), X, y)
 ```
-
-![image.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/38ab27e805d34943b69286edb60f1197~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 库克距离（Cooks Distance）
 
@@ -695,8 +667,6 @@ X, y = load_diabetes(return_X_y=True)
 visualizer = cooks_distance(X, y)
 ```
 
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2983b0797d24f2a851a7fe13048b193~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
-
 ### 聚类模型可视化
 
 #### 轮廓系数（Silhouette Scores）
@@ -713,8 +683,6 @@ from yellowbrick.cluster import silhouette_visualizer
 X, y = load_nfl()
 visualizer = silhouette_visualizer(KMeans(5, random_state=42), X)
 ```
-
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/ea6a34f0e0394c16ba26e02a1e4129ff~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 #### 簇间距离图（Intercluster Distance）
 
@@ -734,8 +702,6 @@ from yellowbrick.cluster import intercluster_distance
 X, y = load_nfl()
 visualizer = intercluster_distance(MiniBatchKMeans(5, random_state=777), X)
 ```
-
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/2f546c9a62d44927adcde2ed47061b1b~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 ### 目标值可视化
 
@@ -758,8 +724,6 @@ from yellowbrick.target import class_balance
 X, y = load_game()
 visualizer = class_balance(y, labels=["draw", "loss", "win"])
 ```
-
-![image.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/671f01b367864c12b3095d9fe13c8f27~tplv-k3u1fbpfcp-zoom-in-crop-mark:4536:0:0:0.awebp)
 
 ## R语言代码示例
 ```r
