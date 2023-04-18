@@ -94,6 +94,10 @@
     - [附加材料](#附加材料)
     - [附：`LS_COLORS`的妙用](#附ls_colors的妙用)
   - [URL Encoding](#url-encoding)
+  - [awk中`printf`的用法](#awk中printf的用法)
+    - [`printf`使用的转义字符](#printf使用的转义字符)
+    - [`printf`的修饰符](#printf的修饰符)
+    - [`printf`的格式说明符](#printf的格式说明符)
 
 
 ## Docker
@@ -1936,5 +1940,51 @@ LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;
 
 ## URL Encoding
 > [http://blooberry.com/indexdot/html/topics/urlencoding.htm](http://blooberry.com/indexdot/html/topics/urlencoding.htm)
+
+
+## awk中`printf`的用法
+> https://www.cnblogs.com/soymilk2019/p/12165545.html
+
+`printf`函数返回一个带格式的字符串给标准输出。`printf`语句包括一个加引号的控制串，控制串中可能嵌有若干格式说明和修饰符。控制串后面跟一个逗号，之后是一列由逗号分隔的表达式。`printf`函数根据控制串中的说明编排这些表达式的格式。与`print`函数不同的是， `printf`不会在行尾自动换行。因此，如果要换行，就必须在控制串中提供转义字符`\n`。每一个百分号和格式说明都必须有一个对应的变量。要打印百分号就必须在控制串中给出两个百分号。
+
+### `printf`使用的转义字符
+
+| 转义字符 | 定义 |
+| --- | --- |
+| c | 字符 |
+| s | 字符串 |
+| d | 十进制整数 |
+| ld | 十进制长整数 |
+| u | 十进制无符号整数 |
+| lu | 十进制无符号长整数 |
+| x | 十六进制整数 |
+| lx | 十六进制长整数 |
+| o | 八进制整数 |
+| lo | 八进制长整数 |
+| e | 用科学记数法(e 记数法)表示的浮点数 |
+| f | 浮点数 |
+| g | 选用e或f中较短的一种形式 |
+
+### `printf`的修饰符
+
+| 字符 | 定义 |
+| --- | --- |
+| \- | 左对齐修饰符 |
+| # | 显示8 进制整数时在前面加个0，显示16 进制整数时在前面加0x |
+| + | 显示使用d、e、f 和 g 转换的整数时，加上正负号+或- |
+| 0 | 用0而不是空白符来填充所显示的值 |
+
+### `printf`的格式说明符
+
+| 格式说明符 | 功能 |
+| --- | --- |
+| %c | 打印单个ASCII 字符 printf("The character is %c\n",x) 输出: The character is A |
+| %d | 打印一个十进制数 printf("The boy is %d years old\n",y) 输出：The boy is 15 years old |
+| %e | 打印数字的e 记数法形式 printf("z is %e\n",z) 打印: z is 2.3e+0 1 |
+| %f | 打印一个浮点数 printf("z is %f\n", 2.3 \* 2) 输出: z is 4.600000 |
+| %o | 打印数字的八进制 printf("y is %o\n",y) 输出：z is 17 |
+| %s | 打印一个字符串 print("The name of the culprit is %s\n",$1) 输出：The name of the culprit is Bob Smith |
+| %x | 打印数字的十六进制值 printf("y is %x\n",y) 输出：x is f |
+
 
 

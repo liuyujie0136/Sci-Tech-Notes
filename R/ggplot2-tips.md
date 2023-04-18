@@ -12,6 +12,7 @@
   - [Use `coord_cartesian` instead of `scale_y_continuous`](#use-coord_cartesian-instead-of-scale_y_continuous)
   - [在散点图上添加线性拟合方程和R值](#在散点图上添加线性拟合方程和r值)
   - [ggplot2多子图对齐坐标轴](#ggplot2多子图对齐坐标轴)
+  - [ggplot2多子图合并图例](#ggplot2多子图合并图例)
 
 
 ## R Graphics Cookbook, 2nd edition
@@ -193,4 +194,52 @@ ggsave("p1.pdf",
 - gridExtra
 - patchwork
 - cowplot
+
+
+## ggplot2多子图合并图例
+> https://wilkelab.org/cowplot/articles/shared_legends.html
+
+使用`cowplot::get_legend()`和`cowplot::plot_grid()`，示例如下：
+
+```r
+library(ggplot2)
+library(cowplot)
+
+# plot something first ......
+
+# arrange the three plots in a single row
+prow <- plot_grid(
+  p1 + theme(legend.position="none"),
+  p2 + theme(legend.position="none"),
+  p3 + theme(legend.position="none"),
+  align = "vh",
+  labels = c("A", "B", "C"),
+  nrow = 1
+)
+
+# extract the legend from one of the plots
+legend_a <- get_legend(
+  # create some space to the left of the legend
+  p1 + theme(legend.box.margin = margin(0, 0, 0, 12))
+)
+
+# add the legend to the row we made earlier. Give it one-third of the width of one plot (via rel_widths).
+plot_grid(prow,
+          legend_a,
+          rel_widths = c(3, .4))
+
+# extract a legend that is laid out horizontally
+legend_b <- get_legend(
+  p1 + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+
+# add the legend underneath the row we made earlier. Give it 10% of the height of one plot (via rel_heights).
+plot_grid(prow,
+          legend_b,
+          ncol = 1,
+          rel_heights = c(1, .1))
+```
+
 
