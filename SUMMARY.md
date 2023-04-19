@@ -9,7 +9,7 @@
   * [基因组注释基本流程](bioinfo/genome-denovo-ann.md)
   * [WGBS甲基化分析](bioinfo/bismark-swDMR.md)
   * [deeptools处理BAM文件](bioinfo/deeptools-bam.md)
-  * [链特异性测序那点事](bioinfo/strand-specific_RNAseq.md)
+  * [链特异性测序](bioinfo/strand-specific_RNAseq.md)
   * [关于readsCount、RPKM/FPKM、RPM(CPM)、TPM的理解](bioinfo/RPKM_TPM.md)
   * [学习一遍ChIPseeker的使用](bioinfo/ChIPseeker_tutorial.md)
   * [PCA降维与KMeans聚类](bioinfo/PCA_KMeans.md)
