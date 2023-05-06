@@ -183,7 +183,7 @@ nucmer --prefix HP103_HP119 HP103_1kb.fa HP119_1kb.fa &
 这里可以比较一下水稻日本晴基因组和其他地方品种
 
 ```bash
-nucmer  --prefix IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta ~/reference/genome/rice_contigs/DHX2.fa
+nucmer --prefix IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta ~/reference/genome/rice_contigs/DHX2.fa
 ```
 
 > 在第四版中新增了一个`dnadiff`，进一步封装`nucmer`和其他数据整理工具，基本上没啥参数，而输出很齐全，非常的人性化。在不知如何开始的时候，可以无脑用这个。
@@ -192,7 +192,7 @@ nucmer  --prefix IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta 
 # 已有delta文件
 dnadiff -d IRGSP1_DHX2.delta
 # 未有delta文件
-dnadiff IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta ~/reference/genome/rice_contigs/DHX2.fa
+dnadiff -p IRGSP1_DHX2 ~/reference/genome/IRGSP1.0/IRGSP-1.0_genome.fasta ~/reference/genome/rice_contigs/DHX2.fa
 ```
 
 ## 数据整理
