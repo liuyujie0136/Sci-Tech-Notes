@@ -350,34 +350,32 @@ perl处理完后会给匹配到的值存在三个特殊变量名:
 1. `s///`
 ```perl
 $f = "'quoted words'";
-if($f =~ s/^'(.*)'$/$1/) { #true, $1指的是引用了第一组(.*)的内容, ^$这两个字符用来表示开始与结束
-    print $f,"\n";        # quoted words
-                          # 注意 标量 $f 匹配后本身内容发生了变化
+print $f,"\n" if $f =~ s/^'(.*)'$/$1/;  # quoted words
+# $1指的是引用了第一组(.*)的内容。注意 标量 $f 匹配后本身内容发生了变化
 }
 ```
 2. `s///r`
 ```perl
 $f = "'quoted words'";
 $n = $f =~ s/^'(.*)'$/$1/r;
-print $f,"\n"; # 'quoted words'   # 注意 标量$f 匹配后本身内容无变化
-print $n,"\n"; #  quoted words    # 注意 标量$n 为匹配后替换的内容
+print $f,"\n";  # 'quoted words'  # 注意 标量$f 匹配后本身内容无变化
+print $n,"\n";  #  quoted words   # 注意 标量$n 为匹配后替换的内容
 ```
 3. `s///g`
 ```perl
 $z = "time hcat to feed the cat hcat";
-$z =~ s/cat/AAA/g; # 多次查找替换
-print $z,"\n"; # time hAAA to feed the AAA hAAA
+$z =~ s/cat/AAA/g;
+print $z,"\n";  # time hAAA to feed the AAA hAAA
 ```
 4. `s///e`
 ```perl
-# reverse all the words in a string
+## reverse all the words in a string
 $x = "the cat in the hat";
-$x =~ s/(\w+)/reverse $1/ge; # $x contains "eht tac ni eht tah"
-
-# convert percentage to decimal
+$x =~ s/(\w+)/reverse $1/ge;  # $x contains "eht tac ni eht tah"
+## convert percentage to decimal
 $x = "A 39% hit rate";
-$x =~ s!(\d+)%!$1/100!e; # $x contains "A 0.39 hit rate"
-# s/// 可以用 s!!! , s{}{} , s{}// 进行替换
+$x =~ s!(\d+)%!$1/100!e;  # $x contains "A 0.39 hit rate"
+## s/// 可以用 s!!! , s{}{} , s{}// 进行替换
 ```
 
 ### 转化操作符
