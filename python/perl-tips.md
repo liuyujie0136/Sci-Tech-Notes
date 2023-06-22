@@ -19,7 +19,7 @@
   - [The Arrow Operators (`->`)](#the-arrow-operators--)
   - [Perl正则表达式](#perl正则表达式)
     - [匹配操作符](#匹配操作符)
-    - [查找替换`s/regex/replacement/modifiers`](#查找替换sregexreplacementmodifiers)
+    - [查找替换`s/regex/rep/mod`](#查找替换sregexrepmod)
     - [转化操作符](#转化操作符)
     - [更多正则表达式规则](#更多正则表达式规则)
     - [123](#123)
@@ -333,7 +333,7 @@ perl处理完后会给匹配到的值存在三个特殊变量名:
 
 如果将这三个变量放在一起,你将得到原始字符串。
 
-### 查找替换`s/regex/replacement/modifiers`
+### 查找替换`s/regex/rep/mod`
 
 替换操作修饰符如下表所示：
 
@@ -350,19 +350,15 @@ perl处理完后会给匹配到的值存在三个特殊变量名:
 1. `s///`
 ```perl
 $f = "'quoted words'";
-#进行模式匹配,下面方法去除''单引号
 if($f =~ s/^'(.*)'$/$1/) { #true, $1指的是引用了第一组(.*)的内容, ^$这两个字符用来表示开始与结束
     print $f,"\n";        # quoted words
                           # 注意 标量 $f 匹配后本身内容发生了变化
 }
 ```
-1. `s///r`
+2. `s///r`
 ```perl
 $f = "'quoted words'";
-#进行模式匹配,下面方法去除''单引号
 $n = $f =~ s/^'(.*)'$/$1/r;
-
-print "matches","\n";
 print $f,"\n"; # 'quoted words'   # 注意 标量$f 匹配后本身内容无变化
 print $n,"\n"; #  quoted words    # 注意 标量$n 为匹配后替换的内容
 ```
@@ -370,7 +366,7 @@ print $n,"\n"; #  quoted words    # 注意 标量$n 为匹配后替换的内容
 ```perl
 $z = "time hcat to feed the cat hcat";
 $z =~ s/cat/AAA/g; # 多次查找替换
-print $z,"\n"; # 结果为 time hAAA to feed the AAA hAAA
+print $z,"\n"; # time hAAA to feed the AAA hAAA
 ```
 4. `s///e`
 ```perl
