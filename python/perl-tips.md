@@ -18,10 +18,11 @@
       - [文艺模式：参数中包含数组](#文艺模式参数中包含数组)
   - [The Arrow Operators (`->`)](#the-arrow-operators--)
   - [Perl正则表达式](#perl正则表达式)
-    - [匹配操作符](#匹配操作符)
+    - [匹配操作符`m/regex/`](#匹配操作符mregex)
     - [查找替换`s/regex/rep/mod`](#查找替换sregexrepmod)
-    - [转化操作符](#转化操作符)
+    - [转化操作符`tr/regex/rep/`](#转化操作符trregexrep)
     - [更多正则表达式规则](#更多正则表达式规则)
+    - [懒惰限定符](#懒惰限定符)
 
 
 ## Perl哈希嵌套数组
@@ -308,9 +309,10 @@ Note that the arrows following the first arrow are optional as perl sees that th
 
 ## Perl正则表达式
 > https://blog.csdn.net/blog_abel/category_2657845.html  
-> https://www.runoob.com/perl/perl-regular-expressions.html
+> https://www.runoob.com/perl/perl-regular-expressions.html  
+> https://perl-book.junmajinlong.com/ch6/12_y_tr.html
 
-### 匹配操作符
+### 匹配操作符`m/regex/`
 
 用于匹配一个字符串语句或者一个正则表达式，如`m//`、`~//`、`$a=~/a/; $b!~/b/`。模式匹配有一些常用的修饰符，如下表所示：
 
@@ -342,7 +344,7 @@ perl处理完后会给匹配到的值存在三个特殊变量名:
 | m | 默认的正则开始^和结束"\$"只是对于正则字符串如果在修饰符中加上"m"，那么开始和结束将会指字符串的每一行：每一行的开头就是"^"，结尾就是"\$" |
 | o | 表达式只执行一次 |
 | x | 表达式中的空白字符将会被忽略，除非它已经被转义 |
-| r | 原始标量的值不会发生变化，可以把新值赋值给一个新的标量 |
+| r | 默认情况下，s///的返回值是替换成功的次数，然后改变原始标量。使用r修饰符，可以让这个替换操作返回替换后的字符串，而原始标量的值不会发生变化。 |
 | g | 替换所有匹配的字符串 |
 | e | 替换字符串作为表达式 |
 
@@ -351,20 +353,21 @@ perl处理完后会给匹配到的值存在三个特殊变量名:
 $f = "'quoted words'";
 print $f,"\n" if $f =~ s/^'(.*)'$/$1/;  # quoted words
 # $1指的是引用了第一组(.*)的内容。注意 标量 $f 匹配后本身内容发生了变化
-}
 ```
 2. `s///r`
 ```perl
 $f = "'quoted words'";
 $n = $f =~ s/^'(.*)'$/$1/r;
-print $f,"\n";  # 'quoted words'  # 注意 标量$f 匹配后本身内容无变化
-print $n,"\n";  #  quoted words   # 注意 标量$n 为匹配后替换的内容
+print $f,"\n";  # 'quoted words'
+print $n,"\n";  #  quoted words
 ```
 3. `s///g`
 ```perl
 $z = "time hcat to feed the cat hcat";
 $z =~ s/cat/AAA/g;
 print $z,"\n";  # time hAAA to feed the AAA hAAA
+$z =~ s/cat|the/AAA/g;
+print $z,"\n";  # time hAAA to feed AAA AAA hAAA
 ```
 4. `s///e`
 ```perl
@@ -377,15 +380,35 @@ $x =~ s!(\d+)%!$1/100!e;  # $x contains "A 0.39 hit rate"
 ## s/// 可以用 s!!! , s{}{} , s{}// 进行替换
 ```
 
-### 转化操作符
+### 转化操作符`tr/regex/rep/`
 
-以下是转化操作符相关的修饰符：
+用于字符映射转换。以下是转化操作符相关的修饰符：
 
 | 修饰符 | 描述 |
 | --- | --- |
 | c | 转化所有未指定字符 |
 | d | 删除所有指定字符 |
 | s | 把多个相同的输出字符缩成一个 |
+
+例：
+```perl
+$str="abcdef";
+$str =~ tr/a-z/A-Z/;
+say $str;  # ABCDEF
+
+$str="aaa bbb ccc ddd";
+$str =~ tr/ab/xy/c;
+say $str;  # aaaybbbyyyyyyyy
+
+$str="abc ddd eee fff";
+$str =~ tr/de/x/d;    # d替换为x，e被删除，结果abc xxx  fff
+$str =~ tr/abcf/mn/d; # a->m b->n，cf被删除，结果"mn xxx  "
+
+$str = "aabbccdd";
+$str =~ tr/a//s;  # 连续的a替换为单个a，结果abbccdd
+$str =~ tr/b/b/s; # 连续的b替换为单个b，结果abccdd
+$str =~ tr/c/*/s; # 连续的c替换为单个*，结果ab*d
+```
 
 ### 更多正则表达式规则
 
@@ -425,4 +448,16 @@ $x =~ s!(\d+)%!$1/100!e;  # $x contains "A 0.39 hit rate"
 | a\|b\|c | 匹配符合a字符 或是b字符 或是c字符 的字符串 |
 | abc | 匹配含有 abc 的字符串 (pattern) () 这个符号会记住所找寻到的字符串,是一个很实用的语法.第一个 () 内所找到的字符串变成 $1 这个变量或是 \\1 变量,第二个 () 内所找到的字符串变成 $2 这个变量或是 \\2 变量,以此类推下去. |
 | /pattern/i | i 这个参数表示忽略英文大小写,也就是在匹配字符串的时候,不考虑英文的大小写问题. \\ 如果要在 pattern 模式中找寻一个特殊字符,如 "\*",则要在这个字符前加上 \\ 符号,这样才会让特殊字符失效 |
+
+### 懒惰限定符
+
+默认情况下，Perl 的正则表达式是“贪婪地”，也就是说它们将尽可能多地匹配字符。要改变匹配特点，只须简单地在量词（加号\[+\]或星号\[\*\]）后面加一个问号（?）即可。 如下：
+
+| 表达式 | 描述 |
+| --- | --- |
+| \*? | 重复任意次，但尽可能少重复 |
+| +? | 重复1次或更多次，但尽可能少重复 |
+| ?? | 重复0次或1次，但尽可能少重复 |
+| {n,m}? | 重复n到m次，但尽可能少重复 |
+| {n,}? | 重复n次以上，但尽可能少重复 |
 
