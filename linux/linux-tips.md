@@ -20,6 +20,7 @@
   - [Linux下将文件夹命名为今天的日期的方法](#linux下将文件夹命名为今天的日期的方法)
   - [Linux下使ls命令只显示目录的方法](#linux下使ls命令只显示目录的方法)
   - [Linux下替换`^M`字符方法](#linux下替换m字符方法)
+    - [附：Windows下使用git时保证为`LF`格式](#附windows下使用git时保证为lf格式)
   - [Linux下将多行文件合并为一行](#linux下将多行文件合并为一行)
   - [Linux中cut命令](#linux中cut命令)
   - [Ubuntu镜像使用帮助](#ubuntu镜像使用帮助)
@@ -669,7 +670,7 @@ exit 0
 
 ## Linux下替换`^M`字符方法
 
-在Linux下使用`vi`或`cat -A`查看一些在Windows下创建的文本文件，有时会发现在行尾有一些`^M`，既影响文件的查看，也影响利用`awk`等命令对文件进行操作，见下：
+在Linux下使用`vi`或`cat -A`查看一些在Windows下创建的文本文件，有时会发现在行尾有一些`^M`，是由于Linux的换行符为`LF`，而Windows的换行符为`CRLF`所造成。它的存在虽然不影响文件的一般查看，但会影响利用`awk`、`grep`等命令对文件进行操作，见下：
 ```bash
 cat -A text.txt
 1^M$
@@ -699,6 +700,24 @@ dos2unix text.txt
 sed -e 's/^M/\n/g' text.txt #注意：^M需使用[ctrl-v] [ctrl-m]生成，并非直接输入
 ```
 * 注：在vim的.vimrc文件中把fileformat=unix去掉便不会显示（默认不显示^M）
+
+### 附：Windows下使用git时保证为`LF`格式
+```bash
+# 先设置用户名和密码
+git config --global user.email "test@foo.com"
+git config --global user.name "test"
+
+# 提交时将CRLF转换为LF，拉取时不将LF转换为CRLF
+# 配合VS Code设置默认EOL为`\n`(LF)，可使所有文件格式保持为LF
+git config --global core.autocrlf input
+# 也可设置为false，拒绝所有转换，但需保证项目所有参与者均用LF提交
+
+# 拒绝提交包含混合换行符的文件
+git config --global core.safecrlf true
+
+# 查看配置
+git config --global --list
+```
 
 
 ## Linux下将多行文件合并为一行
