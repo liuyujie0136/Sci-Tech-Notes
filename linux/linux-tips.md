@@ -1833,7 +1833,7 @@ tasklist /svc /fi "imagename eq svchost.exe" | findstr LxssManager
 Get-CimInstance -ClassName Win32_Service -Filter "Name='LxssManager'"
 ```
 
-然后在任务管理器的详细信息里找到该进程，结束之。之后便可以正常使用启动命令。
+或者，可以直接在任务管理器的**服务**里找到`LxssManager`服务对应的`PID`（此时若直接结束该服务仍会无响应）。然后，在任务管理器的**详细信息**里找到该`PID`对应的`svchost.exe`进程，结束之。之后便可以正常使用启动命令或直接运行WSL窗口。
 
 
 ## conda 创建/删除环境
