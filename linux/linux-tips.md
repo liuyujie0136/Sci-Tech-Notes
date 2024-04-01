@@ -1809,13 +1809,31 @@ sudo service ssh --full-restart   ## 可将该命令保存为service.sh，存在
 
 
 ## WSL重启方法
+> https://stackoverflow.com/questions/70567543/cant-restart-wsl2-lxssmanager-hangs-in-stopping-state-how-to-restart
 
-以管理员权限运行cmd或powershell
+以管理员权限运行Power Shell：
 
 ```cmd
-net stop LxssManager    #停止
-net start LxssManager   #启动
+net stop LxssManager
+net start LxssManager
+
+# OR:
+sc.exe queryex LxssManager
+sc.exe stop LxssManager
+sc.exe start LxssManager
+sc.exe queryex LxssManager
 ```
+
+上述命令在有些情况下无法响应，导致`LxssManager`服务卡在停止中的状态，既无法停止也无法启动。可在`services.msc`里查看到该服务的状态，发现停止和启动按钮均为灰色。若如此，可用如下命令获得运行`LxssManager`服务的`svchost.exe`进程的`PID`：
+
+```cmd
+tasklist /svc /fi "imagename eq svchost.exe" | findstr LxssManager
+
+# OR:
+Get-CimInstance -ClassName Win32_Service -Filter "Name='LxssManager'"
+```
+
+然后在任务管理器的详细信息里找到该进程，结束之。之后便可以正常使用启动命令。
 
 
 ## conda 创建/删除环境
