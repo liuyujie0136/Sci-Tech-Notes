@@ -57,11 +57,11 @@
     - [`samtools cat [-h header.sam] [-o out.bam] <in1.bam> [...<inN.bam>]`](#samtools-cat--h-headersam--o-outbam-in1bam-innbam)
     - [将bam文件转换为fastq文件](#将bam文件转换为fastq文件)
   - [GATK4](#gatk4)
-      - [BWA_GATK_pipeline.sh](#bwa_gatk_pipelinesh)
-      - [01.bwa_mem.sh](#01bwa_memsh)
+      - [BWA\_GATK\_pipeline.sh](#bwa_gatk_pipelinesh)
+      - [01.bwa\_mem.sh](#01bwa_memsh)
       - [02.sam2bam.sh](#02sam2bamsh)
-      - [03.gatk_make_gvcf.sh](#03gatk_make_gvcfsh)
-      - [04.gatk_call_variations.sh](#04gatk_call_variationssh)
+      - [03.gatk\_make\_gvcf.sh](#03gatk_make_gvcfsh)
+      - [04.gatk\_call\_variations.sh](#04gatk_call_variationssh)
   - [bowtie与bowtie2](#bowtie与bowtie2)
   - [vcftools](#vcftools)
     - [vcftools群体遗传参数计算示例](#vcftools群体遗传参数计算示例)
@@ -967,7 +967,7 @@ Options:
 #### BWA_GATK_pipeline.sh
 ```bash
 #!/bin/bash
-# Basic BWA-GATK4 Pipeline for Arabidopsis Resequencing Analysis
+# Basic BWA-GATK4 Pipeline for Resequencing (WGS) Analysis
 # Author: liuyujie0136
 # Date: 1/4/2022
 
@@ -975,12 +975,12 @@ Options:
 conda install -y bwa samtools gatk4
 
 ## Go to Work Dir
-cd ~/arabidopsis_reseq_test
+cd ~/resequencing/
 mv *.fq.gz original_fq/
 mkdir renamed_fq/ sam_files/ bam_files/ gvcf_files/
 
 ## BWA Index
-bwa index TAIR10.fa
+bwa index Ref.fa
 
 ## Rename FastQ Files
 for i in `cat rename`
@@ -996,7 +996,7 @@ done
 for i in `cat rename`
 do
     base=${i%,*}
-    nohup bash 01.bwa_mem.sh $base TAIR10.fa renamed_fq/ sam_files/ "@RG\tID:${base}\tPL:illumina\tSM:${base}" &
+    nohup bash 01.bwa_mem.sh $base Ref.fa renamed_fq/ sam_files/ "@RG\tID:${base}\tPL:illumina\tSM:${base}" &
 done
 
 ## samtools - convert to bam and sort
@@ -1007,16 +1007,16 @@ do
 done
 
 ## GATK4 - mark duplicates and make GVCFs
-gatk CreateSequenceDictionary -R TAIR10.fa
+gatk CreateSequenceDictionary -R Ref.fa
 
 for i in `cat rename`
 do
     base=${i%,*}
-    nohup bash 03.gatk_make_gvcf.sh $base TAIR10.fa bam_files/ gvcf_files/ &
+    nohup bash 03.gatk_make_gvcf.sh $base Ref.fa bam_files/ gvcf_files/ &
 done
 
 ## GATK4 - Joint Calling of GVCFs and filter
-nohup bash 04.gatk_call_variations.sh At_reseq_test TAIR10.fa gvcf_files/ ./ &
+nohup bash 04.gatk_call_variations.sh reseq_test Ref.fa gvcf_files/ ./ &
 ```
 
 #### 01.bwa_mem.sh
@@ -1086,7 +1086,7 @@ gatk GenotypeGVCFs -R $2 -V $3/$1.combined.g.vcf.gz -O $4/$1.vcf.gz
 
 gatk VariantFiltration -V $4/$1.vcf.gz \
     --filter-expression "QD < 2.0 || MQ < 40.0 || FS > 60.0 || SOR > 3.0 || MQRankSum < -12.5 || ReadPosRankSum < -8.0" \
-    --filter-name "PASS" \
+    --filter-name "LowConf" \
     -O $4/$1.filtered.vcf.gz
 ```
 
