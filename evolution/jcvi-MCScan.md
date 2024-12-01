@@ -39,8 +39,8 @@ python -m jcvi.apps.fetch phytozome
 python -m jcvi.apps.fetch phytozome Vvinifera,Ppersica
 
 # convert the GFF to BED file
-python -m jcvi.formats.gff bed --type=mRNA --key=Name Vvinifera_145_Genoscope.12X.gene.gff3.gz -o grape.bed
-python -m jcvi.formats.gff bed --type=mRNA --key=Name Ppersica_298_v2.1.gene.gff3.gz -o peach.bed
+python -m jcvi.formats.gff bed --type=mRNA --key=ID --primary_only Vvinifera_145_Genoscope.12X.gene.gff3.gz -o grape.bed
+python -m jcvi.formats.gff bed --type=mRNA --key=ID --primary_only Ppersica_298_v2.1.gene.gff3.gz -o peach.bed
 
 # clean headers to remove description fields from Phytozome FASTA files
 python -m jcvi.formats.fasta format Vvinifera_145_Genoscope.12X.cds.fa.gz grape.cds
@@ -50,7 +50,7 @@ python -m jcvi.formats.fasta format Ppersica_298_v2.1.cds.fa.gz peach.cds
 ## 共线性分析
 
 ```bash
-python -m jcvi.compara.catalog ortholog grape peach
+python -m jcvi.compara.catalog ortholog --no_strip_names grape peach
 ```
 程序默认按照可用线程，调用全部进行`LAST`比对
 
@@ -88,7 +88,7 @@ python -m jcvi.compara.synteny depth --histogram grape.peach.anchors
 
 首先先从`.anchors`文件中产生更简要的`.simple`文件
 ```bash
-python -m jcvi.compara.synteny screen --minspan=30 --simple grape.peach.anchors grape.peach.anchors.new
+python -m jcvi.compara.synteny screen --minspan=30 --simple grape.peach.anchors grape.peach.anchors.simple
 ```
 
 此外，除了原始BED文件和`.simple`文件文件，还需要手动设置两个文件用于绘图（注意，文件末尾不能存在多余的空行）
