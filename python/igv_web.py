@@ -140,7 +140,7 @@ def make_html(genome, tracks):
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IGViewer</title>
-    <script src="https://cdn.jsdelivr.net/npm/igv@3.1.1/dist/igv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/igv@2.12.0/dist/igv.min.js"></script>
 </head>
 
 <body>
