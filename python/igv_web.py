@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Author: Xu Zhougeng
+# Modified by Yujie Liu
 
 """
 A simple wrapper of igv.js for visulization of BAM, BigWig and etc.
@@ -112,9 +114,9 @@ def make_html(genome, tracks):
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>igv.js</title>
+        <title>IGViewer</title>
    
-        <script src="https://cdn.jsdelivr.net/npm/igv@2.7.2/dist/igv.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/igv@2.12.0/dist/igv.min.js"></script>
     </head>
 
     <body>
