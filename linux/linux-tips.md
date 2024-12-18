@@ -103,7 +103,7 @@
     - [我的wait为什么不能用](#我的wait为什么不能用)
     - [Shell变量while循环内改变无法传递到循环外](#shell变量while循环内改变无法传递到循环外)
   - [Shell中按指定分隔符读取文件字段](#shell中按指定分隔符读取文件字段)
-  - [Bash数组定义](#bash数组定义)
+  - [Shell数组](#shell数组)
 
 
 ## Docker
@@ -2108,11 +2108,25 @@ done < file.csv
 ```
 
 
-## Bash数组定义
+## Shell数组
+> https://www.runoob.com/linux/linux-shell-array.html
 
 ```bash
+# 定义
 array=(A B C D E)
 declare -A array=(["1"]=1 ["2"]=2 ["3"]=3)
 declare -A array=(["A"]=${test[0]} ["B"]=${test[1]} ["C"]=${test[2]})
+
+# 取值
+echo ${array[0]}
+echo ${array["A"]}
+
+# 输出数组全部元素
+echo ${array[*]}
+echo ${array[@]}
+
+# 获取数组长度
+echo ${#array[*]}
+echo ${#array[@]}
 ```
 
