@@ -2112,7 +2112,7 @@ done < file.csv
 
 ```bash
 array=(A B C D E)
-declare -A array=(["1"]=1 ["2"]=2 ["3]=3)
-declare -A array=(["A"]=${test[0]} ["B"]=${test[1]} ["C]=${test[2]})
+declare -A array=(["1"]=1 ["2"]=2 ["3"]=3)
+declare -A array=(["A"]=${test[0]} ["B"]=${test[1]} ["C"]=${test[2]})
 ```
 
