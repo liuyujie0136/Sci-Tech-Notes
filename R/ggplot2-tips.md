@@ -13,6 +13,8 @@
   - [在散点图上添加线性拟合方程和R值](#在散点图上添加线性拟合方程和r值)
   - [ggplot2多子图对齐坐标轴](#ggplot2多子图对齐坐标轴)
   - [ggplot2多子图合并图例](#ggplot2多子图合并图例)
+  - [ggplot2绘制双y轴](#ggplot2绘制双y轴)
+  - [ggplot2设置坐标轴次级刻度(minor breaks)](#ggplot2设置坐标轴次级刻度minor-breaks)
 
 
 ## R Graphics Cookbook, 2nd edition
@@ -243,3 +245,21 @@ plot_grid(prow,
 ```
 
 
+## ggplot2绘制双y轴
+> https://www.zhihu.com/tardis/zm/art/451580927
+
+使用`scale_y_continuous(sec.axis = sec_axis(~./N, name=XXX, breaks=XXX))`即可。其中`N`为两个y轴数据的换算倍数，`~./N`表示次级y轴的范围是用一级y轴除以`N`。
+
+注意，次级y轴对应数据在绘制时需要乘以`N`。
+
+若仅希望重复一遍y轴（即左右均有相同的y轴），则使用`sec.axis = dup_axis(name=XXX, breaks=XXX )`.
+
+
+## ggplot2设置坐标轴次级刻度(minor breaks)
+> https://www.jianshu.com/p/80835c4cc37f
+
+在`scale_(x|y)_continuous`里设置`minor_breaks`:
+- `minor_breaks=NULL`：删除次要刻度标签
+- `minor_breaks=默认`：两个主要刻度之间有一个次要刻度
+- `minor_breaks=手动设置的向量`
+- `minor_breaks=函数`：例如：`scales::minor_breaks_n(n)`（**注意：此处`n`应该设置为所需次级刻度数目+2，因此`n`包含了其两端的两个主要刻度**）

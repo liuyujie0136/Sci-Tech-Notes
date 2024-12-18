@@ -42,4 +42,12 @@
 
 ## `reshape2`: 数据结构转换
 
-[R包reshape2 | 轻松实现长、宽数据表格转换](https://cloud.tencent.com/developer/article/1526683)
+[R包reshape2轻松实现长、宽数据表格转换](https://cloud.tencent.com/developer/article/1526683)
+
+## `rio`：统一的文件读取接口
+
+[A Swiss-Army Knife for Data I/O](https://github.com/gesistsa/rio)
+
+## `ggh4x`：拓展ggplot2绘图 (hacky)
+
+[ggh4x包拓展ggplot2绘图](https://blog.csdn.net/Asa12138/article/details/142880795)

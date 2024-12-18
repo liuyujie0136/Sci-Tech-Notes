@@ -23,6 +23,7 @@
     - [Conclusion and interpretation](#conclusion-and-interpretation)
     - [Combination of plot and statistical test](#combination-of-plot-and-statistical-test)
     - [Related articles](#related-articles)
+  - [16进制颜色设置透明度](#16进制颜色设置透明度)
 
 
 ## Statistics for Biologists - Nature Collection
@@ -529,4 +530,33 @@ As always, if you have a question or a suggestion related to the topic covered i
 - [Correlation coefficient and correlation test in R](https://statsandr.com/blog/correlation-coefficient-and-correlation-test-in-r/)
 - [One-proportion and chi-square goodness of fit test](https://statsandr.com/blog/one-proportion-and-goodness-of-fit-test-in-r-and-by-hand/)
 - [How to do a t-test or ANOVA for more than one variable at once in R](https://statsandr.com/blog/how-to-do-a-t-test-or-anova-for-many-variables-at-once-in-r-and-communicate-the-results-in-a-better-way/)
+
+
+## 16进制颜色设置透明度
+> https://blog.csdn.net/tabweb/article/details/107152141
+
+对于RGB比较常见，显示器、电视等都是采用RGB的颜色标准。RGB是工业界的一种颜色标准，通过R（红）、G（绿）、B（蓝）三个颜色通道的变化以及它们相互之间的叠加来得到各式各样的颜色。我们知道计算机是0和1的世界，RGB每种色彩是用数字来表示，最大为255包括0，所以总共256级。所以RGB的色彩组合是256\*256\*256共16777216，一般简称千万色或者1600万，也有称为24位色，及2的24次方。在代码编程中常以16进制方式表示，如：0xff0000（红色）。
+
+ARGB从表面看比RGB多了个A，也是一种色彩模式，是在RGB的基础上添加了Alpha（透明度）通道。透明度也是以0到255表示的，所以也是总共有256级，透明是0，不透明是255。代码编程中也是以16进制方式表示，如：0xffff0000。
+
+1. ARGB 依次代表透明度（alpha）、红色(red)、绿色(green)、蓝色(blue)。
+2. #FF99CC00 为例，其中，FF 是透明度，99 是红色值， CC 是绿色值， 00 是蓝色值。
+3. 透明度分为256阶（0-255），计算机上用16进制表示为（00-ff）。透明就是0阶，不透明就是255阶,如果50%透明就是127阶（256的一半当然是128，但因为是从0开始，所以实际上是127）。
+4. 透明度 和 不透明度 是两个概念， 它们加起来是1，或者100%.
+
+透明度具体对应百分比：
+
+```
+100% — FF
+ 90% — E6
+ 80% — CC
+ 70% — B3
+ 60% — 99
+ 50% — 80
+ 40% — 66
+ 30% — 4D
+ 20% — 33
+ 10% — 1A
+  0% — 00
+```
 

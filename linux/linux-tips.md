@@ -99,6 +99,11 @@
     - [`printf`使用的转义字符](#printf使用的转义字符)
     - [`printf`的修饰符](#printf的修饰符)
     - [`printf`的格式说明符](#printf的格式说明符)
+  - [Shell管道 (pipe, `|`) 注意事项](#shell管道-pipe--注意事项)
+    - [我的wait为什么不能用](#我的wait为什么不能用)
+    - [Shell变量while循环内改变无法传递到循环外](#shell变量while循环内改变无法传递到循环外)
+  - [Shell中按指定分隔符读取文件字段](#shell中按指定分隔符读取文件字段)
+  - [Bash数组定义](#bash数组定义)
 
 
 ## Docker
@@ -2025,4 +2030,89 @@ LS_COLORS='no=00:fi=00:di=01;33:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;
 | %x | 打印数字的十六进制值 printf("y is %x\n",y) 输出：x is f |
 
 
+## Shell管道 (pipe, `|`) 注意事项
+> https://www.cnblogs.com/wangxin201492/p/5030983.html  
+> https://blog.csdn.net/mdx20072419/article/details/103901292
+
+**Shell管道会形成一个子Shell，在其中使用循环修改的变量不能传递到主Shell，wait也针对主Shell的后台进程**
+
+### 我的wait为什么不能用
+
+```bash
+# (1) 无法wait
+cat $file | while read line
+do
+    echo $line &
+done
+wait
+
+# (2) 可以wait
+while read line
+do
+    echo $line &
+done < $file
+wait
+```
+
+shell的管道`|`实际上是产生了一级子shell，也就是在`(1)`中的后台进程`echo $line &`是主进程子shell的后台进程。而`wait`只会等待当前进程的后台进程执行完毕，所以`(1)`在遇到wait语句直接退出了。
+
+而`(2)`中，通过`< $file`将文件的内容标准输入到`while`中，并未通过管道输入到`while`中，所以`echo $line &`为主shell的后台进程，wait会等待所有的后台进程完成以后退出，
+
+### Shell变量while循环内改变无法传递到循环外
+
+shell中使用管道会生成一个子shell，在子shell中使用while、for循环的代码也是在子shell中执行的，所以在循环中的修改的变量只在子shell中有效，当循环结束时，会回到主shell，子shell中修改的变量不会影响主shell中的变量。 
+
+```bash
+A="1"
+B="2"
+file="test.txt"
+
+# 无法传递赋值结果
+cat $file | while read line
+do
+    B=$A
+done
+
+# 可以保留赋值
+while read line
+do
+    B=$A
+done < $file
+```
+
+
+## Shell中按指定分隔符读取文件字段
+> https://www.topbyte.cn/2020/04/shell-read-file-with-delimiter/
+
+```bash
+# 设置分隔符并读取（默认分隔符为空格、tab、换行符）
+IFS=,
+cat file.csv | while read a b c
+do
+    echo $a $b $c
+done
+
+# 读取至一数组
+IFS=,
+cat file.csv | while read -a line
+do
+    echo ${line[0]} ${line[1]} ${line[2]}
+    echo ${line[*]}  # 输出数组全部元素
+done
+
+# 避免管道带来的变量赋值问题，且仅针对该文件读取设定IFS
+while IFS=, read a b c
+do
+    echo $a $b $c
+done < file.csv
+```
+
+
+## Bash数组定义
+
+```bash
+array=(A B C D E)
+declare -A array=(["1"]=1 ["2"]=2 ["3]=3)
+declare -A array=(["A"]=${test[0]} ["B"]=${test[1]} ["C]=${test[2]})
+```
 
