@@ -1,0 +1,10 @@
+site:
+  title: Sci-Tech-Notes
+  structure:
+    - type: space
+      key: space-sci-tech-notes
+      title: Sci-Tech Notes
+      path: sci-tech-notes
+      default: true
+      content:
+        directory: ./
